@@ -1,0 +1,90 @@
+.barIcon {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+  margin-top: 10px;
+  display: inline-block;
+}
+
+.barIconReversed {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+  margin-top: 10px;
+  display: inline-block;
+  transform: scaleX(-1);
+}
+
+.user {
+  vertical-align: top;
+  display: inline-block;
+  text-align: center;
+  width: 150px;
+}
+
+.users {
+  flex-grow: 1;
+}
+
+.App {
+  display: flex;
+}
+
+.event {
+  width: 25%;
+  text-align: center;
+}
+#type {
+  text-align: center;
+}
+
+#headers {
+  text-align: center;
+}
+
+#logInButton {
+  display: block;
+  margin: 0 auto 15px auto;
+}
+input {
+  display: block;
+  margin: 10px auto;
+}
+img {
+  width: 50px;
+  height: 50px;
+  background-color: white;
+}
+
+button {
+  vertical-align: top;
+  text-align: center;
+  display: inline-block;
+  margin: 20px auto;
+}
+
+.all::after {
+  clear: both;
+  content: "";
+  display: block;
+}
+.box1 {
+  border: 2px solid #daf1d8;
+  border-radius: 15px;
+  width: 45%;
+  height: 580px;
+  float: left;
+  background-color: #daf1d8;
+  box-sizing: border-box;
+  margin: 2.5%;
+}
+.box2 {
+  border: 2px solid #daf1d8;
+  border-radius: 15px;
+  width: 45%;
+  height: 580px;
+  float: right;
+  background-color: #daf1d8;
+  box-sizing: border-box;
+  margin: 2.5%;
+}
