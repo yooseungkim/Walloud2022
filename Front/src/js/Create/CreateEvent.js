@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { users } from "./Var";
+import { users } from "../Var";
 import personSrc from "../img/person.png";
 
 var eventList = [

@@ -2,34 +2,32 @@ import { React, useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import API from "../API";
 import axios from "axios";
+import CreateTravel from "./CreateTravel"
+
 
 const SelectTravel = () => {
   const user = useLocation().state.id;
-  const su = useLocation().state.su;
+  const isLoggin = useLocation().state.isLoggin;
   const [myTravel, setTravellist] = useState([]);
-  const [userList, setUserlist] = useState([]);
   const [newTravel, setNewTravel] = useState("");
-
-  const onNewTravel = (event) => {
-    setNewTravel(event.currentTarget.value);
-  };
 
   useEffect (() => {
     getInfor();
   },[]);
   
   const getInfor = async() => {
-    await axios.all([ API.get("/userlist"), API.get(+"travelList")])
-    .then(
-      axios.spread((res_user, res_travel) => {
-        console.log("userlist : ",res_user.data);
-        console.log("travellist : " ,res_travel.data);
-        setUserlist(res_user.data);
-        setTravellist(res_travel.data);
-    }))
-    .catch((error) => {
-      console.log(error)
+    await axios.get ("/api/Travel",{
+      user : user
+    }).then((response) => {
+      setTravellist(response.data);
+      console.log(response.data);
+    }).catch((error) => {
+      console.log(error);
     })
+  }
+
+  const Logout = (event) => {
+    document.location.href = '/login'
   }
 
   return (
@@ -39,6 +37,7 @@ const SelectTravel = () => {
       >
         My Travel List
       </h1>
+      <button onClick={Logout}>Logout</button>
       {myTravel.map((travel, id) => (
         <Link
           key={id}
@@ -51,23 +50,9 @@ const SelectTravel = () => {
           <br />
         </Link>
       ))}
-      <input onChange={onNewTravel} />
-      <Link
-        to={`/${user}/${newTravel}`}
-        state={{ user: user, travel: newTravel }}
-      >
-        <button style={{ display: "block", margin: "20px auto" }}>
-          Create Travel
-        </button>
-      </Link>
-      {
-        su ? userList.map((use,id) => (
-            <div style={{ display: "block", margin: "auto", textAlign: "center" }}>
-              {id},{use.name}, {use.email}, {use.account}
-            </div>
-        ))
-        : null
-      }
+      <div>
+        <CreateTravel user={user}/>
+      </div>
     </div>
   );
 };
