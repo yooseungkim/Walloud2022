@@ -4,13 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.spring.mydiv.Dto.UserCreateDto;
 import com.spring.mydiv.Dto.UserDto;
@@ -26,18 +20,18 @@ import lombok.RequiredArgsConstructor;
 //@CrossOrigin(origins = "http://localhost:3000/")
 @RestController
 @RequiredArgsConstructor
-//@RequestMapping("/")
+@RequestMapping("/api")
 public class UserController {
     private final UserService userservice;
     private final TravelService travelservice;
 
 
-    @GetMapping("/api/halo")
+    @GetMapping("/halo")
     public String ddd() {
         return "He";
     }
 
-    @PostMapping(value = "/api/Register")
+    @PostMapping(value = "/Register")
     public ResponseEntity<UserCreateDto.Response> createUser(@RequestBody Map map) {
 
         System.out.println("");
@@ -46,9 +40,10 @@ public class UserController {
         System.out.println(map.get("user_password"));
         System.out.println(map.get("user_account"));
 
-        UserCreateDto.Request userdto = new UserCreateDto.Request(map.get("user_name").toString(),map.get("user_email").toString(),map.get("user_password").toString(),map.get("user_account").toString());
-//        userservice.CreateUser(userdto);
-        //JPA save 함수는 리턴값이 없는듯
+        UserCreateDto.Request userdto = new UserCreateDto.Request(map.get("user_name").toString(),
+                map.get("user_email").toString(),
+                map.get("user_password").toString(),
+                map.get("user_account").toString());
         return ResponseEntity.ok(userservice.createUser(userdto));
 //        return "spring";
     }
