@@ -25,7 +25,6 @@ public class UserController {
     private final UserService userservice;
     private final TravelService travelservice;
 
-
     @GetMapping("/halo")
     public String ddd() {
         return "He";
@@ -39,37 +38,33 @@ public class UserController {
         System.out.println(map.get("user_email"));
         System.out.println(map.get("user_password"));
         System.out.println(map.get("user_account"));
-
-        UserCreateDto.Request userdto = new UserCreateDto.Request(map.get("user_name").toString(),
+        UserCreateDto.Request request = new UserCreateDto.Request(map.get("user_name").toString(),
                 map.get("user_email").toString(),
                 map.get("user_password").toString(),
                 map.get("user_account").toString());
-        return ResponseEntity.ok(userservice.createUser(userdto));
-//        return "spring";
+        return ResponseEntity.ok(userservice.createUser(request));
     }
 
-
-//    @PostMapping("/api/Register")
-//    //회원가입
-//    public ResponseEntity<UserCreateDto.Response> createUser(@RequestBody UserCreateDto.Request request) {
-//        //@RequestBody = 회원가입 정보
-//        //service. user DB에 사용자 등록
-//        System.out.println(request.getName());
-//        return ResponseEntity.ok(userservice.createUser(request)); //상태코드 & body
-//    }
-
-    /**로그인
-     * input: id & pw
-     * in user db,
-     *    id 없으면 id 없다는 문구 출력
-     *  pw 틀리면 pw 틀렸다는 문구 출력
-     *  맞으면 return Y*/
-    @PostMapping("/api/login")
-    public UserCreateDto.Response login(@RequestBody UserCreateDto.Login loginUser) {
-        return userservice.login(loginUser);
-//       if answer == null: return "아이디나 비밀번호가 일치하지 않습니다."
-//       else: user 정보 넘겨줄것
-    } //테스트해야함
+    @PostMapping(value = "/login")
+    public String login(@RequestBody Map map) {
+        UserCreateDto.Login loginUser = new UserCreateDto.Login(map.get("input_id").toString(),
+                map.get("input_password").toString());
+        UserCreateDto.Response answer = userservice.login(loginUser);
+        if (answer.getPassword() == null){
+            return "fail!";
+        } else {
+            return "Yes!";
+        }
+        /**수정할지는 front분들이랑 다시 논의할 것
+         * 지금은 로그인 성공(email 있음 & pw 일치)-> 유저 정보 그대로 리턴
+         * 로그인 실패(email 없거나 | pw 틀리거나) -> 유저 정보 = null로 리턴
+         * =>
+         * email 없으면 -> none
+         * pw 틀리면 -> fail
+         * 둘다 맞으면 -> 유저 id.toString()
+         * 리턴하는 방식으로 바꿔도 됨
+         * */
+    }
 
     /**status 코드 리턴 & userDB의 개인정보 리턴
      *       person DB에 user id 있으면 -> travel 리스트 리턴
@@ -80,12 +75,12 @@ public class UserController {
         return userservice.getUserJoinedTravel(no);
     }    //테스트해야함
 
-//    미완성 ...
-//    /**travel join
-//     * input: travel 정보 & 현재 유저 email
-//     * to travel db -> travel 생성
-//     * to person db -> 현재 유저 & travel 데이터 생성
-//     * return travel 메인 페이지*/
+
+    /**travel join
+     * input: travel 정보 & 현재 유저 email
+     * to travel db -> travel 생성
+     * to person db -> 현재 유저 & travel 데이터 생성
+     * return travel 메인 페이지*/
 //   @PostMapping("/{no}/jointravel")
 //   public void joinTravel(@PathVariable int no, @RequestBody Travel travel){
 //      //@PathVariable = 로그인한 유저 아이디
@@ -93,8 +88,6 @@ public class UserController {
 //      //userservice. travel DB에 여행 생성
 //      travelservice.createTravel(travel);
 //      return ResponseEntity.ok(userservice.createUser(no, travel));
-//      //person DB에 (user-travel)추가
-//      //JPA save 함수는 리턴값이 없는듯
 //   }
 
 }

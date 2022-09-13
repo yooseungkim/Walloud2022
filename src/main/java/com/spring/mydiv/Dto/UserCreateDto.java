@@ -37,10 +37,14 @@ public class UserCreateDto {
     @NoArgsConstructor
     @Builder
     public static class Response {
-    	private String Name;
-    	private String Email;
-    	private String Password;
-    	private String Account;
+        @NotNull
+        private String Name;
+        @NotNull
+        private String Email;
+        @NotNull
+        private String Password;
+        @NotNull
+        private String Account;
 
         public static Response fromEntity(User user) {
             return Response.builder()
