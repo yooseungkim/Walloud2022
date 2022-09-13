@@ -25,27 +25,29 @@ public class UserController {
     private final UserService userservice;
     private final TravelService travelservice;
 
-
     @GetMapping("/halo")
     public String ddd() {
         return "He";
     }
 
     @PostMapping(value = "/Register")
-    public ResponseEntity<UserCreateDto.Response> createUser(@RequestBody Map map) {
+    public ResponseEntity<UserCreateDto.Response> createUser(@RequestBody UserCreateDto.Request request) {
 
-        System.out.println("");
-        System.out.println(map.get("user_name"));
-        System.out.println(map.get("user_email"));
-        System.out.println(map.get("user_password"));
-        System.out.println(map.get("user_account"));
-
-        UserCreateDto.Request userdto = new UserCreateDto.Request(map.get("user_name").toString(),
-                map.get("user_email").toString(),
-                map.get("user_password").toString(),
-                map.get("user_account").toString());
-        return ResponseEntity.ok(userservice.createUser(userdto));
-//        return "spring";
+//        System.out.println("");
+//        System.out.println(map.get("user_name"));
+//        System.out.println(map.get("user_email"));
+//        System.out.println(map.get("user_password"));
+//        System.out.println(map.get("user_account"));
+//
+//        UserCreateDto.Request request = new UserCreateDto.Request(map.get("user_name").toString(),
+//                map.get("user_email").toString(),
+//                map.get("user_password").toString(),
+//                map.get("user_account").toString());
+        System.out.println(request.getName());
+        System.out.println(request.getEmail());
+        System.out.println(request.getPassword());
+        System.out.println(request.getAccount());
+        return ResponseEntity.ok(userservice.createUser(request));
     }
 
 
