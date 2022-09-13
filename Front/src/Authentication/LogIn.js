@@ -59,32 +59,24 @@ const LogIn = () => {
       input_id : input_id,
       input_password : input_password
     }).then((response) => {
-      if(response.data == null) {
-        alert("Right");
+      if(response.data == "fail!") {
+        alert("Login Fail");
+        console.log(response.data);
       }
-      else {
+      else if(response.data == "Yes!"){
         alert("Login Success");
+        setisLogin(true);
         console.log(response.data);
       }
     }).catch((error) => {
       event.preventDefault();
       console.log(error);
-      alert("Loggin failed");
+      alert("Error");
     })
   }
 
   const onSubmit = (event) => {
-    if (localStorage.getItem(input_id) === null) {
-      event.preventDefault();
-      alert("Given ID does not exist");
-    } else if (JSON.parse(localStorage.getItem(input_id)) !== input_password) {
-      event.preventDefault();
-      alert("Incorrect Password");
-    } else {
-      console.log(localStorage.getItem("id"));
-      //localStorage.setItem("id", JSON.stringify(input_id));
-      try_LogIn(event);
-    }
+    try_LogIn(event)
   };
 
   return (
@@ -140,7 +132,7 @@ const LogIn = () => {
             value={input_password}
             onChange={onPasswordHandler}
           />
-          <Link to= {`/${input_id}/${su}/selectTravel`} state={{ id: input_id, su : su }}>
+          <Link to= {`/${input_id}/${isLoggin}/selectTravel`} state={{ id: input_id, isLoggin : isLoggin }}>
             <Button onClick={onSubmit}>로그인</Button>
           </Link>
           <Link to="/register">
