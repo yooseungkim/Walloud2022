@@ -3,11 +3,11 @@ package com.spring.mydiv.Service;
 import javax.transaction.Transactional;
 
 import com.spring.mydiv.Dto.UserDetailDto;
+import com.spring.mydiv.Entity.Person;
 import org.springframework.stereotype.Service;
 
 import com.spring.mydiv.Dto.TravelDto;
 import com.spring.mydiv.Dto.UserCreateDto;
-import com.spring.mydiv.Dto.UserDto;
 import com.spring.mydiv.Entity.Travel;
 import com.spring.mydiv.Entity.User;
 import com.spring.mydiv.Repository.PersonRepository;
@@ -16,6 +16,7 @@ import com.spring.mydiv.Repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,7 +41,14 @@ public class UserService {
         userRepository.save(user);
         return UserCreateDto.Response.fromEntity(user);
     }
-    
+
+
+
+
+
+
+
+
     UserCreateDto.Response answer = null;
     String result = "";
 //    public UserCreateDto.Response login(UserCreateDto.Login loginUser) { //ver1. return info
@@ -68,15 +76,29 @@ public class UserService {
         return UserDetailDto.fromEntity(info.get());
     }
 
-    List<String> travelList = null;
     public List<String> getUserJoinedTravel(int no){
-    	List<Integer> travelIdList = personRepository.findTravelIdByUserId(no);
-    	for(int id : travelIdList) {
-    		travelList.add(travelRepository.findNameIdById(id));
-    	}
-    	return travelList;
+        List<Person> list = personRepository.findByUser_Id(Long.valueOf(no));
+        List<String> result = new ArrayList<String>();
+        for (Person p : list){
+            Optional<Travel> info = travelRepository.findById(Long.valueOf(p.getTravel().getId()));
+            result.add(info.get().getName());
+        }
+        return result;
     }
-    
+
+    public UserDetailDto.WithTravel getUserInfoWithTravel(int no){
+        Optional<User> info = userRepository.findById(Long.valueOf(no));
+        UserDetailDto.WithTravel dto = UserDetailDto.WithTravel.fromEntity(info.get());
+        dto.setTravelList(getUserJoinedTravel(no));
+        return dto;
+    } //test yet
+
+
+
+
+
+
+
     @Transactional
     public UserCreateDto.Response createPerson(UserCreateDto.Request userinfo, TravelDto travelinfo) {
         User user = User.builder()
@@ -93,5 +115,5 @@ public class UserService {
         return UserCreateDto.Response.fromEntity(user);
     }
     
-    
+
 }

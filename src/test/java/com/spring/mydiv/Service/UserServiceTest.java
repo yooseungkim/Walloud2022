@@ -1,6 +1,5 @@
 package com.spring.mydiv.Service;
 
-import com.spring.mydiv.Dto.UserCreateDto;
 import com.spring.mydiv.Dto.UserDetailDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -8,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Commit;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class UserServiceTest {
@@ -21,8 +19,8 @@ class UserServiceTest {
 //    void createUser() {
 //        //given
 //        UserCreateDto.Request request = UserCreateDto.Request.builder()
-//                .Name("haeunGmail2")
-//                .Email("bittersweet@gmail.com")
+//                .Name("이하은")
+//                .Email("12novel30@naver.com")
 //                .Password("20205149")
 //                .Account("000-000-00")
 //                .build();
@@ -50,27 +48,52 @@ class UserServiceTest {
 //        //fail("Not yet implemented"); // TODO
 //    }
 
+//    @Test
+//    @Commit
+//    @DisplayName("유저 정보 리턴")
+//    void getUserInfo() {
+//        //given
+//        int userid = 4;
+//
+//        //when
+//        UserDetailDto info = userService.getUserInfo(userid);
+//
+//        //then
+//        System.out.println("Name: "+info.getName());
+//        System.out.println("Email: "+info.getEmail());
+//        System.out.println("Account: "+info.getAccount());
+//    }
+
+//    @Test
+//    @Commit
+//    @DisplayName("여행 리스트 리턴")
+//    void getUserJoinedTravel() {
+//        //given
+//        //when
+//        List<String> list = userService.getUserJoinedTravel(11);
+//
+//        //then
+//        for (String n : list){
+//            System.out.println("Name: "+n);
+//        }
+//    }
+
     @Test
     @Commit
-    @DisplayName("유저 정보 리턴")
+    @DisplayName("유저 정보 리턴 + 여행리스트까지")
     void getUserInfo() {
         //given
-        int userid = 4;
+        int userid = 11;
 
         //when
-        UserDetailDto info = userService.getUserInfo(4);
+        UserDetailDto.WithTravel info = userService.getUserInfoWithTravel(userid);
 
         //then
         System.out.println("Name: "+info.getName());
         System.out.println("Email: "+info.getEmail());
         System.out.println("Account: "+info.getAccount());
+        for(String travel : info.getTravelList()){
+            System.out.println("Travel Name: "+travel);
+        }
     }
-
-//    @Test
-//    void getUserJoinedTravel() {
-//    }
-//
-//    @Test
-//    void createPerson() {
-//    }
 }

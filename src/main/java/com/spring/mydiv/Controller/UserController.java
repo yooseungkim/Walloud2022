@@ -73,19 +73,12 @@ public class UserController {
         return userservice.login(loginUser);
     }
 
+    // front; user info - travellist == null -> return "Create travel!"
     @PostMapping("/{no}")
-    public UserDetailDto getUserInfo(@PathVariable int no){
+    public UserDetailDto.WithTravel getUserInfo(@PathVariable int no){
         //@PathVariable = 로그인한 유저 아이디
-        return userservice.getUserInfo(no);
+        return userservice.getUserInfoWithTravel(no);
     }
-
-    /** person DB에 user id 있으면 -> travel 리스트 리턴
-     *  null -> "여행을 만들어보세요!" 출력해주세용(프론트에서)*/
-    @PostMapping("/{no}/travellist")
-    public List<String> getUserJoinedTravel(@PathVariable int no){
-        return userservice.getUserJoinedTravel(no);
-    }    //테스트해야함
-
 
     /**travel join
      * input: travel 정보 & 현재 유저 email
