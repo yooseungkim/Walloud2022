@@ -1,14 +1,16 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 
 const CreateUser = () => {
-  const user = useLocation().state.user;
-  const travel = useLocation().state.travel;
+  const user = useParams()["user"];
+  const travel = useParams()["travel"];
+  // const user = useLocation().state.user;
+  // const travel = useLocation().state.travel;
   return (
     <div>
-      <h1 id="headers">Create User</h1>
-      <input placeholder="name" />
-      <input placeholder="account" />
+      <h2>Add User</h2>
+      <label>Email</label>
+      <input type="email" />
       <Link to={`/${user}/${travel}`} state={{ user: user, travel: travel }}>
         <button>Submit</button>
       </Link>
