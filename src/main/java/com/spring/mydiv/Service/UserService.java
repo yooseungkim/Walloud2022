@@ -42,7 +42,7 @@ public class UserService {
     }
     
     UserCreateDto.Response answer = null;
-    String id = "0";
+    String result = "";
 //    public UserCreateDto.Response login(UserCreateDto.Login loginUser) { //ver1. return info
 //    	Optional<User> info = userRepository.findByEmail(loginUser.getEmail());
 //    	info.ifPresent(user ->
@@ -56,11 +56,11 @@ public class UserService {
         Optional<User> info = userRepository.findByEmail(loginUser.getEmail());
         info.ifPresentOrElse(user ->
                                 {if (loginUser.getPassword().toString().equals(user.getPassword().toString())) {
-                                    id = user.getId().toString();}
-                                else{id = "Wrong Password!";}},
-                                    ()-> {if(loginUser.getEmail()!=null){id = "Wrong Email!";}}
+                                    result = "Login Success!";}
+                                else{result = "Wrong Password!";}},
+                                    ()-> {if(loginUser.getEmail()!=null){result = "Wrong Email!";}}
         );
-        return id;
+        return result;
     }
 
     public UserDetailDto getUserInfo(int no){

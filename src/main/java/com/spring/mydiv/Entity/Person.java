@@ -29,9 +29,11 @@ public class Person {
 	private Long id;
 	
 	@ManyToOne
+	@JoinColumn(name="user_id")
 	private User user;
 
 	@ManyToOne
+	@JoinColumn(name="travel_id")
 	private Travel travel;
 	
 	@Column(name = "person_sumSend", nullable = false)
