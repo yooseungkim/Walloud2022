@@ -36,16 +36,16 @@ public class Person {
 	@JoinColumn(name="travel_id")
 	private Travel travel;
 	
-	@Column(name = "person_sumSend", nullable = false)
+	@Column(name = "person_sumsend", nullable = false)
 	private Double sumSend;
 	
-	@Column(name = "person_sumGet", nullable = false)
+	@Column(name = "person_sumget", nullable = false)
 	private Double sumGet;
 	
 	@Column(name = "person_difference", nullable = false)
 	private Double difference;
 	
-	@Column(name = "person_travelRole", length = 50)
+	@Column(name = "person_travelrole", length = 50)
 	private String role;
 	
 }

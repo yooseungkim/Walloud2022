@@ -28,15 +28,18 @@ public class PersonService {
     public PersonDto createPerson(PersonCreateDto.Request request) {
         Person person = Person.builder()
         		.user(User.builder()
+                        .id(request.getUser().getId())
                         .name(request.getUser().getName())
                         .email(request.getUser().getEmail())
                         .password(request.getUser().getPassword())
                         .account(request.getUser().getAccount())
                         .build())
         		.travel(Travel.builder()
+                        .id(request.getTravel().getId())
                         .name(request.getTravel().getName())
                         .build())
                 .build();
+//        System.out.println("here!"); //여기까지도 됐음
         personRepository.save(person);
         return PersonDto.fromEntity(person);
     }

@@ -26,20 +26,21 @@ class PersonServiceTest {
     @DisplayName("여행 생성")
     void createPerson() {
         //given
-        int userNo = 4;
+        int userNo = 6; //2번만 없다 ㅋㅋㅋ
         TravelCreateDto.Request travelInfo = TravelCreateDto.Request.builder()
-                .Name("new_travel_2")
+                .Name("test!")
                 .build();
 
         PersonCreateDto.Request request = PersonCreateDto.Request.builder()
                 .User(userService.getUserInfo(userNo))
                 .Travel(travelService.createTravel(travelInfo))
                 .build();
-        System.out.println("here!");
+//        System.out.println("here!"); //여기는 됐음
         //when
         PersonDto person = personService.createPerson(request);
         //then
-        System.out.print("name = " + person.getUser().getName());
+        System.out.println("User name = " + person.getUser().getName());
+        System.out.println("Travel name = " + person.getTravel().getName());
     }
 
 
