@@ -9,7 +9,7 @@ function DisplayUsers({ users, preferences, travel }) {
       <div className="user">
         <Link to={`profile/${user.name}`}>
           {preferences.displayIcon ? (
-            <img className="icon" src={personSrc} alt="profile" />
+            <img className="user-icon" src={personSrc} alt="profile" />
           ) : null}
         </Link>
         <br />
@@ -37,10 +37,10 @@ function DisplayUsers({ users, preferences, travel }) {
       }
     };
     return (
-      <div id="type">
-        <h2 id="headers" onClick={() => onClickDescription({ type })}>
+      <div>
+        <h4 className="type" onClick={() => onClickDescription({ type })}>
           {type}
-        </h2>
+        </h4>
         <div>
           {users
             .filter((user) => user.type === type)
@@ -48,7 +48,6 @@ function DisplayUsers({ users, preferences, travel }) {
               <CreateUser user={user} key={user.index} />
             ))}
         </div>
-        <hr />
       </div>
     );
   }
@@ -56,7 +55,9 @@ function DisplayUsers({ users, preferences, travel }) {
   return (
     <div className="users">
       <CreateType users={users} type="Depositors" />
+      <hr />
       <CreateType users={users} type="Manager" />
+      <hr />
       <CreateType users={users} type="Recipients" />
     </div>
   );

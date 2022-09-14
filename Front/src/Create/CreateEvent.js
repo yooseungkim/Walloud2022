@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { users } from "../js/Var";
-import personSrc from  "../img/person.png";
+import personSrc from "../img/person.png";
+import API from "../API";
 
 var eventList = [
   {
@@ -32,13 +33,17 @@ var eventList = [
 var payer = [];
 var participants = [...users];
 function CreateEvent() {
+  // const user = useLocation().state.user;
+  // const travel = useLocation().state.travel;
+  var test = useParams();
+  const username = test["username"];
+  const travelName = test["travel"];
+
   const [inputs, setInputs] = useState({
     place: "",
     price: "",
     date: "",
   });
-
-  
 
   const { place, price, date } = inputs;
 
@@ -51,6 +56,22 @@ function CreateEvent() {
   };
 
   function CreateUser({ user }) {
+    //////////////////////////
+    const create_user_func = async () => {
+      await API.post("/createUser", {
+        place: place,
+        price: price,
+        date: date,
+      })
+        .then((response) => {
+          console.log(response);
+          window.alert("Successfully Added");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+
     const [participate, setParticipate] = useState("participate");
     const [nameColor, setNameColor] = useState("green");
     const onClickIcon = () => {
@@ -74,7 +95,7 @@ function CreateEvent() {
 
     return (
       <div className="user" onClick={onClickIcon}>
-        <img className="icon" src={personSrc} alt="profile" />
+        <img className="user-icon" src={personSrc} alt="profile" />
         <br />
         <span style={{ color: nameColor }}>{user.name}</span>
       </div>
@@ -104,9 +125,10 @@ function CreateEvent() {
 
   return (
     <div>
+      <h2>Create Event</h2>
       <div>
+        <label for="place">Place</label>
         <input
-          placeholder="장소"
           type="text"
           id="place"
           name="place"
@@ -114,8 +136,8 @@ function CreateEvent() {
           value={place}
           size="5"
         />
+        <label for="price">Price</label>
         <input
-          placeholder="가격"
           type="text"
           id="price"
           name="price"
@@ -123,8 +145,8 @@ function CreateEvent() {
           value={price}
           size="5"
         />
+        <label for="date">Date</label>
         <input
-          placeholder="날짜"
           type="date"
           id="date"
           name="date"
@@ -133,12 +155,13 @@ function CreateEvent() {
           size="5"
         />
       </div>
-      <div>
+      <label for="create-event">Participants</label>
+      <div className="box" id="create-event">
         {users.map((user) => (
           <CreateUser user={user} key={user.index} />
         ))}
       </div>
-      <Link to="/" onClick={onClickSubmit}>
+      <Link to={`/${username}/${travelName}`} onClick={onClickSubmit}>
         <button>이벤트 추가</button>
       </Link>
     </div>

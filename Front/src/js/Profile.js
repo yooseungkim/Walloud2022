@@ -22,16 +22,14 @@ const Profile = () => {
   };
   return (
     <div>
-      <h1 id="headers">{profile.name}</h1>
-      <h2 id="headers">Account : {profile.account}</h2>
-      <h3
-        id="headers"
-        style={{ color: profile.type === "Depositors" ? "red" : "blue" }}
-      >
+      <h2>{profile.name}</h2>
+      <h3>Account : {profile.account}</h3>
+      <h3 style={{ color: profile.type === "Depositors" ? "red" : "blue" }}>
         Spent: {profile.spent}₩
       </h3>
-      <h4 id="headers">Participated Events: </h4>
+      <h3 id="headers">Participated Events: </h3>
       {displayEvents()}
+      <br />
     </div>
   );
 };

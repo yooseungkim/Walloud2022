@@ -61,15 +61,20 @@ const LogIn = () => {
       input_id : input_id,
       input_password : input_password
     }).then((response) => {
-      if(response.data === "Login Success!") {
-        alert(response.data);
-        console.log(response.data);
-        navigate('/selectTravel', {state :{ id: input_id }});
-      }
-      else {
-        alert(response.data);
-        console.log(response.data);
-        navigate('/login');
+      switch(response.data){
+        case 0:
+          throw("Network Error");
+        case -1:
+          alert("Wrong Password");
+          navigate('/login');
+          break;
+        case -2:
+          alert("Wrong Email");
+          navigate('/login');
+          break;
+        default:
+          alert("Login Success!");
+          navigate('/selectTravel', {state :{ id: input_id }});
       }
     }).catch((error) => {
       event.preventDefault();
@@ -83,64 +88,36 @@ const LogIn = () => {
   };
 
   return (
-    /*
-    <div>
-      <h1
-        style={{ margin: "10px auto", display: "block", textAlign: "center" }}
-      >
-        Log In
-      </h1>
-      <form>
-        <div>
-          <input name="id" placeholder="id" value={input_id} onChange={onIdHandler} />
-        </div>
-        <div>
-          <input
-            name="pw"
-            placeholder="password"
-            value={input_password}
-            onChange={onPasswordHandler}
-          />
-        </div>
-        <Link to={`/${input_id}/selectTravel`} state={{ id: input_id }}>
-          <div>
-            <button onClick={onSubmit}>Log In</button>
-          </div>
-        </Link>
-        <Link to="/register">
-          <div>
-            <button>Register</button>
-          </div>
-        </Link>
-      </form>
+    <div className="login">
+      <h2>Log In</h2>
+      <label for="email">Email</label>
+      <input
+        type="email"
+        name="email"
+        id="email"
+        value={input_id}
+        onChange={onIdHandler}
+      />
+      <label for="password">Password</label>
+      <input
+        type="password"
+        name="password"
+        id="password"
+        value={input_password}
+        onChange={onPasswordHandler}
+      />
+      <Link to={`/${input_id}/selectTravel`} state={{ id: input_id, su: su }}>
+        <button type="submit" onClick={onSubmit}>
+          Log In
+        </button>
+      </Link>
+      <h5 style={{ margin: "5rem 0 0 0 " }}>
+        If you don't have ID, register first
+      </h5>
+      <Link to="/register">
+        <button>Register</button>
+      </Link>
     </div>
-    */
-   <div>
-    <h1
-      style={{ margin: "10px auto", display: "block", textAlign: "center" }}
-    >
-      Log In
-    </h1>
-        <Container>
-          <Input 
-            name="id" 
-            placeholder="id"
-            value={input_id}
-            onChange={onIdHandler}
-          />
-          <Input
-            name="pw"
-            type = "password"
-            placeholder="password"
-            value={input_password}
-            onChange={onPasswordHandler}
-          />
-          <Button onClick={onSubmit}>로그인</Button>
-          <Link to="/register">
-            <Button>Register</Button>
-          </Link>
-        </Container>
-      </div>
   );
 };
 

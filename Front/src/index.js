@@ -6,7 +6,9 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 ReactDOM.render(
   <BrowserRouter>
+    <h1>Divide by N</h1>
     <App />
+    <div className="footer">Developed by &copy; Divide by N</div>
   </BrowserRouter>,
   document.getElementById("root")
 );
