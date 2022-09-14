@@ -1,7 +1,7 @@
 import axios from "axios";
 import React from "react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -43,9 +43,11 @@ const Button = styled.div`
 
 const LogIn = () => {
   const [su,setsu] = useState(true);
-  const [isLoggin, setisLogin] = useState(false);
+  const [isLoggin, setisLogin] = useState(true);
   const [input_id, setId] = useState("");
   const [input_password, setPassword] = useState("");
+  const navigate = useNavigate();
+
   const onIdHandler = (event) => {
     setId(event.currentTarget.value);
   };
@@ -59,14 +61,15 @@ const LogIn = () => {
       input_id : input_id,
       input_password : input_password
     }).then((response) => {
-      if(response.data == "fail!") {
-        alert("Login Fail");
+      if(response.data === "Login Success!") {
+        alert(response.data);
         console.log(response.data);
+        navigate('/selectTravel', {state :{ id: input_id }});
       }
-      else if(response.data == "Yes!"){
-        alert("Login Success");
-        setisLogin(true);
+      else {
+        alert(response.data);
         console.log(response.data);
+        navigate('/login');
       }
     }).catch((error) => {
       event.preventDefault();
@@ -132,9 +135,7 @@ const LogIn = () => {
             value={input_password}
             onChange={onPasswordHandler}
           />
-          <Link to= {`/${input_id}/${isLoggin}/selectTravel`} state={{ id: input_id, isLoggin : isLoggin }}>
-            <Button onClick={onSubmit}>로그인</Button>
-          </Link>
+          <Button onClick={onSubmit}>로그인</Button>
           <Link to="/register">
             <Button>Register</Button>
           </Link>

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import NavigationBar from "./NavigationBar";
+import NavigationBar from "../js/NavigationBar";
 import DisplayUsers from "./DisplayUsers";
 import Events from "./Events";
 import { Link, useLocation } from "react-router-dom";
-import { users, eventList } from "./Var";
+import { users, eventList } from "../js/Var";
 
 const Home = () => {
   const user = useLocation().state.user;
