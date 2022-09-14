@@ -67,7 +67,7 @@ public class UserController {
 //        }
 //    }
     @PostMapping(value = "/login")
-    public String login(@RequestBody Map map) { //ver 1.
+    public int login(@RequestBody Map map) { //ver 1.
         UserCreateDto.Login loginUser = new UserCreateDto.Login(map.get("input_id").toString(),
                 map.get("input_password").toString());
         return userservice.login(loginUser);
@@ -85,11 +85,12 @@ public class UserController {
      * to travel db -> travel 생성
      * to person db -> 현재 유저 & travel 데이터 생성
      * return travel 메인 페이지*/
-   @PostMapping("/{no}/joinTravel")
-   public ResponseEntity<PersonDto> joinTravel(@PathVariable int userNo, @RequestBody Map map){
-       TravelCreateDto.Request travelInfo = new TravelCreateDto.Request(map.get("travel_name").toString());
+   @PostMapping("/{no}/createTravel")
+   public ResponseEntity<PersonDto> joinTravel(@PathVariable int no, @RequestBody String travel_name){
+//       TravelCreateDto.Request travelInfo = new TravelCreateDto.Request(map.get("travel_name").toString());
+       TravelCreateDto.Request travelInfo = new TravelCreateDto.Request(travel_name);
        PersonCreateDto.Request request = new PersonCreateDto.Request(
-               userservice.getUserInfo(userNo),
+               userservice.getUserInfo(no),
                travelservice.createTravel(travelInfo));
        return ResponseEntity.ok(personservice.createPerson(request));
    }
