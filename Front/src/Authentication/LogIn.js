@@ -106,11 +106,9 @@ const LogIn = () => {
         value={input_password}
         onChange={onPasswordHandler}
       />
-      <Link to={`/${input_id}/selectTravel`} state={{ id: input_id, su: su }}>
         <button type="submit" onClick={onSubmit}>
           Log In
         </button>
-      </Link>
       <h5 style={{ margin: "5rem 0 0 0 " }}>
         If you don't have ID, register first
       </h5>
