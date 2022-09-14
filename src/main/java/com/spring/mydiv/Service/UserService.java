@@ -2,6 +2,7 @@ package com.spring.mydiv.Service;
 
 import javax.transaction.Transactional;
 
+import com.spring.mydiv.Dto.UserDetailDto;
 import org.springframework.stereotype.Service;
 
 import com.spring.mydiv.Dto.TravelDto;
@@ -61,7 +62,12 @@ public class UserService {
         );
         return id;
     }
-    
+
+    public UserDetailDto getUserInfo(int no){
+        Optional<User> info = userRepository.findById(Long.valueOf(no));
+        return UserDetailDto.fromEntity(info.get());
+    }
+
     List<String> travelList = null;
     public List<String> getUserJoinedTravel(int no){
     	List<Integer> travelIdList = personRepository.findTravelIdByUserId(no);

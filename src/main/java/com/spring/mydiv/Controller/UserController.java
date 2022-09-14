@@ -3,6 +3,7 @@ package com.spring.mydiv.Controller;
 import java.util.List;
 import java.util.Map;
 
+import com.spring.mydiv.Dto.UserDetailDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -72,12 +73,16 @@ public class UserController {
         return userservice.login(loginUser);
     }
 
-    /**status 코드 리턴 & userDB의 개인정보 리턴
-     *       person DB에 user id 있으면 -> travel 리스트 리턴
-     *       null -> "여행을 만들어보세요!" 출력*/
     @PostMapping("/{no}")
-    public List<String> getUserJoinedTravel(@PathVariable int no){
+    public UserDetailDto getUserInfo(@PathVariable int no){
         //@PathVariable = 로그인한 유저 아이디
+        return userservice.getUserInfo(no);
+    }    //테스트해야함
+
+    /** person DB에 user id 있으면 -> travel 리스트 리턴
+     *  null -> "여행을 만들어보세요!" 출력해주세용(프론트에서)*/
+    @PostMapping("/{no}/travellist")
+    public List<String> getUserJoinedTravel(@PathVariable int no){
         return userservice.getUserJoinedTravel(no);
     }    //테스트해야함
 

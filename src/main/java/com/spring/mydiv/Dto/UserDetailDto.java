@@ -25,8 +25,8 @@ public class UserDetailDto {
 	private String Account;
 	//private List Travel;
 
-    public static UserDto fromEntity(User user) {
-        return UserDto.builder()
+    public static UserDetailDto fromEntity(User user) {
+        return UserDetailDto.builder()
                 .Name(user.getName())
                 .Email(user.getEmail())
                 .Password(user.getPassword())
