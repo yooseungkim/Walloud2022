@@ -2,14 +2,12 @@ import { React, useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import API from "../API";
 import axios from "axios";
-import CreateTravel from "./CreateTravel"
+import CreateTravel from "../Create/CreateTravel"
 
 
 const SelectTravel = () => {
   const user = useLocation().state.id;
-  const isLoggin = useLocation().state.isLoggin;
   const [myTravel, setTravellist] = useState([]);
-  const [newTravel, setNewTravel] = useState("");
 
   useEffect (() => {
     getInfor();
@@ -29,7 +27,7 @@ const SelectTravel = () => {
   const Logout = (event) => {
     document.location.href = '/login'
   }
-
+  
   return (
     <div>
       <h1
