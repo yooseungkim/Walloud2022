@@ -8,12 +8,15 @@ import com.spring.mydiv.Entity.User;
 
 import antlr.collections.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 /**
  * @author 12nov
  */
 public interface UserRepository extends JpaRepository<User, Long>{
-
     Optional<User> findByEmail(String Email);
-
-    //List<User> findDevelopersByStatusEquals(StatusCode status);
+    Optional<User> findById(Long no);
+//
+//    //List<User> findDevelopersByStatusEquals(StatusCode status);
 }

@@ -17,9 +17,4 @@ import java.util.Map;
 public class TravelController {
     private final TravelService travelservice;
 
-    @PostMapping("/create-travel")
-    public ResponseEntity<TravelDto> createTravel(@RequestBody String name) {
-        TravelDto request = new TravelDto(name);
-        return ResponseEntity.ok(travelservice.createTravel(request));
-    }
 }

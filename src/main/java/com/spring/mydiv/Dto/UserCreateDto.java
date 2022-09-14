@@ -38,6 +38,8 @@ public class UserCreateDto {
     @Builder
     public static class Response {
         @NotNull
+
+        @NotNull
         private String Name;
         @NotNull
         private String Email;

@@ -19,14 +19,16 @@ import lombok.Setter;
 @NoArgsConstructor
 @Builder
 public class UserDetailDto {
+	private Long Id;
 	private String Name;
 	private String Email;
 	private String Password;
 	private String Account;
 	//private List Travel;
 
-    public static UserDto fromEntity(User user) {
-        return UserDto.builder()
+    public static UserDetailDto fromEntity(User user) {
+        return UserDetailDto.builder()
+				.Id(user.getId())
                 .Name(user.getName())
                 .Email(user.getEmail())
                 .Password(user.getPassword())

@@ -2,6 +2,8 @@ package com.spring.mydiv.Service;
 
 import javax.transaction.Transactional;
 
+import com.spring.mydiv.Dto.PersonCreateDto;
+import com.spring.mydiv.Entity.Travel;
 import org.springframework.stereotype.Service;
 
 import com.spring.mydiv.Dto.PersonDto;
@@ -23,16 +25,21 @@ public class PersonService {
 	private final PersonRepository personRepository;
 	
     @Transactional
-    public PersonDto createPerson(PersonDto request) {
+    public PersonDto createPerson(PersonCreateDto.Request request) {
         Person person = Person.builder()
-        		//.Id(userdto.getId())
-        		.user(request.getUser())
-        		.travel(request.getTravel())
-        		.sumSend(request.getSumSend())
-        		.sumGet(request.getSumGet())
-        		.difference(request.getDifference())
-        		.role(request.getRole())
+        		.user(User.builder()
+                        .id(request.getUser().getId())
+                        .name(request.getUser().getName())
+                        .email(request.getUser().getEmail())
+                        .password(request.getUser().getPassword())
+                        .account(request.getUser().getAccount())
+                        .build())
+        		.travel(Travel.builder()
+                        .id(request.getTravel().getId())
+                        .name(request.getTravel().getName())
+                        .build())
                 .build();
+//        System.out.println("here!"); //여기까지도 됐음
         personRepository.save(person);
         return PersonDto.fromEntity(person);
     }

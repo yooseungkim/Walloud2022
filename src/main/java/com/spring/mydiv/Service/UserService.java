@@ -2,6 +2,7 @@ package com.spring.mydiv.Service;
 
 import javax.transaction.Transactional;
 
+import com.spring.mydiv.Dto.UserDetailDto;
 import org.springframework.stereotype.Service;
 
 import com.spring.mydiv.Dto.TravelDto;
@@ -41,16 +42,32 @@ public class UserService {
     }
     
     UserCreateDto.Response answer = null;
-    public UserCreateDto.Response login(UserCreateDto.Login loginUser) {
-    	Optional<User> info = userRepository.findByEmail(loginUser.getEmail());
-    	info.ifPresent(user ->
-    					{if (loginUser.getPassword().toString().equals(user.getPassword().toString())) {
-    						answer = UserCreateDto.Response.fromEntity(user);}
-    					}
-    					);
-    	return answer;
+    String result = "";
+//    public UserCreateDto.Response login(UserCreateDto.Login loginUser) { //ver1. return info
+//    	Optional<User> info = userRepository.findByEmail(loginUser.getEmail());
+//    	info.ifPresent(user ->
+//    					{if (loginUser.getPassword().toString().equals(user.getPassword().toString())) {
+//    						answer = UserCreateDto.Response.fromEntity(user);}
+//    					}
+//    					);
+//    	return answer;
+//    }
+    public String login(UserCreateDto.Login loginUser) { //ver2. return id
+        Optional<User> info = userRepository.findByEmail(loginUser.getEmail());
+        info.ifPresentOrElse(user ->
+                                {if (loginUser.getPassword().toString().equals(user.getPassword().toString())) {
+                                    result = "Login Success!";}
+                                else{result = "Wrong Password!";}},
+                                    ()-> {if(loginUser.getEmail()!=null){result = "Wrong Email!";}}
+        );
+        return result;
     }
-    
+
+    public UserDetailDto getUserInfo(int no){
+        Optional<User> info = userRepository.findById(Long.valueOf(no));
+        return UserDetailDto.fromEntity(info.get());
+    }
+
     List<String> travelList = null;
     public List<String> getUserJoinedTravel(int no){
     	List<Integer> travelIdList = personRepository.findTravelIdByUserId(no);
