@@ -10,6 +10,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * @author 12nov
  */
@@ -24,7 +26,6 @@ public class UserDetailDto {
 	private String Email;
 	private String Password;
 	private String Account;
-	//private List Travel;
 
     public static UserDetailDto fromEntity(User user) {
         return UserDetailDto.builder()
@@ -35,4 +36,33 @@ public class UserDetailDto {
                 .Account(user.getAccount())
                 .build();
     }
+
+	@Getter
+	@Setter
+	@AllArgsConstructor
+	@NoArgsConstructor
+	@Builder
+	public static class WithTravel {
+		@NotNull
+		private Long Id;
+		@NotNull
+		private String Name;
+		@NotNull
+		private String Email;
+		@NotNull
+		private String Password;
+		@NotNull
+		private String Account;
+		private List<String> TravelList;
+
+		public static WithTravel fromEntity(User user) {
+			return WithTravel.builder()
+					.Id(user.getId())
+					.Name(user.getName())
+					.Email(user.getEmail())
+					.Password(user.getPassword())
+					.Account(user.getAccount())
+					.build();
+		}
+	}
 }

@@ -5,11 +5,12 @@ import javax.transaction.Transactional;
 import com.spring.mydiv.Dto.TravelCreateDto;
 import org.springframework.stereotype.Service;
 
-import com.spring.mydiv.Dto.TravelDto;
 import com.spring.mydiv.Entity.Travel;
 import com.spring.mydiv.Repository.TravelRepository;
 
 import lombok.RequiredArgsConstructor;
+
+import java.util.Optional;
 
 /**
  * @author 12nov
@@ -26,6 +27,11 @@ public class TravelService {
                 .build();
         travelRepository.save(travel);
         return TravelCreateDto.Response.fromEntity(travel);
+    }
+
+    public TravelCreateDto.Response getTravelInfo(int no){
+        Optional<Travel> info = travelRepository.findById(Long.valueOf(no));
+        return TravelCreateDto.Response.fromEntity(info.get());
     }
 
 }

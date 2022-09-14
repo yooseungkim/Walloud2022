@@ -26,9 +26,9 @@ class PersonServiceTest {
     @DisplayName("여행 생성")
     void createPerson() {
         //given
-        int userNo = 6; //2번만 없다 ㅋㅋㅋ
+        int userNo = 11;
         TravelCreateDto.Request travelInfo = TravelCreateDto.Request.builder()
-                .Name("test!")
+                .Name("서울 여행")
                 .build();
 
         PersonCreateDto.Request request = PersonCreateDto.Request.builder()

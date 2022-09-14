@@ -27,4 +27,18 @@ class TravelServiceTest {
         //then
         System.out.println("id = " + response.getId());
     }
+
+    @Test
+    @Commit
+    @DisplayName("여행 정보 리턴")
+    void getTravelInfo() {
+        //given
+        int id = 9;
+
+        //when
+        TravelCreateDto.Response info = travelService.getTravelInfo(id);
+
+        //then
+        System.out.println("Name: "+info.getName());
+    }
 }
