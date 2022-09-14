@@ -45,25 +45,31 @@ public class UserController {
         return ResponseEntity.ok(userservice.createUser(request));
     }
 
+    /**수정할지는 front분들이랑 다시 논의할 것
+     * 지금은 로그인 성공(email 있음 & pw 일치)-> 유저 정보 그대로 리턴
+     * 로그인 실패(email 없거나 | pw 틀리거나) -> 유저 정보 = null로 리턴
+     * =>
+     * email 없으면 -> none
+     * pw 틀리면 -> fail
+     * 둘다 맞으면 -> 유저 id.toString()
+     * 리턴하는 방식으로 바꿔도 됨
+     * */
+//    @PostMapping(value = "/login")
+//    public String login(@RequestBody Map map) { //ver 1.
+//        UserCreateDto.Login loginUser = new UserCreateDto.Login(map.get("input_id").toString(),
+//                map.get("input_password").toString());
+//        UserCreateDto.Response answer = userservice.login(loginUser);
+//        if (answer.getPassword() == null){
+//            return "fail!";
+//        } else {
+//            return "Yes!";
+//        }
+//    }
     @PostMapping(value = "/login")
-    public String login(@RequestBody Map map) {
+    public String login(@RequestBody Map map) { //ver 1.
         UserCreateDto.Login loginUser = new UserCreateDto.Login(map.get("input_id").toString(),
                 map.get("input_password").toString());
-        UserCreateDto.Response answer = userservice.login(loginUser);
-        if (answer.getPassword() == null){
-            return "fail!";
-        } else {
-            return "Yes!";
-        }
-        /**수정할지는 front분들이랑 다시 논의할 것
-         * 지금은 로그인 성공(email 있음 & pw 일치)-> 유저 정보 그대로 리턴
-         * 로그인 실패(email 없거나 | pw 틀리거나) -> 유저 정보 = null로 리턴
-         * =>
-         * email 없으면 -> none
-         * pw 틀리면 -> fail
-         * 둘다 맞으면 -> 유저 id.toString()
-         * 리턴하는 방식으로 바꿔도 됨
-         * */
+        return userservice.login(loginUser);
     }
 
     /**status 코드 리턴 & userDB의 개인정보 리턴

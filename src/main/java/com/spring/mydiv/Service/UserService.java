@@ -41,14 +41,25 @@ public class UserService {
     }
     
     UserCreateDto.Response answer = null;
-    public UserCreateDto.Response login(UserCreateDto.Login loginUser) {
-    	Optional<User> info = userRepository.findByEmail(loginUser.getEmail());
-    	info.ifPresent(user ->
-    					{if (loginUser.getPassword().toString().equals(user.getPassword().toString())) {
-    						answer = UserCreateDto.Response.fromEntity(user);}
-    					}
-    					);
-    	return answer;
+    String id = "0";
+//    public UserCreateDto.Response login(UserCreateDto.Login loginUser) { //ver1. return info
+//    	Optional<User> info = userRepository.findByEmail(loginUser.getEmail());
+//    	info.ifPresent(user ->
+//    					{if (loginUser.getPassword().toString().equals(user.getPassword().toString())) {
+//    						answer = UserCreateDto.Response.fromEntity(user);}
+//    					}
+//    					);
+//    	return answer;
+//    }
+    public String login(UserCreateDto.Login loginUser) { //ver2. return id
+        Optional<User> info = userRepository.findByEmail(loginUser.getEmail());
+        info.ifPresentOrElse(user ->
+                                {if (loginUser.getPassword().toString().equals(user.getPassword().toString())) {
+                                    id = user.getId().toString();}
+                                else{id = "Wrong Password!";}},
+                                    ()-> {if(loginUser.getEmail()!=null){id = "Wrong Email!";}}
+        );
+        return id;
     }
     
     List<String> travelList = null;

@@ -35,25 +35,25 @@ class UserServiceTest {
     @Test
     @Commit
     @DisplayName("로그인")
-    void login() {
+    void login() { //for ver2.
         //given
         UserCreateDto.Login login = UserCreateDto.Login.builder()
                 .Email("bittersweet141230@gmail.com")
                 .Password("20205149")
                 .build();
         //when
-        UserCreateDto.Response response = userService.login(login);
+        String response = userService.login(login);
 
         //then
-        System.out.print("password = " + response.getPassword());
+        System.out.println(response);
         //fail("Not yet implemented"); // TODO
     }
 
-    @Test
-    void getUserJoinedTravel() {
-    }
-
-    @Test
-    void createPerson() {
-    }
+//    @Test
+//    void getUserJoinedTravel() {
+//    }
+//
+//    @Test
+//    void createPerson() {
+//    }
 }
