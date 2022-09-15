@@ -47,21 +47,13 @@ function NavigationBar({ preferences, setPreferences }) {
   };
   return (
     <div>
-      {loggedIn !== null ? (
-        <div>
-          <span>{loggedIn}</span>
-          <br />
-          <Link to="/">
-            <button style={{ margin: "10px auto 0 0" }} onClick={onLogOutClick}>
-              Log Out
-            </button>
-          </Link>
-        </div>
-      ) : (
-        <Link to="/login">
-          <button>Log In</button>
-        </Link>
-      )}
+      <h4>{loggedIn}</h4>
+      <br />
+      <Link to="/">
+        <button id="logout" onClick={onLogOutClick}>
+          Log Out
+        </button>
+      </Link>
       <br />
       <img
         className="barIcon"
@@ -69,8 +61,8 @@ function NavigationBar({ preferences, setPreferences }) {
         onClick={onClickPreference}
         alt="gear"
       />
-      <PreferenceTab />
       <br />
+      <PreferenceTab />
       <img className="barIcon" src={bracketSrc} alt="leftBracket" />
       <br />
       <img className="barIconReversed" src={bracketSrc} alt="rightBracket" />

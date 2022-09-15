@@ -1,7 +1,7 @@
 import axios from "axios";
 import React from "react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -43,9 +43,11 @@ const Button = styled.div`
 
 const LogIn = () => {
   const [su,setsu] = useState(true);
-  const [isLoggin, setisLogin] = useState(false);
+  const [isLoggin, setisLogin] = useState(true);
   const [input_id, setId] = useState("");
   const [input_password, setPassword] = useState("");
+  const navigate = useNavigate();
+
   const onIdHandler = (event) => {
     setId(event.currentTarget.value);
   };
@@ -59,14 +61,20 @@ const LogIn = () => {
       input_id : input_id,
       input_password : input_password
     }).then((response) => {
-      if(response.data == "fail!") {
-        alert("Login Fail");
-        console.log(response.data);
-      }
-      else if(response.data == "Yes!"){
-        alert("Login Success");
-        setisLogin(true);
-        console.log(response.data);
+      switch(response.data){
+        case 0:
+          throw("Network Error");
+        case -1:
+          alert("Wrong Password");
+          navigate('/login');
+          break;
+        case -2:
+          alert("Wrong Email");
+          navigate('/login');
+          break;
+        default:
+          alert("Login Success!");
+          navigate('/selectTravel', {state :{ id: input_id }});
       }
     }).catch((error) => {
       event.preventDefault();
@@ -80,66 +88,34 @@ const LogIn = () => {
   };
 
   return (
-    /*
-    <div>
-      <h1
-        style={{ margin: "10px auto", display: "block", textAlign: "center" }}
-      >
-        Log In
-      </h1>
-      <form>
-        <div>
-          <input name="id" placeholder="id" value={input_id} onChange={onIdHandler} />
-        </div>
-        <div>
-          <input
-            name="pw"
-            placeholder="password"
-            value={input_password}
-            onChange={onPasswordHandler}
-          />
-        </div>
-        <Link to={`/${input_id}/selectTravel`} state={{ id: input_id }}>
-          <div>
-            <button onClick={onSubmit}>Log In</button>
-          </div>
-        </Link>
-        <Link to="/register">
-          <div>
-            <button>Register</button>
-          </div>
-        </Link>
-      </form>
+    <div className="login">
+      <h2>Log In</h2>
+      <label for="email">Email</label>
+      <input
+        type="email"
+        name="email"
+        id="email"
+        value={input_id}
+        onChange={onIdHandler}
+      />
+      <label for="password">Password</label>
+      <input
+        type="password"
+        name="password"
+        id="password"
+        value={input_password}
+        onChange={onPasswordHandler}
+      />
+        <button type="submit" onClick={onSubmit}>
+          Log In
+        </button>
+      <h5 style={{ margin: "5rem 0 0 0 " }}>
+        If you don't have ID, register first
+      </h5>
+      <Link to="/register">
+        <button>Register</button>
+      </Link>
     </div>
-    */
-   <div>
-    <h1
-      style={{ margin: "10px auto", display: "block", textAlign: "center" }}
-    >
-      Log In
-    </h1>
-        <Container>
-          <Input 
-            name="id" 
-            placeholder="id"
-            value={input_id}
-            onChange={onIdHandler}
-          />
-          <Input
-            name="pw"
-            type = "password"
-            placeholder="password"
-            value={input_password}
-            onChange={onPasswordHandler}
-          />
-          <Link to= {`/${input_id}/${isLoggin}/selectTravel`} state={{ id: input_id, isLoggin : isLoggin }}>
-            <Button onClick={onSubmit}>로그인</Button>
-          </Link>
-          <Link to="/register">
-            <Button>Register</Button>
-          </Link>
-        </Container>
-      </div>
   );
 };
 

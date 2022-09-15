@@ -66,68 +66,62 @@ const Register = () => {
     }
   };
 
-  // const onSubmit = (event) => {
-  //   if (localStorage.getItem(user_email) !== null) {
-  //     event.preventDefault();
-  //     alert("Given ID already exists");
-  //   } else if (user_password !== confirmPassword) {
-  //     event.preventDefault();
-  //     alert("Passwords do not match");
-  //   } else if (user_password.length < 5) {
-  //     event.preventDefault();
-  //     alert("Password is too short");
-  //   } else {
-  //     alert("Succesfully Registered");
-  //     localStorage.setItem(user_email, JSON.stringify(user_password));
-  //   }
-  // };
-
   return (
     <div>
-      <h1
-        style={{ margin: "10px auto", display: "block", textAlign: "center" }}
-      >
-        Register
-      </h1>
+      <h2>Register</h2>
       <form style={{ margin: "10px auto", textAlign: "center" }}>
         <div>
+          <label for="email">Email</label>
           <input
-            placeholder="name"
+            type="email"
+            id="email"
+            value={user_email}
+            onChange={onEmailHandler}
+          />
+        </div>
+        <div>
+          <label for="name">Name</label>
+          <input
+            type="text"
+            id="name"
             value={user_name}
             onChange={onUserHandler}
           />
         </div>
         <div>
+          <label for="account">Account</label>
           <input
-            placeholder="account"
+            type="text"
+            id="account"
             value={user_account}
             onChange={onAccountHandler}
           />
         </div>
         <div>
-          <input placeholder="email" value={user_email} onChange={onEmailHandler} />
-        </div>
-        <div>
+          <label for="password">Password</label>
           <input
-            type = "password"
-            placeholder="password"
+            type="password"
+            id="password"
             value={user_password}
             onChange={onPasswordHandler}
           />
         </div>
         <div>
+          <label for="confirm-password">Confirm Password</label>
           <input
-            type = "password"
-            placeholder="confirm password"
+            type="password"
+            id="confirm-password"
             value={confirmPassword}
             onChange={onConfirmPasswordHandler}
           />
         </div>
-        <Link to = "/login">
+        <Link to="/login">
           <div>
-            <button onClick={onSubmit}>Submit</button>
+            <button type="submit" onClick={onSubmit}>
+              Submit
+            </button>
           </div>
-         </Link>
+        </Link>
       </form>
     </div>
   );

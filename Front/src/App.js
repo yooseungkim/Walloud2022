@@ -1,12 +1,12 @@
 import React from "react";
 import "./App.css";
-import Home from "./js/Home/Home";
+import Home from "./Home/Home";
 import Profile from "./js/Profile";
 import LogIn from "./Authentication/LogIn";
 import Register from "./Authentication/Register";
-import Calendar from "./js/Home/Calendar";
-import { CreateEvent } from "./js/Create/CreateEvent";
-import CreateUser from "./js/CreateUser";
+import Calendar from "./Home/Calendar";
+import { CreateEvent } from "./Create/CreateEvent";
+import CreateUser from "./Create/CreateUser";
 import EventDescription from "./js/EventDescription";
 import { Routes, Route } from "react-router-dom";
 import SelectTravel from "./js/SelectTravel";
@@ -32,7 +32,7 @@ const App = () => {
           path="/:username/:travel/event/:event"
           element={<EventDescription />}
         />
-        <Route path="/:username/:isLoggin/selectTravel" element={<SelectTravel />} />
+        <Route path="/selectTravel" element={<SelectTravel />} />
         <Route path="/:username/:travel" element={<Home />} />
       </Routes>
     </div>

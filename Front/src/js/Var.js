@@ -81,7 +81,7 @@ export const users = [
   },
 ];
 
-export var eventList = [
+export var eventlist = [
   {
     index: 1,
     place: "newEvent",
