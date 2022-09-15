@@ -30,14 +30,14 @@ class PersonServiceTest {
         TravelCreateDto.Request travelInfo = TravelCreateDto.Request.builder()
                 .Name("서울 여행")
                 .build();
-
         PersonCreateDto.Request request = PersonCreateDto.Request.builder()
                 .User(userService.getUserInfo(userNo))
                 .Travel(travelService.createTravel(travelInfo))
                 .build();
-//        System.out.println("here!"); //여기는 됐음
+
         //when
         PersonDto person = personService.createPerson(request);
+
         //then
         System.out.println("User name = " + person.getUser().getName());
         System.out.println("Travel name = " + person.getTravel().getName());

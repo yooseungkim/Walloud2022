@@ -26,19 +26,18 @@ public class UserController {
     private final TravelService travelservice;
     private final PersonService personservice;
 
-    @GetMapping("/halo")
+    @GetMapping("/halo") //just for test
     public String ddd() {
         return "He";
     }
 
     @PostMapping(value = "/Register")
     public ResponseEntity<UserCreateDto.Response> createUser(@RequestBody Map map) {
-
-        System.out.println("");
-        System.out.println(map.get("user_name"));
-        System.out.println(map.get("user_email"));
-        System.out.println(map.get("user_password"));
-        System.out.println(map.get("user_account"));
+//        System.out.println("");
+//        System.out.println(map.get("user_name"));
+//        System.out.println(map.get("user_email"));
+//        System.out.println(map.get("user_password"));
+//        System.out.println(map.get("user_account"));
         UserCreateDto.Request request = new UserCreateDto.Request(map.get("user_name").toString(),
                 map.get("user_email").toString(),
                 map.get("user_password").toString(),
@@ -46,46 +45,24 @@ public class UserController {
         return ResponseEntity.ok(userservice.createUser(request));
     }
 
-    /**수정할지는 front분들이랑 다시 논의할 것
-     * 지금은 로그인 성공(email 있음 & pw 일치)-> 유저 정보 그대로 리턴
-     * 로그인 실패(email 없거나 | pw 틀리거나) -> 유저 정보 = null로 리턴
-     * =>
-     * email 없으면 -> none
-     * pw 틀리면 -> fail
-     * 둘다 맞으면 -> 유저 id.toString()
-     * 리턴하는 방식으로 바꿔도 됨
-     * */
-//    @PostMapping(value = "/login")
-//    public String login(@RequestBody Map map) { //ver 1.
-//        UserCreateDto.Login loginUser = new UserCreateDto.Login(map.get("input_id").toString(),
-//                map.get("input_password").toString());
-//        UserCreateDto.Response answer = userservice.login(loginUser);
-//        if (answer.getPassword() == null){
-//            return "fail!";
-//        } else {
-//            return "Yes!";
-//        }
-//    }
     @PostMapping(value = "/login")
-    public int login(@RequestBody Map map) { //ver 1.
+    public int login(@RequestBody Map map) {
         UserCreateDto.Login loginUser = new UserCreateDto.Login(map.get("input_id").toString(),
                 map.get("input_password").toString());
         return userservice.login(loginUser);
+        /**success -> return [user id]
+         * wrong email -> -2
+         * wrong pw -> -1
+         */
     }
 
-    // front; user info - travellist == null -> return "Create travel!"
+    // front; user info_travellist == null -> return "Create travel!"
     @PostMapping("/{no}")
     public UserDetailDto.WithTravel getUserInfo(@PathVariable int no){
-        //@PathVariable = 로그인한 유저 아이디
         return userservice.getUserInfoWithTravel(no);
     }
 
-    /**travel join
-     * input: travel 정보 & 현재 유저 email
-     * to travel db -> travel 생성
-     * to person db -> 현재 유저 & travel 데이터 생성
-     * return travel 메인 페이지*/
-   @PostMapping("/{no}/createTravel")
+   @PostMapping("/{no}/createTravel") //프론트 테스트중
    public ResponseEntity<PersonDto> joinTravel(@PathVariable int no, @RequestBody String travel_name){
 //       TravelCreateDto.Request travelInfo = new TravelCreateDto.Request(map.get("travel_name").toString());
        TravelCreateDto.Request travelInfo = new TravelCreateDto.Request(travel_name);
