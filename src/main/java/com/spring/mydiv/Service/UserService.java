@@ -52,7 +52,6 @@ public class UserService {
                     result = user.getId().intValue();}
                 else{result = -1;}}, //"Wrong Password!"
             ()-> {if(loginUser.getEmail()!=null){result = -2;}} //"Wrong Email!"
->>>>>>>>> Temporary merge branch 2
         );
         return result;
     }
