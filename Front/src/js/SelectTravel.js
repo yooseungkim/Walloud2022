@@ -2,23 +2,19 @@ import { React, useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import API from "../API";
 import axios from "axios";
+import CreateTravel from "../Create/CreateTravel";
 
 const SelectTravel = () => {
-  const user = useLocation().state.id;
+  const user_id = useLocation().state.id;
   const [myTravel, setTravellist] = useState([]);
-  const [userList, setUserlist] = useState([]);
-  const [newTravel, setNewTravel] = useState("");
 
-  const onNewTravel = (event) => {
-    setNewTravel(event.currentTarget.value);
-  };
 
   useEffect(() => {
     getInfor();
   }, []);
 
   const getInfor = async() => {
-    await axios.get (`/api/${user}`).then((response) => {
+    await axios.get (`/api/${user_id}`).then((response) => {
       setTravellist(response.data.travelList);
       console.log(response.data);
     }).catch((error) => {
@@ -38,8 +34,8 @@ const SelectTravel = () => {
       {myTravel.map((travel, id) => (
         <Link
           key={id}
-          to={`/${user}/${travel}`}
-          state={{ user: user, travel: travel }}
+          to={`/${user_id}/${travel}`}
+          state={{ user_id: user_id, travel: travel }}
         >
           <h3 style={{ display: "block", margin: "auto", textAlign: "center" }}>
             {travel}
@@ -47,24 +43,7 @@ const SelectTravel = () => {
           <br />
         </Link>
       ))}
-      <h4>Create New Travel</h4>
-      <input onChange={onNewTravel} />
-      <Link
-        to={`/${user}/${newTravel}`}
-        state={{ user: user, travel: newTravel }}
-      >
-        <button type="submit" style={{ display: "block", margin: "20px auto" }}>
-          Create Travel
-        </button>
-      </Link>
-      {/* {
-        su ? userList.map((use,id) => (
-            <div style={{ display: "block", margin: "auto", textAlign: "center" }}>
-              {id},{use.name}, {use.email}, {use.account}
-            </div>
-        ))
-        : null
-      } */}
+        <CreateTravel user_id={user_id} /> 
     </div>
   );
 };

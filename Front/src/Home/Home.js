@@ -20,9 +20,9 @@ const Home = () => {
 
   ////////////////////////////////////
 
-  useEffect(() => {
-    getEvent();
-  }, []);
+  // useEffect(() => {
+  //   getEvent();
+  // }, []);
 
   // parameter = user info
   const getEvent = async (travel) => {
