@@ -43,26 +43,20 @@ public class UserService {
     }
 
 
-
-
-
-
-
-
-    UserCreateDto.Response answer = null;
     int result = 0;
-    public int login(UserCreateDto.Login loginUser) { //ver2. return id
+    public int login(UserCreateDto.Login loginUser) {
         Optional<User> info = userRepository.findByEmail(loginUser.getEmail());
-        info.ifPresentOrElse(user ->
+        info.ifPresentOrElse(
+            user ->
                 {if (loginUser.getPassword().toString().equals(user.getPassword().toString())) {
                     result = user.getId().intValue();}
                 else{result = -1;}}, //"Wrong Password!"
-                ()-> {if(loginUser.getEmail()!=null){result = -2;}} //"Wrong Email!"
+            ()-> {if(loginUser.getEmail()!=null){result = -2;}} //"Wrong Email!"
         );
         return result;
     }
 
-    public UserDetailDto getUserInfo(int no){
+    public UserDetailDto getUserInfo(int no){ //travellist없이 user 정보만 리턴
         Optional<User> info = userRepository.findById(Long.valueOf(no));
         return UserDetailDto.fromEntity(info.get());
     }
@@ -82,29 +76,6 @@ public class UserService {
         UserDetailDto.WithTravel dto = UserDetailDto.WithTravel.fromEntity(info.get());
         dto.setTravelList(getUserJoinedTravel(no));
         return dto;
-    } //test yet
-
-
-
-
-
-
-
-    @Transactional
-    public UserCreateDto.Response createPerson(UserCreateDto.Request userinfo, TravelDto travelinfo) {
-        User user = User.builder()
-                .name(userinfo.getName())
-                .email(userinfo.getEmail())
-                .password(userinfo.getPassword())
-                .account(userinfo.getAccount())
-                .build();
-        Travel travel = Travel.builder()
-                .name(travelinfo.getName())
-                .build();
-        
-        userRepository.save(user);
-        return UserCreateDto.Response.fromEntity(user);
     }
-    
 
 }
