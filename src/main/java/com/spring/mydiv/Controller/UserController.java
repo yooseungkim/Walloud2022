@@ -57,19 +57,19 @@ public class UserController {
     }
 
     // front; user info_travellist == null -> return "Create travel!"
-    @PostMapping("/{no}")
+    @GetMapping("/{no}")
     public UserDetailDto.WithTravel getUserInfo(@PathVariable int no){
         return userservice.getUserInfoWithTravel(no);
     }
 
-   @PostMapping("/{no}/createTravel") //프론트 테스트중
-   public ResponseEntity<PersonDto> joinTravel(@PathVariable int no, @RequestBody String travel_name){
-//       TravelCreateDto.Request travelInfo = new TravelCreateDto.Request(map.get("travel_name").toString());
+    @PostMapping("/{no}/createTravel") //프론트 테스트중
+    public ResponseEntity<PersonDto> joinTravel(@PathVariable int no, @RequestBody String travel_name){
+    //       TravelCreateDto.Request travelInfo = new TravelCreateDto.Request(map.get("travel_name").toString());
        TravelCreateDto.Request travelInfo = new TravelCreateDto.Request(travel_name);
        PersonCreateDto.Request request = new PersonCreateDto.Request(
                userservice.getUserInfo(no),
                travelservice.createTravel(travelInfo));
        return ResponseEntity.ok(personservice.createPerson(request));
-   }
+    }
 
 }

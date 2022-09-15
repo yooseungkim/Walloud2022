@@ -42,6 +42,7 @@ public class UserService {
         return UserCreateDto.Response.fromEntity(user);
     }
 
+
     int result = 0;
     public int login(UserCreateDto.Login loginUser) {
         Optional<User> info = userRepository.findByEmail(loginUser.getEmail());
@@ -51,6 +52,7 @@ public class UserService {
                     result = user.getId().intValue();}
                 else{result = -1;}}, //"Wrong Password!"
             ()-> {if(loginUser.getEmail()!=null){result = -2;}} //"Wrong Email!"
+>>>>>>>>> Temporary merge branch 2
         );
         return result;
     }
