@@ -1,6 +1,5 @@
 import { React, useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import API from "../API";
 import axios from "axios";
 import CreateTravel from "../Create/CreateTravel";
 
@@ -26,6 +25,10 @@ const SelectTravel = () => {
     document.location.href = '/login'
   }
 
+  const onDelete = () => {
+
+  }
+
   return (
     <div>
       <h2>My Travel List</h2>
@@ -42,8 +45,9 @@ const SelectTravel = () => {
           </h3>
           <br />
         </Link>
+        
       ))}
-        <CreateTravel user_id={user_id} /> 
+        <CreateTravel user_id={user_id} myTravel = {myTravel}  /> 
     </div>
   );
 };

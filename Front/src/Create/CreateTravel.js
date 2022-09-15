@@ -1,8 +1,10 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const CreateTravel = (props) => {
+    const navigate = useNavigate();
+    const travel_List = props.myTravel;
     const user_id = props.user_id;
     const [Travel_name, setTravel_name] = useState("");
 
@@ -10,15 +12,25 @@ const CreateTravel = (props) => {
         setTravel_name(event.currentTarget.value);
     }
 
+    console.log(travel_List);
+
     const onSubmit = async() => {
-        await axios.post(`/api/${user_id}/createTravel`,
-            {travel_name: Travel_name}
-        ).then((response) => {
-            console.log(Travel_name);
-            console.log(response.data)
-        }).catch((error)=> {
-            console.log(error);
-        })
+        if(Travel_name === "") {
+            alert("Travel Name is blank!");
+        }
+        else if(travel_List.includes(Travel_name)) {
+            alert("Travel Name exist");
+        }
+        else {
+            await axios.post(`/api/${user_id}/createTravel`,
+                {travel_name: Travel_name}
+            ).then((response) => {
+                console.log(Travel_name);
+                navigate(`/${user_id}/${Travel_name}`, {state :{ user_id : user_id, travel:Travel_name }});
+            }).catch((error)=> {
+                console.log(error);
+            })
+        }
     }
 
     return (
@@ -27,15 +39,11 @@ const CreateTravel = (props) => {
             <input onChange={onChange} 
                 value = {Travel_name}
                 placeholder = "Travel Name" />
-            {/* <Link
-             to={`/${user_id}/${Travel_name}`}
-             state={{ user : user, travel:Travel_name}}> */}
                 <button style={{ display: "block", margin: "20px auto" }}
                     onClick = {onSubmit}
                 >
                 Create Travel
                 </button>
-            {/* </Link> */}
         </div>
     )
 }
