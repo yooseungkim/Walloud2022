@@ -42,6 +42,7 @@ public class UserService {
         return UserCreateDto.Response.fromEntity(user);
     }
 
+
     int result = 0;
     public int login(UserCreateDto.Login loginUser) {
         Optional<User> info = userRepository.findByEmail(loginUser.getEmail());
