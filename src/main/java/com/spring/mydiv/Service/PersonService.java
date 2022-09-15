@@ -24,7 +24,7 @@ import lombok.RequiredArgsConstructor;
 public class PersonService {
 	private final PersonRepository personRepository;
 	
-    @Transactional
+    @Transactional //back 테스트 완료 //front 테스트중
     public PersonDto createPerson(PersonCreateDto.Request request) {
         Person person = Person.builder()
         		.user(User.builder()
@@ -39,7 +39,6 @@ public class PersonService {
                         .name(request.getTravel().getName())
                         .build())
                 .build();
-//        System.out.println("here!"); //여기까지도 됐음
         personRepository.save(person);
         return PersonDto.fromEntity(person);
     }
