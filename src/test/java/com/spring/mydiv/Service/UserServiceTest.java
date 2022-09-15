@@ -81,7 +81,7 @@ class UserServiceTest {
     @Test
     @Commit
     @DisplayName("유저 정보 리턴 + 여행리스트까지")
-    void getUserInfo() {
+    void getUserInfoWithTravel() {
         //given
         int userid = 11;
 
