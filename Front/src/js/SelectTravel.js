@@ -5,7 +5,6 @@ import axios from "axios";
 
 const SelectTravel = () => {
   const user = useLocation().state.id;
-  const su = useLocation().state.su;
   const [myTravel, setTravellist] = useState([]);
   const [userList, setUserlist] = useState([]);
   const [newTravel, setNewTravel] = useState("");
@@ -20,7 +19,7 @@ const SelectTravel = () => {
 
   const getInfor = async() => {
     await axios.get (`/api/${user}`).then((response) => {
-      setTravellist(response.data);
+      setTravellist(response.data.travelList);
       console.log(response.data);
     }).catch((error) => {
       console.log(error);
