@@ -50,23 +50,14 @@ public class UserService {
 
 
     UserCreateDto.Response answer = null;
-    String result = "";
-//    public UserCreateDto.Response login(UserCreateDto.Login loginUser) { //ver1. return info
-//    	Optional<User> info = userRepository.findByEmail(loginUser.getEmail());
-//    	info.ifPresent(user ->
-//    					{if (loginUser.getPassword().toString().equals(user.getPassword().toString())) {
-//    						answer = UserCreateDto.Response.fromEntity(user);}
-//    					}
-//    					);
-//    	return answer;
-//    }
-    public String login(UserCreateDto.Login loginUser) { //ver2. return id
+    int result = 0;
+    public int login(UserCreateDto.Login loginUser) { //ver2. return id
         Optional<User> info = userRepository.findByEmail(loginUser.getEmail());
         info.ifPresentOrElse(user ->
-                                {if (loginUser.getPassword().toString().equals(user.getPassword().toString())) {
-                                    result = "Login Success!";}
-                                else{result = "Wrong Password!";}},
-                                    ()-> {if(loginUser.getEmail()!=null){result = "Wrong Email!";}}
+                {if (loginUser.getPassword().toString().equals(user.getPassword().toString())) {
+                    result = user.getId().intValue();}
+                else{result = -1;}}, //"Wrong Password!"
+                ()-> {if(loginUser.getEmail()!=null){result = -2;}} //"Wrong Email!"
         );
         return result;
     }

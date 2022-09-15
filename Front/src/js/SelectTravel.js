@@ -5,7 +5,6 @@ import axios from "axios";
 
 const SelectTravel = () => {
   const user = useLocation().state.id;
-  const su = useLocation().state.su;
   const [myTravel, setTravellist] = useState([]);
   const [userList, setUserlist] = useState([]);
   const [newTravel, setNewTravel] = useState("");

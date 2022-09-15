@@ -67,7 +67,7 @@ public class UserController {
 //        }
 //    }
     @PostMapping(value = "/login")
-    public String login(@RequestBody Map map) { //ver 1.
+    public int login(@RequestBody Map map) { //ver 1.
         UserCreateDto.Login loginUser = new UserCreateDto.Login(map.get("input_id").toString(),
                 map.get("input_password").toString());
         return userservice.login(loginUser);

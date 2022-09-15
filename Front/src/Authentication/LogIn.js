@@ -74,7 +74,8 @@ const LogIn = () => {
           break;
         default:
           alert("Login Success!");
-          navigate('/selectTravel', {state :{ id: input_id }});
+          console.log(response.data);
+          navigate('/selectTravel', {state :{ id: response.data }});
       }
     }).catch((error) => {
       event.preventDefault();
