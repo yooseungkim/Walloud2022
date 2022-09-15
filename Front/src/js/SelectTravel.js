@@ -19,7 +19,7 @@ const SelectTravel = () => {
 
   const getInfor = async() => {
     await axios.get (`/api/${user}`).then((response) => {
-      setTravellist(response.data);
+      setTravellist(response.data.travelList);
       console.log(response.data);
     }).catch((error) => {
       console.log(error);
