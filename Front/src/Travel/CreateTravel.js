@@ -25,7 +25,6 @@ const CreateTravel = (props) => {
             await axios.post(`/api/${user_id}/createTravel`,
                 {travel_name: Travel_name}
             ).then((response) => {
-                console.log(Travel_name);
                 navigate(`/${user_id}/${Travel_name}`, {state :{ user_id : user_id, travel:Travel_name }});
             }).catch((error)=> {
                 console.log(error);
