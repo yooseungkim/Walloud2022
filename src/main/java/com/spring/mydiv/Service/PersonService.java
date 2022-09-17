@@ -43,4 +43,9 @@ public class PersonService {
         return PersonDto.fromEntity(person);
     }
 
+    @Transactional
+    public void deleteJoinTravel(int userId, int travelId) {
+        personRepository.deleteByUser_IdAndTravel_Id(Long.valueOf(userId), Long.valueOf(travelId));
+    }
+
 }

@@ -21,26 +21,41 @@ class PersonServiceTest {
     @Autowired(required=true)
     private TravelService travelService;
 
+//    @Test
+//    @Commit
+//    @DisplayName("여행 생성")
+//    void createPerson() {
+//        //given
+//        int userNo = 11;
+//        TravelCreateDto.Request travelInfo = TravelCreateDto.Request.builder()
+//                .Name("서울 여행")
+//                .build();
+//        PersonCreateDto.Request request = PersonCreateDto.Request.builder()
+//                .User(userService.getUserInfo(userNo))
+//                .Travel(travelService.createTravel(travelInfo))
+//                .build();
+//
+//        //when
+//        PersonDto person = personService.createPerson(request);
+//
+//        //then
+//        System.out.println("User name = " + person.getUser().getName());
+//        System.out.println("Travel name = " + person.getTravel().getName());
+//    }
+
     @Test
     @Commit
-    @DisplayName("여행 생성")
-    void createPerson() {
+    @DisplayName("여행 삭제")
+    void deleteJoinTravel() {
         //given
-        int userNo = 11;
-        TravelCreateDto.Request travelInfo = TravelCreateDto.Request.builder()
-                .Name("서울 여행")
-                .build();
-        PersonCreateDto.Request request = PersonCreateDto.Request.builder()
-                .User(userService.getUserInfo(userNo))
-                .Travel(travelService.createTravel(travelInfo))
-                .build();
+        int userId = 11;
+        int travelId = 30;
 
         //when
-        PersonDto person = personService.createPerson(request);
+        personService.deleteJoinTravel(userId, travelId);
 
         //then
-        System.out.println("User name = " + person.getUser().getName());
-        System.out.println("Travel name = " + person.getTravel().getName());
+        System.out.println("delete check please!");
     }
 
 

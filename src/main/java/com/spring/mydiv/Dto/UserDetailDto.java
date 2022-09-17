@@ -53,7 +53,7 @@ public class UserDetailDto {
 		private String Password;
 		@NotNull
 		private String Account;
-		private List<String> TravelList;
+		private List<TravelCreateDto.Response> TravelList;
 
 		public static WithTravel fromEntity(User user) {
 			return WithTravel.builder()
