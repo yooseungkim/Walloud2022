@@ -2,6 +2,7 @@ package com.spring.mydiv.Service;
 
 import javax.transaction.Transactional;
 
+import com.spring.mydiv.Dto.TravelCreateDto;
 import com.spring.mydiv.Dto.UserDetailDto;
 import com.spring.mydiv.Entity.Person;
 import org.springframework.stereotype.Service;
@@ -61,12 +62,16 @@ public class UserService {
         return UserDetailDto.fromEntity(info.get());
     }
 
-    public List<String> getUserJoinedTravel(int no){
+    public List<TravelCreateDto.Response> getUserJoinedTravel(int no){
         List<Person> list = personRepository.findByUser_Id(Long.valueOf(no));
-        List<String> result = new ArrayList<String>();
+        List<TravelCreateDto.Response> result = new ArrayList<TravelCreateDto.Response>();
         for (Person p : list){
             Optional<Travel> info = travelRepository.findById(Long.valueOf(p.getTravel().getId()));
-            result.add(info.get().getName());
+            TravelCreateDto.Response travel = TravelCreateDto.Response.builder()
+                    .Id(info.get().getId())
+                    .Name(info.get().getName())
+                    .build();
+            result.add(travel);
         }
         return result;
     }

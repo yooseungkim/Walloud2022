@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Commit;
 
 import javax.persistence.EntityManager;
+import java.util.List;
 
 @SpringBootTest
 class PersonServiceTest {
@@ -21,7 +22,7 @@ class PersonServiceTest {
     @Autowired(required=true)
     private TravelService travelService;
 
-    @Test
+/*    @Test
     @Commit
     @DisplayName("여행 생성")
     void createPerson() {
@@ -41,7 +42,39 @@ class PersonServiceTest {
         //then
         System.out.println("User name = " + person.getUser().getName());
         System.out.println("Travel name = " + person.getTravel().getName());
+    }*/
+
+    @Test
+    @Commit
+    @DisplayName("여행 참가자 리스트 리턴")
+    void getPersonNameInTravel(){
+        //given
+        int travelId = 29; //남양주 여행
+
+        //when
+        List<PersonCreateDto.Simple> list = personService.getPersonNameInTravel(travelId);
+
+        //then
+        for (PersonCreateDto.Simple p : list){
+            System.out.println("Name: " + p.getName());
+        }
+
     }
+
+//    @Test
+//    @Commit
+//    @DisplayName("여행 삭제")
+//    void deleteJoinTravel() {
+//        //given
+//        int userId = 11;
+//        int travelId = 30;
+//
+//        //when
+//        personService.deleteJoinTravel(userId, travelId);
+//
+//        //then
+//        System.out.println("delete check please!");
+//    }
 
 
 }

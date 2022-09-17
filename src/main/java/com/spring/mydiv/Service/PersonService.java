@@ -15,6 +15,10 @@ import com.spring.mydiv.Repository.TravelRepository;
 import com.spring.mydiv.Repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PathVariable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author 12nov
@@ -24,7 +28,7 @@ import lombok.RequiredArgsConstructor;
 public class PersonService {
 	private final PersonRepository personRepository;
 	
-    @Transactional //back 테스트 완료 //front 테스트중
+    @Transactional
     public PersonDto createPerson(PersonCreateDto.Request request) {
         Person person = Person.builder()
         		.user(User.builder()
@@ -42,5 +46,25 @@ public class PersonService {
         personRepository.save(person);
         return PersonDto.fromEntity(person);
     }
+
+    @Transactional
+    public void deleteJoinTravel(int userId, int travelId) {
+        personRepository.deleteByUser_IdAndTravel_Id(Long.valueOf(userId), Long.valueOf(travelId));
+    }
+
+    public List<PersonCreateDto.Simple> getPersonNameInTravel(@PathVariable int travelid){
+        List<Person> list = personRepository.findByTravel_Id(Long.valueOf(travelid));
+        List<PersonCreateDto.Simple> result = new ArrayList<PersonCreateDto.Simple>();
+        for (Person p : list){
+            PersonCreateDto.Simple person = PersonCreateDto.Simple.builder()
+                    .Id(Long.valueOf(p.getUser().getId()))
+                    .Name(p.getUser().getName().toString())
+                    .build();
+            result.add(person);
+        }
+        return result;
+    }
+
+
 
 }

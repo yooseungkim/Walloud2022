@@ -92,8 +92,8 @@ class UserServiceTest {
         System.out.println("Name: "+info.getName());
         System.out.println("Email: "+info.getEmail());
         System.out.println("Account: "+info.getAccount());
-        for(String travel : info.getTravelList()){
-            System.out.println("Travel Name: "+travel);
-        }
+//        for(String travel : info.getTravelList()){
+//            System.out.println("Travel Name: "+travel);
+//        } //22-09-17 info 수정한 뒤로 테스트코드 변경 안했음
     }
 }

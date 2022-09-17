@@ -1,5 +1,6 @@
 package com.spring.mydiv.Dto;
 
+import com.spring.mydiv.Entity.Person;
 import com.spring.mydiv.Entity.Travel;
 import com.spring.mydiv.Entity.User;
 import lombok.*;
@@ -24,22 +25,13 @@ public class PersonCreateDto {
     @AllArgsConstructor
     @NoArgsConstructor
     @Builder
-    public static class Response {
-        @NotNull
+    public static class Simple {
+        private Long Id;
         private String Name;
-        @NotNull
-        private String Email;
-        @NotNull
-        private String Password;
-        @NotNull
-        private String Account;
 
-        public static UserCreateDto.Response fromEntity(User user) {
-            return UserCreateDto.Response.builder()
-                    .Name(user.getName())
-                    .Email(user.getEmail())
-                    .Password(user.getPassword())
-                    .Account(user.getAccount())
+        public static Simple fromEntity(Person person) {
+            return Simple.builder()
+                    .Id(person.getId())
                     .build();
         }
     }

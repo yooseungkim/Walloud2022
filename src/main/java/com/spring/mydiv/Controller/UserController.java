@@ -57,12 +57,12 @@ public class UserController {
     }
 
     // front; user info_travellist == null -> return "Create travel!"
-    @GetMapping("/{no}")
+    @GetMapping("/{no}") //프론트 테스트중 -> travel name, travel info 둘 다 넘기는걸로 수정했는데 에러가 난 듯 하다 ...
     public UserDetailDto.WithTravel getUserInfo(@PathVariable int no){
         return userservice.getUserInfoWithTravel(no);
     }
 
-    @PostMapping("/{no}/createTravel") //프론트 테스트중
+    @PostMapping("/{no}/createTravel")
     public ResponseEntity<PersonDto> joinTravel(@PathVariable int no, @RequestBody Map map){
         String travel_name = map.get("travel_name").toString();
     //       TravelCreateDto.Request travelInfo = new TravelCreateDto.Request(map.get("travel_name").toString());
@@ -71,6 +71,16 @@ public class UserController {
                 userservice.getUserInfo(no),
                 travelservice.createTravel(travelInfo));
         return ResponseEntity.ok(personservice.createPerson(request));
+    }
+
+    /**user가 참가한 여행을 삭제하는 메소드
+     * -> 여행 자체를 삭제하는 것 or
+     * -> 여행에서 참가하지 않는 것?
+     * 일단은 후자로 작성했음.
+     * */
+    @DeleteMapping("/{user_id}/{travel_id}/deleteTravel") // 프론트 테스트중
+    public void deleteJoinTravel(@PathVariable int user_id, @PathVariable int travel_id) {
+        personservice.deleteJoinTravel(user_id, travel_id);
     }
 
 }
