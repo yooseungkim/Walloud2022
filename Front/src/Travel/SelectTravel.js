@@ -2,13 +2,13 @@ import { React, useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
 import CreateTravel from "./CreateTravel";
-import DeleteTravel from "./DeleteTravel";
 
 const SelectTravel = () => {
   const user_id = useLocation().state.id;
   const [myTravel, setTravellist] = useState([]);
   const [try_del, setDelete] = useState(false);
-
+  const [checkedItems, setCheckedItems] = useState([]);
+  const [checekdTravels, setCheckedTravel] = useState([]);
 
   useEffect(() => {
     getInfor();
@@ -27,11 +27,56 @@ const SelectTravel = () => {
     document.location.href = '/login'
   }
 
+  // Delete
+
   const try_Delete = () => {
-    if(!try_del) {
-      setDelete(true);
-    } else {
-      setDelete(false);
+    if(try_del) {
+      if(checkedItems.length !== 0) {
+        if(window.confirm(checekdTravels+" 이 선택되었습니다.\n 삭제하시겠습니까?")){
+          checkedItems.map((travel_id, idx) => {
+            axios.delete(`/api/${user_id}/${travel_id}/deleteTravel`).catch((error) => {
+              console.log(error);
+            })
+          })
+          alert("삭제되었습니다.");
+          window.location.reload();
+        }
+        else {
+          alert("취소되었습니다.");
+        }
+      }
+    }
+    setDelete(!try_del)
+  }
+
+  const checkHandler = (checked, elem) => {
+    if(checked) {
+        setCheckedItems(prev => [...prev, elem.id]);
+        setCheckedTravel(prev => [...prev,elem.name])
+        console.log(elem,"push", checkedItems);
+    }
+    else {
+        setCheckedItems(checkedItems.filter((e) => e !== elem.id));
+        setCheckedTravel(checekdTravels.filter((e) => e !== elem.name));
+        console.log(elem,"pop", checkedItems);
+    }
+  }
+
+  const handleAllCheck = (checked) => {
+    if(checked) {
+        const idArray = [];
+        const travelArray = [];
+        myTravel.forEach((e) => {idArray.push(e.id);
+          travelArray.push(e.name);
+        });
+        setCheckedItems(idArray);
+        setCheckedTravel(travelArray);
+        console.log("checked all",checkedItems);
+    }
+    else {
+        setCheckedItems([]);
+        setCheckedTravel([]);
+        console.log("unchecked all",checkedItems);
     }
   }
 
@@ -43,19 +88,35 @@ const SelectTravel = () => {
       <h3>Existing Travels</h3>
       
       {
-        try_del ? <div>{myTravel.map((travel, id) => (
+        !try_del ? <div>{myTravel.map((travel, idx) => (
           <Link
-            key={id}
-            to={`/${user_id}/${travel}`}
+            key={idx}
+            to={`/${user_id}/${travel.id}`}
             state={{ user_id: user_id, travel: travel }}
           >
             <h3 style={{ display: "block", margin: "auto", textAlign: "center" }}>
-              {travel}
+              {travel.name}
             </h3>
             <br />
           </Link>
         ))}</div> : 
-        <DeleteTravel myTravel = {myTravel}/>
+        <div className = "contStyle">
+            <input type='checkbox'
+              onChange={(e) => handleAllCheck(e.target.checked)}
+              checked={checkedItems.length === myTravel.length ? true : false} 
+            >
+            </input>
+            {myTravel.map((travel, idx) => (
+                <label key= {idx} className = "innerBox">
+                    <input type = "checkbox"
+                    value = {travel.id}
+                    onChange={(e) => checkHandler(e.target.checked, travel)}
+                    checked = {checkedItems.includes(travel.id) ? true : false }
+                    />
+                    <h3>{travel.name}</h3>
+                </label>
+            ))}
+        </div>
       }
         <CreateTravel user_id={user_id} myTravel = {myTravel}  />
 
@@ -63,4 +124,4 @@ const SelectTravel = () => {
   );
 };
 
-export default SelectTravel;
+export default SelectTravel
