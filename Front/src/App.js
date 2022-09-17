@@ -9,7 +9,7 @@ import { CreateEvent } from "./Create/CreateEvent";
 import CreateUser from "./Create/CreateUser";
 import EventDescription from "./js/EventDescription";
 import { Routes, Route } from "react-router-dom";
-import SelectTravel from "./js/SelectTravel";
+import SelectTravel from "./Travel/SelectTravel";
 
 const App = () => {
   return (

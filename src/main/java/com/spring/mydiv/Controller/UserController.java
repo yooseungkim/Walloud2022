@@ -63,13 +63,14 @@ public class UserController {
     }
 
     @PostMapping("/{no}/createTravel") //프론트 테스트중
-    public ResponseEntity<PersonDto> joinTravel(@PathVariable int no, @RequestBody String travel_name){
+    public ResponseEntity<PersonDto> joinTravel(@PathVariable int no, @RequestBody Map map){
+        String travel_name = map.get("travel_name").toString();
     //       TravelCreateDto.Request travelInfo = new TravelCreateDto.Request(map.get("travel_name").toString());
-       TravelCreateDto.Request travelInfo = new TravelCreateDto.Request(travel_name);
-       PersonCreateDto.Request request = new PersonCreateDto.Request(
-               userservice.getUserInfo(no),
-               travelservice.createTravel(travelInfo));
-       return ResponseEntity.ok(personservice.createPerson(request));
+        TravelCreateDto.Request travelInfo = new TravelCreateDto.Request(travel_name);
+        PersonCreateDto.Request request = new PersonCreateDto.Request(
+                userservice.getUserInfo(no),
+                travelservice.createTravel(travelInfo));
+        return ResponseEntity.ok(personservice.createPerson(request));
     }
 
 }
