@@ -1,8 +1,23 @@
 package com.spring.mydiv.Controller;
 
+import com.spring.mydiv.Dto.PersonCreateDto;
+import com.spring.mydiv.Dto.TravelCreateDto;
+import com.spring.mydiv.Entity.Person;
+import com.spring.mydiv.Entity.Travel;
+import com.spring.mydiv.Entity.User;
+import com.spring.mydiv.Repository.PersonRepository;
+import com.spring.mydiv.Repository.UserRepository;
+import com.spring.mydiv.Service.EventService;
+import com.spring.mydiv.Service.PersonService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * @author 12nov
@@ -11,14 +26,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/api")
 public class EventController {
+    private final EventService eventService;
+    private final PersonService personService;
+
     /**이벤트 생성하는 화면에서 필요한거
-     * - 여행 참가자 리스트(getPersonNameByTravelId)
+     * - 여행 참가자 리스트
      * */
-//    @PostMapping("/{userid}/{travelid}/createEvent")
-//    public List<String> getPersonNameByTravelId(@PathVariable int travelid){
-//        //@PathVariable = 여행 아이디
-//        //return service. person DB에서 travelid랑 일치하는 사용자 리스트 "이름만" 리턴
-//    }
+    @PostMapping("/{userid}/{travelid}/createEvent") //프론트 테스트중
+    public List<PersonCreateDto.Simple> getPersonNameInTravel(@PathVariable int travelid){
+        return personService.getPersonNameInTravel(travelid);
+    }
 
     /**이벤트 생성하기
      * -> 프론트로부터 유저 정보 받아온다

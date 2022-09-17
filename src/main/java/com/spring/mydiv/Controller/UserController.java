@@ -78,9 +78,9 @@ public class UserController {
      * -> 여행에서 참가하지 않는 것?
      * 일단은 후자로 작성했음.
      * */
-    @DeleteMapping("/{no}") // 프론트 테스트중
-    public void deleteJoinTravel(@PathVariable int no, @RequestBody Map map) {
-        personservice.deleteJoinTravel(no, Integer.parseInt(map.get("travel_id").toString()));
+    @DeleteMapping("/{user_id}/{travel_id}/deleteTravel") // 프론트 테스트중
+    public void deleteJoinTravel(@PathVariable int user_id, @PathVariable int travel_id) {
+        personservice.deleteJoinTravel(user_id, travel_id);
     }
 
 }
