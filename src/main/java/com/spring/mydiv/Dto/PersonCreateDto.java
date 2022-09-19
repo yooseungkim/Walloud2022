@@ -32,6 +32,25 @@ public class PersonCreateDto {
         public static Simple fromEntity(Person person) {
             return Simple.builder()
                     .Id(person.getId())
+                    .Name(person.getUser().getName())
+                    .build();
+        }
+    }
+
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+    public static class HomeView {
+        private Long Id;
+        private String Name;
+        private String Role;
+        public static HomeView fromEntity(Person person) {
+            return HomeView.builder()
+                    .Id(person.getId())
+                    .Name(person.getUser().getName())
+                    .Role(person.getRole())
                     .build();
         }
     }

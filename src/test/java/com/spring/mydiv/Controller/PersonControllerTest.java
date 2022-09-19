@@ -1,6 +1,5 @@
 package com.spring.mydiv.Controller;
 
-import com.spring.mydiv.Service.UserService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,13 +9,11 @@ import org.springframework.test.annotation.Commit;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @SpringBootTest
-class ParticipateControllerTest {
+class PersonControllerTest {
 
     @Autowired(required=true)
-    private ParticipateController participateController;
+    private PersonController personController;
 
     @Test
     @Commit
@@ -28,7 +25,7 @@ class ParticipateControllerTest {
         map.put("user_email", "star4007lg@gm.gist.ac.kr");
 
         //when
-        String answer = participateController.createPerson2Travel(travelId, map);
+        String answer = personController.createPerson2Travel(travelId, map);
 
         //then
         System.out.println(answer);

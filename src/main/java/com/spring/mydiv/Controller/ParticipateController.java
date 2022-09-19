@@ -25,29 +25,7 @@ import java.util.Optional;
 @RequestMapping("/api")
 public class ParticipateController {
 
-    private final UserService userService;
-    private final TravelService travelService;
-    private final PersonService personService;
-    
-    @PostMapping("/{userid}/{travelid}/invitePerson") //프론트 테스트중
-    public String createPerson2Travel(@PathVariable int travelid,
-                                    @RequestBody Map map){
-        String user_email = map.get("user_email").toString();
-        UserDetailDto userDetailDto = userService.getUserInfoByEmail(user_email);
-        if (userDetailDto == null){
-            return "-1";
-        } else {
-            PersonCreateDto.Request request = new PersonCreateDto.Request(
-                    userDetailDto,
-                    travelService.getTravelInfo(travelid));
-            PersonDto personDto = personService.createPerson(request);
-            if (personDto != null)
-                return "200"; //success
-            else return "-2"; //fail
-        }
-    }
-
-    /**사람 생성하고 디테일뷰에서 해당 내용 불러오기
+    /**사람 "디테일뷰"에서 해당 내용 불러오기
      * -> 이 사람의 기본 정보(user에서 가져와야함)
      * -> +) getPersonInfoByPersonId
      * -> 이 사람이 참여한 event list(from event serv) -> getJoinEventListByPersonId

@@ -1,5 +1,6 @@
 package com.spring.mydiv.Dto;
 
+import com.spring.mydiv.Entity.Event;
 import com.spring.mydiv.Entity.User;
 import lombok.*;
 
@@ -40,12 +41,37 @@ public class EventCreateDto {
         @NotNull
         private int Price;
 
-        public static UserCreateDto.Response fromEntity(User user) {
-            return UserCreateDto.Response.builder()
-                    .Name(user.getName())
-                    .Email(user.getEmail())
-                    .Password(user.getPassword())
-                    .Account(user.getAccount())
+        public static Response fromEntity(Event event) {
+            return Response.builder()
+                    .Name(event.getName())
+//아직 안짬 !!
+                    .build();
+        }
+    }
+
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+    public static class HomeView {
+        @NotNull
+        private Long Id;
+        @NotNull
+        private String Name;
+        @NotNull
+        private java.util.Date Date;
+        @NotNull
+        private int Price;
+
+        private String Payer;
+
+        public static HomeView fromEntity(Event event) {
+            return HomeView.builder()
+                    .Id(event.getId())
+                    .Name(event.getName())
+                    .Date(event.getDate())
+                    .Price(event.getPrice())
                     .build();
         }
     }
