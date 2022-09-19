@@ -2,8 +2,10 @@ package com.spring.mydiv.Service;
 
 import javax.transaction.Transactional;
 
+import com.spring.mydiv.Dto.ParticipateCreateDto;
 import com.spring.mydiv.Dto.PersonCreateDto;
 import com.spring.mydiv.Entity.Travel;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.spring.mydiv.Dto.PersonDto;
@@ -74,6 +76,11 @@ public class PersonService {
 
     public int getPersonCountInTravel(int travelId){
         return personRepository.countDistinctByTravel_Id(Long.valueOf(travelId));
+    }
+
+    @Transactional
+    public ResponseEntity<ParticipateCreateDto> updatePersonWithEvent(){
+        return null;
     }
 
 }

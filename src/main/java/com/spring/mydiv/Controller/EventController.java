@@ -1,19 +1,18 @@
 package com.spring.mydiv.Controller;
 
-import com.spring.mydiv.Dto.EventCreateDto;
-import com.spring.mydiv.Dto.PersonCreateDto;
-import com.spring.mydiv.Dto.TravelCreateDto;
-import com.spring.mydiv.Dto.UserCreateDto;
+import com.spring.mydiv.Dto.*;
 import com.spring.mydiv.Entity.Person;
 import com.spring.mydiv.Entity.Travel;
 import com.spring.mydiv.Entity.User;
 import com.spring.mydiv.Repository.PersonRepository;
 import com.spring.mydiv.Repository.UserRepository;
 import com.spring.mydiv.Service.EventService;
+import com.spring.mydiv.Service.ParticipateService;
 import com.spring.mydiv.Service.PersonService;
 import com.spring.mydiv.Service.TravelService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.unit.DataUnit;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -28,6 +27,7 @@ public class EventController {
     private final EventService eventService;
     private final PersonService personService;
     private final TravelService travelService;
+    private final ParticipateService participateService;
 
     /**이벤트 생성하는 화면에서 필요한거
      * - 여행 참가자 리스트
@@ -42,23 +42,28 @@ public class EventController {
      * -> 참가한 유저 리스트도 주셔야 해요!(map에 넣어서)
      * */
     @PostMapping("/{userid}/{travelid}/CreateEvent") //백엔드 테스트중
-    public ResponseEntity<EventCreateDto.Response> createEvent(@PathVariable int travelid,
-                                                              @RequestBody Map map){
+    public int createEvent(@PathVariable int travelid, @RequestBody Map map){
+        //set event dto(name, travel(TravelCreateDto.Response), date, price)
         EventCreateDto.Request request = EventCreateDto.Request.builder()
                 .Name(map.get("event_name").toString())
                 .Travel(travelService.getTravelInfo(travelid))
                 .Date((Date) map.get("event_name"))
                 .Price(Integer.parseInt(map.get("event_name").toString()))
                 .build();
-        if (ResponseEntity.ok(eventService.createEvent(request)).toString() =="200"){
-            /**
-             * 날짜 & name 으로 일치하는 event를 검색,
-             * 해당 값으로 participate 업데이트
-             * - 해당 이벤트에서의 role만 결정
-             * 해당 값으로 person 업데이트
-             * - 결론적으로 얻어야 할 값 등 정해야함*/
-        }
-        return null;
+        ResponseEntity<EventCreateDto.Response> eventDto = eventService.createEvent(request);
+        //get event dto(eventId)
+
+        if (ResponseEntity.ok(eventDto).toString() =="200"){ //success to create event
+            //set parti dto(personId, eventId, role)
+            List<ParticipateCreateDto.Request> partiDtoList =
+                    (List<ParticipateCreateDto.Request>)map.get("parti_list");
+            if (ResponseEntity.ok(participateService.createParticipate()).toString() == "200"){
+                //set person dto(sumsend, sumget, difference, travelRole)
+                if (ResponseEntity.ok(personService.updatePersonWithEvent()).toString() == "200")
+                    return 200; //success all
+                else return -3; //fail to update person
+            } else return -2; //fail to create participate
+        } else return -1; //fail to create event
     }
 
     /**이벤트 생성하고 디테일뷰에서 해당 내용 불러오기

@@ -21,7 +21,7 @@ public class Event {
 	private Long id;
 
 	@ManyToOne
-	@JoinColumn(name = "travel_id", referencedColumnName = "user_id")
+	@JoinColumn(name = "travel_id")
 	private Travel travel;
 	
 	@Column(name = "event_name", length = 200)
