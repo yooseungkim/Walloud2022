@@ -33,7 +33,7 @@ const App = () => {
           element={<EventDescription />}
         />
         <Route path="/selectTravel" element={<SelectTravel />} />
-        <Route path="/:username/:travel" element={<Home />} />
+        <Route path="/:userid/:travelid/:travelname" element={<Home />} />
       </Routes>
     </div>
   );
