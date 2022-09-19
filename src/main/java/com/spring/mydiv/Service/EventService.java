@@ -4,7 +4,9 @@ import com.spring.mydiv.Dto.EventCreateDto;
 import com.spring.mydiv.Dto.PersonCreateDto;
 import com.spring.mydiv.Entity.Event;
 import com.spring.mydiv.Entity.Person;
+import com.spring.mydiv.Entity.Travel;
 import com.spring.mydiv.Repository.EventRepository;
+import com.spring.mydiv.Repository.ParticipateRepository;
 import com.spring.mydiv.Repository.PersonRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +29,17 @@ public class EventService {
     private final EventRepository eventRepository;
 
     public ResponseEntity<EventCreateDto.Response> createEvent(EventCreateDto.Request request){
-        return null;
+        Event event = Event.builder()
+                .name(request.getName())
+                .date(request.getDate())
+                .price(request.getPrice())
+                .travel(Travel.builder()
+                        .id(request.getTravel().getId())
+                        .name(request.getTravel().getName())
+                        .build())
+                .build();
+        eventRepository.save(event);
+        return EventDto.fromEntity(event); //해야함
     }
 
     public List<EventCreateDto.HomeView> getEventInfoInTravel(int travelId){

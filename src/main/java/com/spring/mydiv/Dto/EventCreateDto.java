@@ -33,6 +33,8 @@ public class EventCreateDto {
     @Builder
     public static class Response {
         @NotNull
+        private Long Id;
+        @NotNull
         private String Name;
         @NotNull
         private TravelCreateDto.Response Travel;
@@ -43,8 +45,8 @@ public class EventCreateDto {
 
         public static Response fromEntity(Event event) {
             return Response.builder()
+                    .Id(event.getId())
                     .Name(event.getName())
-//아직 안짬 !!
                     .build();
         }
     }
