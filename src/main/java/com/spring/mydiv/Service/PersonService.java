@@ -58,7 +58,7 @@ public class PersonService {
         for (Person p : list){
             PersonCreateDto.Simple person = PersonCreateDto.Simple.builder()
                     .Id(Long.valueOf(p.getUser().getId()))
-                    .Name(p.getUser().getName().toString())
+                    .Name(p.getUser().getName())
                     .build();
             result.add(person);
         }

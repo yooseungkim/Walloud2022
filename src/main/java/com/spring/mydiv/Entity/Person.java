@@ -29,11 +29,17 @@ public class Person {
 	private Long id;
 	
 	@ManyToOne
-	@JoinColumn(name="user_id")
+	@JoinColumns({
+			@JoinColumn(name = "user_id", referencedColumnName = "user_id"),
+			@JoinColumn(name = "user_name", referencedColumnName = "user_name")
+	})
 	private User user;
 
 	@ManyToOne
-	@JoinColumn(name="travel_id")
+	@JoinColumns({
+			@JoinColumn(name = "travel_id", referencedColumnName = "travel_id"),
+			@JoinColumn(name = "travel_name", referencedColumnName = "travel_name")
+	})
 	private Travel travel;
 	
 	@Column(name = "person_sumsend", nullable = false)

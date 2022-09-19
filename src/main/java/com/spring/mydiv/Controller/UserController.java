@@ -33,11 +33,6 @@ public class UserController {
 
     @PostMapping(value = "/Register")
     public ResponseEntity<UserCreateDto.Response> createUser(@RequestBody Map map) {
-//        System.out.println("");
-//        System.out.println(map.get("user_name"));
-//        System.out.println(map.get("user_email"));
-//        System.out.println(map.get("user_password"));
-//        System.out.println(map.get("user_account"));
         UserCreateDto.Request request = new UserCreateDto.Request(map.get("user_name").toString(),
                 map.get("user_email").toString(),
                 map.get("user_password").toString(),
@@ -57,7 +52,7 @@ public class UserController {
     }
 
     // front; user info_travellist == null -> return "Create travel!"
-    @GetMapping("/{no}") //프론트 테스트중 -> travel name, travel info 둘 다 넘기는걸로 수정했는데 에러가 난 듯 하다 ...
+    @GetMapping("/{no}")
     public UserDetailDto.WithTravel getUserInfo(@PathVariable int no){
         return userservice.getUserInfoWithTravel(no);
     }
@@ -65,7 +60,7 @@ public class UserController {
     @PostMapping("/{no}/createTravel")
     public ResponseEntity<PersonDto> joinTravel(@PathVariable int no, @RequestBody Map map){
         String travel_name = map.get("travel_name").toString();
-    //       TravelCreateDto.Request travelInfo = new TravelCreateDto.Request(map.get("travel_name").toString());
+//        TravelCreateDto.Request travelInfo = new TravelCreateDto.Request(map.get("travel_name").toString());
         TravelCreateDto.Request travelInfo = new TravelCreateDto.Request(travel_name);
         PersonCreateDto.Request request = new PersonCreateDto.Request(
                 userservice.getUserInfo(no),
@@ -78,7 +73,7 @@ public class UserController {
      * -> 여행에서 참가하지 않는 것?
      * 일단은 후자로 작성했음.
      * */
-    @DeleteMapping("/{user_id}/{travel_id}/deleteTravel") // 프론트 테스트중
+    @DeleteMapping("/{user_id}/{travel_id}/deleteTravel")
     public void deleteJoinTravel(@PathVariable int user_id, @PathVariable int travel_id) {
         personservice.deleteJoinTravel(user_id, travel_id);
     }
