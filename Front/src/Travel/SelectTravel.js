@@ -7,6 +7,7 @@ const SelectTravel = () => {
   const user_id = useLocation().state.id;
   const [myTravel, setTravellist] = useState([]);
   const [try_del, setDelete] = useState(false);
+  const [checkallbutton, setcheckallbutton] = useState("전체 선택");
   const [checkedItems, setCheckedItems] = useState([]);
   const [checekdTravels, setCheckedTravel] = useState([]);
 
@@ -64,6 +65,7 @@ const SelectTravel = () => {
 
   const handleAllCheck = (checked) => {
     if(checked) {
+        setcheckallbutton("전체 선택")
         const idArray = [];
         const travelArray = [];
         myTravel.forEach((e) => {idArray.push(e.id);
@@ -74,6 +76,7 @@ const SelectTravel = () => {
         console.log("checked all",checkedItems);
     }
     else {
+        setcheckallbutton("전체 선택")
         setCheckedItems([]);
         setCheckedTravel([]);
         console.log("unchecked all",checkedItems);
@@ -91,8 +94,8 @@ const SelectTravel = () => {
         !try_del ? <div>{myTravel.map((travel, idx) => (
           <Link
             key={idx}
-            to={`/${user_id}/${travel.id}`}
-            state={{ user_id: user_id, travel: travel }}
+            to={`/${user_id}/${travel.id}/${travel.name}`}
+            state={{ user_id: user_id, travel_id : travel.id }}
           >
             <h3 style={{ display: "block", margin: "auto", textAlign: "center" }}>
               {travel.name}
@@ -104,8 +107,7 @@ const SelectTravel = () => {
             <input type='checkbox'
               onChange={(e) => handleAllCheck(e.target.checked)}
               checked={checkedItems.length === myTravel.length ? true : false} 
-            >
-            </input>
+            ></input>{checkallbutton}
             {myTravel.map((travel, idx) => (
                 <label key= {idx} className = "innerBox">
                     <input type = "checkbox"
@@ -113,7 +115,13 @@ const SelectTravel = () => {
                     onChange={(e) => checkHandler(e.target.checked, travel)}
                     checked = {checkedItems.includes(travel.id) ? true : false }
                     />
+                    <Link
+                    key={idx}
+                    to={`/${user_id}/${travel.id}/${travel.name}`}
+                    state={{ user_id: user_id, travel_id : travel.id }}
+                    >
                     <h3>{travel.name}</h3>
+                    </Link>
                 </label>
             ))}
         </div>

@@ -9,10 +9,8 @@ import plusSrc from "../img/plus.jpg";
 import axios from "axios";
 
 const Home = () => {
-  // const user = useLocation().state.user;
-  // const travel = useLocation().state.travel;
-  const user = useParams()["username"];
-  const travel = useParams()["travel"];
+  const user = useLocation().state.user_id;
+  const travel = useLocation().state.travel_id;
 
   const [userList, setuserList] = useState(users);
   const [eventList, seteventList] = useState(eventlist);
@@ -20,27 +18,18 @@ const Home = () => {
 
   ////////////////////////////////////
 
-  // useEffect(() => {
-  //   getEvent();
-  // }, []);
+  useEffect(() => {
+    console.log(user);
+  }, []);
 
-  // parameter = user info
-  const getEvent = async (travel) => {
-    await API.get("/travelComponents", {
-      params: {
-        user,
-        travel,
-      },
-    })
-      .then((res_event, res_users) => {
-        seteventList(res_event);
-        setuserList(res_users);
+  // parameter = user info,
+  const getEvent_User = async () => {
+    await axios.all([axios.get(`/`), axios.get(`/`)]).then(
+      axios.spread((res_users, res_travel) => {
+        console.log(res_users.data);
       })
-      .catch((error) => {
-        console.log(error);
-        // alert("travel missmatch");
-      });
-  };
+    )
+  }
 
   /////////////////////////////////
 
