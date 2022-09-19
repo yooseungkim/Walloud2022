@@ -39,7 +39,7 @@ public class EventService {
                         .build())
                 .build();
         eventRepository.save(event);
-        return EventDto.fromEntity(event); //해야함
+        return EventDto.fromEntity(event); //해야함 - fromEntity 의 역할?
     }
 
     public List<EventCreateDto.HomeView> getEventInfoInTravel(int travelId){
