@@ -5,6 +5,8 @@ import com.spring.mydiv.Entity.User;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
+import java.util.Date;
+import java.util.List;
 
 public class TravelCreateDto {
     @Getter
@@ -31,6 +33,32 @@ public class TravelCreateDto {
             return TravelCreateDto.Response.builder()
                     .Id(travel.getId())
                     .Name(travel.getName())
+                    .build();
+        }
+    }
+
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+    public static class HomeView {
+        @NotNull
+        private Long TravelId;
+        @NotNull
+        private String TravelName;
+
+        private List<PersonCreateDto.HomeView> PersonList;
+        private int PersonCount;
+
+        private List<EventCreateDto.HomeView> EventList;
+        private int EventCount;
+        private String Period;
+
+        public static HomeView fromEntity(Travel travel) {
+            return HomeView.builder()
+                    .TravelId(travel.getId())
+                    .TravelName(travel.getName())
                     .build();
         }
     }

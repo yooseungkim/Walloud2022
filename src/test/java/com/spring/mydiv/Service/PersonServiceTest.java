@@ -22,14 +22,14 @@ class PersonServiceTest {
     @Autowired(required=true)
     private TravelService travelService;
 
-/*    @Test
+    @Test
     @Commit
     @DisplayName("여행 생성")
     void createPerson() {
         //given
-        int userNo = 11;
+        int userNo = 13;
         TravelCreateDto.Request travelInfo = TravelCreateDto.Request.builder()
-                .Name("서울 여행")
+                .Name("전주 여행")
                 .build();
         PersonCreateDto.Request request = PersonCreateDto.Request.builder()
                 .User(userService.getUserInfo(userNo))
@@ -42,14 +42,14 @@ class PersonServiceTest {
         //then
         System.out.println("User name = " + person.getUser().getName());
         System.out.println("Travel name = " + person.getTravel().getName());
-    }*/
+    }
 
     @Test
     @Commit
     @DisplayName("여행 참가자 리스트 리턴")
     void getPersonNameInTravel(){
         //given
-        int travelId = 29; //남양주 여행
+        int travelId = 57; //서울 여행
 
         //when
         List<PersonCreateDto.Simple> list = personService.getPersonNameInTravel(travelId);
@@ -61,20 +61,20 @@ class PersonServiceTest {
 
     }
 
-//    @Test
-//    @Commit
-//    @DisplayName("여행 삭제")
-//    void deleteJoinTravel() {
-//        //given
-//        int userId = 11;
-//        int travelId = 30;
-//
-//        //when
-//        personService.deleteJoinTravel(userId, travelId);
-//
-//        //then
-//        System.out.println("delete check please!");
-//    }
+    @Test
+    @Commit
+    @DisplayName("여행 삭제")
+    void deleteJoinTravel() {
+        //given
+        int userId = 13;
+        int travelId = 58;
+
+        //when
+        personService.deleteJoinTravel(userId, travelId);
+
+        //then
+        System.out.println("check DB please!");
+    }
 
 
 }

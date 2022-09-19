@@ -34,4 +34,8 @@ public class TravelService {
         return TravelCreateDto.Response.fromEntity(info.get());
     }
 
+    public TravelCreateDto.HomeView getTravelToMainView(int travelId){
+        Optional<Travel> info = travelRepository.findById(Long.valueOf(travelId));
+        return TravelCreateDto.HomeView.fromEntity(info.get());
+    }
 }

@@ -52,19 +52,28 @@ public class PersonService {
         personRepository.deleteByUser_IdAndTravel_Id(Long.valueOf(userId), Long.valueOf(travelId));
     }
 
-    public List<PersonCreateDto.Simple> getPersonNameInTravel(@PathVariable int travelid){
-        List<Person> list = personRepository.findByTravel_Id(Long.valueOf(travelid));
+    public List<PersonCreateDto.Simple> getPersonNameInTravel(int travelId){
+        List<Person> list = personRepository.findByTravel_Id(Long.valueOf(travelId));
         List<PersonCreateDto.Simple> result = new ArrayList<PersonCreateDto.Simple>();
         for (Person p : list){
-            PersonCreateDto.Simple person = PersonCreateDto.Simple.builder()
-                    .Id(Long.valueOf(p.getUser().getId()))
-                    .Name(p.getUser().getName().toString())
-                    .build();
+            PersonCreateDto.Simple person = PersonCreateDto.Simple.fromEntity(p);
             result.add(person);
         }
         return result;
     }
 
+    public List<PersonCreateDto.HomeView> getPersonInfoInTravel(int travelId){
+        List<Person> list = personRepository.findByTravel_Id(Long.valueOf(travelId));
+        List<PersonCreateDto.HomeView> result = new ArrayList<PersonCreateDto.HomeView>();
+        for (Person p : list){
+            PersonCreateDto.HomeView person = PersonCreateDto.HomeView.fromEntity(p);
+            result.add(person);
+        }
+        return result;
+    }
 
+    public int getPersonCountInTravel(int travelId){
+        return personRepository.countDistinctByTravel_Id(Long.valueOf(travelId));
+    }
 
 }

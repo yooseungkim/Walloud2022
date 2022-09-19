@@ -66,10 +66,9 @@ public class UserService {
         List<Person> list = personRepository.findByUser_Id(Long.valueOf(no));
         List<TravelCreateDto.Response> result = new ArrayList<TravelCreateDto.Response>();
         for (Person p : list){
-            Optional<Travel> info = travelRepository.findById(Long.valueOf(p.getTravel().getId()));
             TravelCreateDto.Response travel = TravelCreateDto.Response.builder()
-                    .Id(info.get().getId())
-                    .Name(info.get().getName())
+                    .Id(p.getTravel().getId())
+                    .Name(p.getTravel().getName())
                     .build();
             result.add(travel);
         }
@@ -80,6 +79,18 @@ public class UserService {
         Optional<User> info = userRepository.findById(Long.valueOf(no));
         UserDetailDto.WithTravel dto = UserDetailDto.WithTravel.fromEntity(info.get());
         dto.setTravelList(getUserJoinedTravel(no));
+        return dto;
+    }
+
+    public UserDetailDto getUserInfoByEmail(String email){
+        Optional<User> user = userRepository.findByEmail(email);
+        UserDetailDto dto = UserDetailDto.builder()
+                .Id(user.get().getId())
+                .Name(user.get().getName())
+                .Email(user.get().getEmail())
+                .Account(user.get().getAccount())
+                .Password(user.get().getPassword())
+                .build();
         return dto;
     }
 

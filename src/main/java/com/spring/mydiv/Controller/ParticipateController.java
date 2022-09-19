@@ -1,9 +1,21 @@
 package com.spring.mydiv.Controller;
 
+import com.spring.mydiv.Dto.PersonCreateDto;
+import com.spring.mydiv.Dto.PersonDto;
+import com.spring.mydiv.Dto.TravelCreateDto;
+import com.spring.mydiv.Dto.UserDetailDto;
+import com.spring.mydiv.Entity.User;
+import com.spring.mydiv.Repository.PersonRepository;
+import com.spring.mydiv.Repository.UserRepository;
+import com.spring.mydiv.Service.ParticipateService;
+import com.spring.mydiv.Service.PersonService;
+import com.spring.mydiv.Service.TravelService;
+import com.spring.mydiv.Service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
+import java.util.Optional;
 
 /**
  * @author 12nov
@@ -13,15 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class ParticipateController {
 
-    /**여행에 사람 초대(생성)하기
-     * -> 초대하고 싶은 사람 이메일로 사람 찾는 기능 필요*/
-//    @PostMapping("/{userid}/{travelid}/invitePerson")
-//    public void createPerson2Travel(String email){
-//        //email: 초대할 사람 이메일 -> 아이디로 바꿔도 됨
-//        //return service. user DB에서 이메일 일치하는 사람 있으면 -> person DB에 추가
-//    }
-
-    /**사람 생성하고 디테일뷰에서 해당 내용 불러오기
+    /**사람 "디테일뷰"에서 해당 내용 불러오기
      * -> 이 사람의 기본 정보(user에서 가져와야함)
      * -> +) getPersonInfoByPersonId
      * -> 이 사람이 참여한 event list(from event serv) -> getJoinEventListByPersonId
