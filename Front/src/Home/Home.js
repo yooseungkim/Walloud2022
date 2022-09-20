@@ -28,8 +28,8 @@ const Home = () => {
       axios.spread((res_users, res_travel) => {
         console.log(res_users.data);
       })
-    )
-  }
+    );
+  };
 
   /////////////////////////////////
 
@@ -90,7 +90,7 @@ const Home = () => {
                 travelName={travel}
               />
             </div>
-            <Link to="createEvent" key={(user, travel)}>
+            <Link to="createUser" key={(user, travel)}>
               <button>Add User</button>
             </Link>
           </div>

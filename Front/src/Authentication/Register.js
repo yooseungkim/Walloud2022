@@ -2,9 +2,9 @@ import axios from "axios";
 import { React, useState } from "react";
 import { Link } from "react-router-dom";
 
-const Register = () => {  
+const Register = () => {
   const [user_name, setname] = useState("");
-  const [user_account,setaccout] = useState("");
+  const [user_account, setaccout] = useState("");
   const [user_email, setEmail] = useState("");
   const [user_password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -15,7 +15,7 @@ const Register = () => {
 
   const onAccountHandler = (event) => {
     setaccout(event.currentTarget.value);
-  }
+  };
 
   const onEmailHandler = (event) => {
     setEmail(event.currentTarget.value);
@@ -30,23 +30,24 @@ const Register = () => {
   };
 
   const CreateUser = async () => {
-    await axios.post('/api/Register',{
-      user_name : user_name,
-      user_email : user_email,
-      user_password : user_password,
-      user_account : user_account
-    })
-    .then((response) =>{
-      console.log(response);
-      setname("");
-      setEmail("");
-      setaccout("");
-      setPassword("");
-      setConfirmPassword("");
-    })
-    .catch((error) => {
-      console.log(error);
-    })
+    await axios
+      .post("/api/Register", {
+        user_name: user_name,
+        user_email: user_email,
+        user_password: user_password,
+        user_account: user_account,
+      })
+      .then((response) => {
+        console.log(response);
+        setname("");
+        setEmail("");
+        setaccout("");
+        setPassword("");
+        setConfirmPassword("");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const onSubmit = (event) => {
@@ -60,8 +61,7 @@ const Register = () => {
       event.preventDefault();
       alert("Password is too short");
     } else {
-      event.preventDefault();
-      console.log(user_name,user_account,user_email,user_password);
+      console.log(user_name, user_account, user_email, user_password);
       CreateUser();
     }
   };
@@ -71,7 +71,7 @@ const Register = () => {
       <h2>Register</h2>
       <form style={{ margin: "10px auto", textAlign: "center" }}>
         <div>
-          <label for="email">Email</label>
+          <label htmlFor="email">Email</label>
           <input
             type="email"
             id="email"
@@ -80,7 +80,7 @@ const Register = () => {
           />
         </div>
         <div>
-          <label for="name">Name</label>
+          <label htmlFor="name">Name</label>
           <input
             type="text"
             id="name"
@@ -89,7 +89,7 @@ const Register = () => {
           />
         </div>
         <div>
-          <label for="account">Account</label>
+          <label htmlFor="account">Account</label>
           <input
             type="text"
             id="account"
@@ -98,7 +98,7 @@ const Register = () => {
           />
         </div>
         <div>
-          <label for="password">Password</label>
+          <label htmlFor="password">Password</label>
           <input
             type="password"
             id="password"
@@ -107,7 +107,7 @@ const Register = () => {
           />
         </div>
         <div>
-          <label for="confirm-password">Confirm Password</label>
+          <label htmlFor="confirm-password">Confirm Password</label>
           <input
             type="password"
             id="confirm-password"
