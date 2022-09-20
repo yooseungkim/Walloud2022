@@ -23,6 +23,7 @@ public class EventCreateDto {
         private java.util.Date Date;
         @NotNull
         private int Price;
+        private int PartiCount;
         private String Image;
     }
 
@@ -36,17 +37,15 @@ public class EventCreateDto {
         private Long Id;
         @NotNull
         private String Name;
-        @NotNull
-        private TravelCreateDto.Response Travel;
-        @NotNull
-        private java.util.Date Date;
-        @NotNull
-        private int Price;
+        private Double DividePrice;
+        private Double TakePrice;
 
         public static Response fromEntity(Event event) {
             return Response.builder()
                     .Id(event.getId())
                     .Name(event.getName())
+                    .DividePrice(event.getDividePrice())
+                    .TakePrice(event.getTakePrice())
                     .build();
         }
     }
@@ -65,7 +64,6 @@ public class EventCreateDto {
         private java.util.Date Date;
         @NotNull
         private int Price;
-
         private String Payer;
 
         public static HomeView fromEntity(Event event) {

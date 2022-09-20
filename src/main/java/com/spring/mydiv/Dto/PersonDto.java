@@ -30,7 +30,7 @@ public class PersonDto {
 	private Double SumSend;
 	private Double SumGet;
 	private Double Difference;
-	private String Role;
+	private Boolean Role;
 	
     public static PersonDto fromEntity(Person person) {
         return PersonDto.builder()

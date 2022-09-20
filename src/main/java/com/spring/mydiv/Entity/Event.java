@@ -37,7 +37,7 @@ public class Event {
 	private Double dividePrice;
 	
 	@Column(name = "event_getprice")
-	private Double getPrice;
+	private Double takePrice;
 	
 	@Column(name = "event_image")
 	private String image;

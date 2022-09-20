@@ -4,7 +4,10 @@ import java.util.List;
 
 import com.spring.mydiv.Entity.Person;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 
 /**
@@ -15,6 +18,11 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
 	List<Person> findByTravel_Id(Long id);
 	void deleteByUser_IdAndTravel_Id(Long userid, Long travelid);
 	int countDistinctByTravel_Id(Long id);
+
+	@Transactional
+	@Modifying
+	@Query("update Person p set p.sumSend = ?1, p.sumGet = ?2, p.difference = ?3, p.role = ?4 where p.id = ?5")
+	int updateSumSendAndSumGetAndDifferenceAndRoleById(Double sumSend, Double sumGet, Double difference, Boolean role, Long id);
 
 }
 

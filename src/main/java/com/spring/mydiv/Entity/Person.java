@@ -53,7 +53,10 @@ public class Person implements Serializable {
 	@Column(name = "person_difference", nullable = false)
 	private Double difference;
 	
-	@Column(name = "person_travelrole", length = 50)
-	private String role;
+	@Column(name = "person_travelrole")
+	private Boolean role;
+	/**travel Role
+	 * 1, true: TAKER
+	 * 0, false: SENDER*/
 	
 }

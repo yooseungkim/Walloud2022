@@ -2,15 +2,17 @@ package com.spring.mydiv.Entity;
 
 import javax.persistence.*;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-@Entity
-@Table(name = "PARTICIPANT")
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Entity
+@EntityListeners(AuditingEntityListener.class)
+@Table(name = "participant")
 public class Participant {
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,10 +20,7 @@ public class Participant {
 	private Long id;
 
 	@ManyToOne
-	@JoinColumns({
-			@JoinColumn(name = "person_id", referencedColumnName = "person_id"),
-			@JoinColumn(name = "person_name", referencedColumnName = "user_name")
-	})
+	@JoinColumn(name = "person_id", referencedColumnName = "person_id")
 	private Person person;
 
 	@ManyToOne
@@ -31,7 +30,7 @@ public class Participant {
 	})
 	private Event event;
 	
-	@Column(name = "participant_eventRole", length = 1)
+	@Column(name = "participant_eventrole", length = 1)
 	private Boolean eventRole;
 	/**Boolean eventRole
 	 * 1, true: payer
