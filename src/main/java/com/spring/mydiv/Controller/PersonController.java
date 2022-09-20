@@ -22,7 +22,7 @@ public class PersonController {
     private final TravelService travelService;
     private final PersonService personService;
 
-    @PostMapping("/{userid}/{travelid}/invitePerson") //프론트 테스트중
+    @PostMapping("/{userid}/{travelid}/invitePerson")
     public String createPerson2Travel(@PathVariable int travelid,
                                       @RequestBody Map map){
         String user_email = map.get("user_email").toString();

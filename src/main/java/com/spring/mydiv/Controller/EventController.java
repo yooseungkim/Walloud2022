@@ -29,7 +29,7 @@ public class EventController {
         return personService.getPersonNameInTravel(travelid);
     }
 
-    @PostMapping("/{userid}/{travelid}/CreateEvent") //백엔드 테스트중
+    @PostMapping("/{userid}/{travelid}/CreateEvent")
     public int createEvent(@PathVariable int travelId, @RequestBody Map map){
         //set event dto(name, travel(TravelCreateDto.Response), date, price)
         List<Map> partiDtoList = (List)map.get("parti_list");
