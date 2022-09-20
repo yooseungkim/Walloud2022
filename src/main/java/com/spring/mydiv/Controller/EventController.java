@@ -10,6 +10,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -25,19 +28,20 @@ public class EventController {
     private final ParticipantService participantService;
 
     @GetMapping("/{userid}/{travelid}/createEvent") //don't use this
-    public List<PersonCreateDto.Simple> getPersonNameInTravel(@PathVariable int travelid){
+    public List<PersonCreateDto.Simple> getPersonNameInTravel(@PathVariable("travelid") int travelid){
         return personService.getPersonNameInTravel(travelid);
     }
 
     @PostMapping("/{userid}/{travelid}/CreateEvent")
-    public int createEvent(@PathVariable int travelId, @RequestBody Map map){
+    public int createEvent(@PathVariable("travelid") int travelId, @RequestBody Map map) throws ParseException {
         //set event dto(name, travel(TravelCreateDto.Response), date, price)
+        DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         List<Map> partiDtoList = (List)map.get("parti_list");
         int partiCount = partiDtoList.size();
         EventCreateDto.Request request = EventCreateDto.Request.builder()
                 .Name(map.get("event_name").toString())
                 .Travel(travelService.getTravelInfo(travelId))
-                .Date((Date) map.get("event_date"))
+                .Date((Date) simpleDateFormat.parse(map.get("event_date").toString()))
                 .Price(Integer.parseInt(map.get("price").toString()))
                 .PartiCount(partiCount)
                 .build();
@@ -45,7 +49,7 @@ public class EventController {
         EventCreateDto.Response eventDto = eventService.createEvent(request);
         //get event dto(eventId)
 
-        if (ResponseEntity.ok(eventDto).toString() =="200"){ //success to create event
+        if (ResponseEntity.ok(eventDto).getStatusCodeValue() == 200){ //success to create event
             Long eventId = eventDto.getId();
             List<Person> personList = new ArrayList<>();
 
@@ -58,10 +62,10 @@ public class EventController {
                 ParticipantCreateDto.Request partiRequest = ParticipantCreateDto.Request.builder()
                         .person(person)
                         .event(eventService.getEventEntityByEventId(Long
-                                        .valueOf(partiDto.get("event_id").toString())).get())
+                                        .valueOf(eventDto.getId().toString())).get())
                         .role(Boolean.valueOf(partiDto.get("role").toString()))
                         .build();
-                if (ResponseEntity.ok(participantService.createParticipant(partiRequest)).toString() != "200")
+                if (ResponseEntity.ok(participantService.createParticipant(partiRequest)).getStatusCodeValue() != 200)
                     return -2; //fail to create participate
             }
 
