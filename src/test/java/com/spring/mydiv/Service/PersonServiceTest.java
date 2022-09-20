@@ -29,7 +29,7 @@ class PersonServiceTest {
         //given
         int userNo = 13;
         TravelCreateDto.Request travelInfo = TravelCreateDto.Request.builder()
-                .Name("전주 여행")
+                .Name("광주 여행")
                 .build();
         PersonCreateDto.Request request = PersonCreateDto.Request.builder()
                 .User(userService.getUserInfo(userNo))
@@ -75,6 +75,10 @@ class PersonServiceTest {
         //then
         System.out.println("check DB please!");
     }
+
+//    @Test
+//    @Commit
+//    @DisplayName("여행")
 
 
 }
