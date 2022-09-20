@@ -2,25 +2,22 @@ package com.spring.mydiv.Service;
 
 import javax.transaction.Transactional;
 
-import com.spring.mydiv.Dto.ParticipateCreateDto;
+import com.spring.mydiv.Dto.ParticipantCreateDto;
 import com.spring.mydiv.Dto.PersonCreateDto;
 import com.spring.mydiv.Entity.Travel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.spring.mydiv.Dto.PersonDto;
-import com.spring.mydiv.Dto.UserCreateDto;
 import com.spring.mydiv.Entity.Person;
 import com.spring.mydiv.Entity.User;
 import com.spring.mydiv.Repository.PersonRepository;
-import com.spring.mydiv.Repository.TravelRepository;
-import com.spring.mydiv.Repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author 12nov
@@ -64,6 +61,10 @@ public class PersonService {
         return result;
     }
 
+    public Optional<Person> getPersonEntityByPersonId(Long id){
+        return personRepository.findById(id);
+    }
+
     public List<PersonCreateDto.HomeView> getPersonInfoInTravel(int travelId){
         List<Person> list = personRepository.findByTravel_Id(Long.valueOf(travelId));
         List<PersonCreateDto.HomeView> result = new ArrayList<PersonCreateDto.HomeView>();
@@ -79,8 +80,45 @@ public class PersonService {
     }
 
     @Transactional
-    public ResponseEntity<ParticipateCreateDto> updatePersonWithEvent(){
-        return null;
-    }
+    public void updatePersonWithEvent(List<Person> personList,
+                                      Long payer_person_id,
+                                      Double dividePrice,
+                                      Double takePrice){
+        int TAKER_index = -1;
+        Double tmpDifference = Double.MIN_VALUE;
+        int index = 0;
 
+        for (Person p : personList){
+            // update sumget & sumsend
+            if (p.getId().equals(payer_person_id)){ // payer
+                if (p.getSumSend() == null) p.setSumGet(takePrice);
+                else p.setSumGet(p.getSumGet() + takePrice);
+            } else { // ~payer
+                if (p.getSumGet() == null) p.setSumSend(dividePrice);
+                else p.setSumSend(p.getSumSend() + dividePrice);
+            }
+
+            // update difference
+            if (p.getSumGet() == null) p.setDifference(-p.getSumSend());
+            else if (p.getSumSend() == null) p.setDifference(p.getSumGet());
+            else p.setDifference(p.getSumGet() - p.getSumSend());
+
+            if (p.getDifference() > tmpDifference) {
+                TAKER_index = index;
+                tmpDifference = p.getDifference();
+            }
+
+            // set default Role
+            p.setRole(false);
+
+            index++;
+        }
+        // update TAKER role
+        personList.get(TAKER_index).setRole(true);
+
+        for (Person p : personList)
+            personRepository.updateSumSendAndSumGetAndDifferenceAndRoleById(p.getSumSend(),
+                    p.getSumGet(), p.getDifference(), p.getRole(),
+                    p.getId());
+    }
 }

@@ -33,7 +33,7 @@ class TravelServiceTest {
     @DisplayName("여행 정보 리턴")
     void getTravelInfo() {
         //given
-        int id = 9;
+        int id = 57;
 
         //when
         TravelCreateDto.Response info = travelService.getTravelInfo(id);

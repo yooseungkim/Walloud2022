@@ -25,7 +25,7 @@ public class TravelController {
     private final PersonService personService;
     private final EventService eventService;
 
-    @GetMapping("/{userid}/{travelId}") //백엔드 테스트중
+    @GetMapping("/{userid}/{travelId}")
     public TravelCreateDto.HomeView getTravelToMainView(@PathVariable int travelId){
         TravelCreateDto.HomeView homeView = travelservice.getTravelToMainView(travelId);
         homeView.setPersonList(personService.getPersonInfoInTravel(travelId));
