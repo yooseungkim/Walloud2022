@@ -24,10 +24,13 @@ const App = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/calendar" element={<Calendar />} />
         <Route
-          path="/:username/:travel/createEvent"
+          path="/:username/:userid/:travelid/createEvent"
           element={<CreateEvent />}
         />
-        <Route path="/:username/:travel/createUser" element={<CreateUser />} />
+        <Route
+          path="/:username/:userid/:travelid/createUser"
+          element={<CreateUser />}
+        />
         <Route
           path="/:username/:travel/event/:event"
           element={<EventDescription />}
