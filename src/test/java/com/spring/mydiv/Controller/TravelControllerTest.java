@@ -26,6 +26,7 @@ class TravelControllerTest {
         TravelCreateDto.HomeView homeView = travelController.getTravelToMainView(travelId);
 
         //then
+        System.out.println(homeView.getPeriod());
         System.out.println(homeView.getTravelId());
     }
 }

@@ -1,24 +1,19 @@
 package com.spring.mydiv.Service;
 
 import com.spring.mydiv.Dto.EventCreateDto;
-import com.spring.mydiv.Dto.PersonCreateDto;
 import com.spring.mydiv.Entity.Event;
 import com.spring.mydiv.Entity.Person;
 import com.spring.mydiv.Entity.Travel;
 import com.spring.mydiv.Repository.EventRepository;
-import com.spring.mydiv.Repository.ParticipateRepository;
-import com.spring.mydiv.Repository.PersonRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
-import javax.xml.stream.util.EventReaderDelegate;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author 12nov
@@ -28,7 +23,7 @@ import java.util.List;
 public class EventService {
     private final EventRepository eventRepository;
 
-    public ResponseEntity<EventCreateDto.Response> createEvent(EventCreateDto.Request request){
+    public EventCreateDto.Response createEvent(EventCreateDto.Request request){
         Event event = Event.builder()
                 .name(request.getName())
                 .date(request.getDate())
@@ -37,9 +32,11 @@ public class EventService {
                         .id(request.getTravel().getId())
                         .name(request.getTravel().getName())
                         .build())
+                .dividePrice((double)request.getPrice()/request.getPartiCount())
+                .takePrice((double)request.getPrice()/request.getPartiCount()*(request.getPartiCount()-1))
                 .build();
         eventRepository.save(event);
-        return EventDto.fromEntity(event); //해야함 - fromEntity 의 역할?
+        return EventCreateDto.Response.fromEntity(event);
     }
 
     public List<EventCreateDto.HomeView> getEventInfoInTravel(int travelId){
@@ -67,6 +64,10 @@ public class EventService {
         String periodFormat = dateFormat.format(format2) + " ~ " + dateFormat.format(format1)
                 + ", " + diffDays + " days";
         return periodFormat;
+    }
+
+    public Optional<Event> getEventEntityByEventId(Long id){
+        return eventRepository.findById(id);
     }
 
 }

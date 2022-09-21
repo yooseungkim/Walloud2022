@@ -9,8 +9,8 @@ const CreateUser = () => {
   return (
     <div>
       <h2>Add User</h2>
-      <label>Email</label>
-      <input type="email" />
+      <label htmlFor="email">Email</label>
+      <input id="email" type="email" />
       <Link to={`/${user}/${travel}`} state={{ user: user, travel: travel }}>
         <button>Submit</button>
       </Link>

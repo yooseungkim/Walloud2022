@@ -1,11 +1,14 @@
 package com.spring.mydiv.Dto;
 
+import com.spring.mydiv.Entity.Event;
+import com.spring.mydiv.Entity.Participant;
+import com.spring.mydiv.Entity.Person;
 import com.spring.mydiv.Entity.Travel;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
 
-public class ParticipateCreateDto {
+public class ParticipantCreateDto {
     @Getter
     @Setter
     @AllArgsConstructor
@@ -13,8 +16,9 @@ public class ParticipateCreateDto {
     @Builder
     public static class Request {
         @NotNull
-        private Long personId;
-        private Long eventId;
+        private Person person;
+        @NotNull
+        private Event event;
         @NotNull
         private Boolean role;
         /**Boolean eventRole
@@ -33,10 +37,9 @@ public class ParticipateCreateDto {
         private Long Id;
         @NotNull
         private String Name;
-        public static TravelCreateDto.Response fromEntity(Travel travel) {
-            return TravelCreateDto.Response.builder()
-                    .Id(travel.getId())
-                    .Name(travel.getName())
+        public static Response fromEntity(Participant participant) {
+            return Response.builder()
+
                     .build();
         }
     }

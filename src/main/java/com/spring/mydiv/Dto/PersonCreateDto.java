@@ -45,7 +45,7 @@ public class PersonCreateDto {
     public static class HomeView {
         private Long Id;
         private String Name;
-        private String Role;
+        private Boolean Role;
         public static HomeView fromEntity(Person person) {
             return HomeView.builder()
                     .Id(person.getId())

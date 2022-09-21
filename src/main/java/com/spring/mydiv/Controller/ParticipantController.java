@@ -1,21 +1,7 @@
 package com.spring.mydiv.Controller;
 
-import com.spring.mydiv.Dto.PersonCreateDto;
-import com.spring.mydiv.Dto.PersonDto;
-import com.spring.mydiv.Dto.TravelCreateDto;
-import com.spring.mydiv.Dto.UserDetailDto;
-import com.spring.mydiv.Entity.User;
-import com.spring.mydiv.Repository.PersonRepository;
-import com.spring.mydiv.Repository.UserRepository;
-import com.spring.mydiv.Service.ParticipateService;
-import com.spring.mydiv.Service.PersonService;
-import com.spring.mydiv.Service.TravelService;
-import com.spring.mydiv.Service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
-import java.util.Optional;
 
 /**
  * @author 12nov
@@ -23,7 +9,7 @@ import java.util.Optional;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api")
-public class ParticipateController {
+public class ParticipantController {
 
     /**사람 "디테일뷰"에서 해당 내용 불러오기
      * -> 이 사람의 기본 정보(user에서 가져와야함)
