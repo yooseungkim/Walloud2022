@@ -3,6 +3,10 @@ package com.spring.mydiv.Service;
 import javax.transaction.Transactional;
 
 import com.spring.mydiv.Dto.TravelCreateDto;
+import com.spring.mydiv.Entity.Event;
+import com.spring.mydiv.Entity.Person;
+import com.spring.mydiv.Repository.EventRepository;
+import com.spring.mydiv.Repository.PersonRepository;
 import org.springframework.stereotype.Service;
 
 import com.spring.mydiv.Entity.Travel;
@@ -10,6 +14,7 @@ import com.spring.mydiv.Repository.TravelRepository;
 
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -19,6 +24,9 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class TravelService {
 	private final TravelRepository travelRepository;
+    private final EventRepository eventRepository;
+
+    private final PersonRepository personRepository;
 
     @Transactional
     public TravelCreateDto.Response createTravel(TravelCreateDto.Request request) {
@@ -37,5 +45,17 @@ public class TravelService {
     public TravelCreateDto.HomeView getTravelToMainView(int travelId){
         Optional<Travel> info = travelRepository.findById(Long.valueOf(travelId));
         return TravelCreateDto.HomeView.fromEntity(info.get());
+    }
+    @Transactional
+    public void deleteTravel(int travelId){
+        List<Event> eventList = eventRepository.findByTravel_Id(Long.valueOf(travelId));
+        List<Person> personList = personRepository.findByTravel_Id(Long.valueOf(travelId));
+        for(Event event : eventList){
+            eventRepository.delete(event);
+        }
+        for(Person person : personList){
+            personRepository.delete(person);
+        }
+        travelRepository.deleteById(Long.valueOf(travelId));
     }
 }

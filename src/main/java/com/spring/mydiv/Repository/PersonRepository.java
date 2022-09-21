@@ -17,6 +17,7 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
 	List<Person> findByUser_Id(@Param(value = "user_id") Long id);
 	List<Person> findByTravel_Id(Long id);
 	void deleteByUser_IdAndTravel_Id(Long userid, Long travelid);
+	void delete(Person person);
 	int countDistinctByTravel_Id(Long id);
 
 	@Transactional

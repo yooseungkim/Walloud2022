@@ -95,4 +95,16 @@ class EventServiceTest {
         //then
         System.out.println("name: " + event.getName());
     }
+
+    @Test
+    @Commit
+    @DisplayName("이벤트 삭제하기")
+    void deleteEvent() {
+        //given
+        int event_id = 6;
+        //when
+        eventService.deleteEvent(event_id);
+        //then
+        System.out.println("check DB please!");
+    }
 }
