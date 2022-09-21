@@ -1,7 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import moment from "moment/moment";
 
 function Events({ event }) {
+  
+
   return (
     <div style={{ display: "flex" }}>
       <Link
@@ -9,11 +12,11 @@ function Events({ event }) {
         to={`event/${event.place}`}
         state={{ event: event }}
       >
-        <span>{event.place}</span>
+        <span>{event.name}</span>
       </Link>
-      <span className="event">{event.name}</span>
+      <span className="event">{event.payer}</span>
       <span className="event">{event.price}</span>
-      <span className="event">{event.date}</span>
+      <span className="event">{moment(event.date).utc().format('YYYY-MM-DD')}</span>
     </div>
   );
 }
