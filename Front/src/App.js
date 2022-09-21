@@ -17,26 +17,26 @@ const App = () => {
       <Routes>
         <Route path="/" element={<LogIn />} />
         <Route
-          path="/:username/:travel/profile/:username"
+          path="/:user/:travel/:travelName/profile/:username"
           element={<Profile />}
         />
         <Route path="/login" element={<LogIn />} />
         <Route path="/register" element={<Register />} />
         <Route path="/calendar" element={<Calendar />} />
         <Route
-          path="/:username/:userid/:travelid/createEvent"
+          path="/:user/:travel/:travelName/createEvent"
           element={<CreateEvent />}
         />
         <Route
-          path="/:username/:userid/:travelid/createUser"
+          path="/:user/:travel/:travelName/createUser"
           element={<CreateUser />}
         />
         <Route
-          path="/:username/:travel/event/:event"
+          path="/:username/:user/:travelName/:event"
           element={<EventDescription />}
         />
         <Route path="/selectTravel" element={<SelectTravel />} />
-        <Route path="/:userid/:travelid/:travelname" element={<Home />} />
+        <Route path="/:user/:travel/:travelName" element={<Home />} />
       </Routes>
     </div>
   );

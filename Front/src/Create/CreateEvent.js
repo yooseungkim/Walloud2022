@@ -35,10 +35,7 @@ var participants = [...users];
 function CreateEvent() {
   // const user = useLocation().state.user;
   // const travel = useLocation().state.travel;
-  var test = useParams();
-  const username = test["username"];
-  const travelName = test["travel"];
-
+  const { user, travel, travelName } = useParams();
   const [inputs, setInputs] = useState({
     place: "",
     price: "",
@@ -55,7 +52,7 @@ function CreateEvent() {
     });
   };
 
-  function CreateUser({ user }) {
+  function CreateUser({ each }) {
     //////////////////////////
     const create_user_func = async () => {
       await API.post("/createUser", {
@@ -78,16 +75,16 @@ function CreateEvent() {
       if (participate === "participate") {
         setParticipate("no");
         setNameColor("black");
-        participants.pop(user.name);
+        participants.pop(each.name);
       } else if (participate === "no") {
         setParticipate("payer");
         setNameColor("blue");
-        participants.push(user.name);
-        payer.push(user.name);
+        participants.push(each.name);
+        payer.push(each.name);
       } else if (participate === "payer") {
         setParticipate("participate");
         setNameColor("green");
-        payer.pop(user.name);
+        payer.pop(each.name);
       }
       console.log(payer);
       console.log(participants);
@@ -125,6 +122,12 @@ function CreateEvent() {
 
   return (
     <div>
+      <Link
+        to={`/${user}/${travel}/${travelName}`}
+        // state={{ user_id: userid, travel_id: travelid, travelName: travelname }}
+      >
+        <h1>Divide by N</h1>
+      </Link>
       <h2>Create Event</h2>
       <div>
         <label htmlFor="place">Place</label>
@@ -157,11 +160,11 @@ function CreateEvent() {
       </div>
       <label htmlFor="create-event">Participants</label>
       <div className="box" id="create-event">
-        {users.map((user) => (
-          <CreateUser user={user} key={user.index} />
+        {users.map((each) => (
+          <CreateUser each={each.name} key={each.index} />
         ))}
       </div>
-      <Link to={`/${username}/${travelName}`} onClick={onClickSubmit}>
+      <Link to={`/${user}/${travel}/${travelName}`} onClick={onClickSubmit}>
         <button>이벤트 추가</button>
       </Link>
     </div>

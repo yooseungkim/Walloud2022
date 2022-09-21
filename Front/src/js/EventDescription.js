@@ -1,22 +1,46 @@
 import React from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { eventList } from "./Var";
 
 const EventDescription = ({}) => {
   const description = useLocation().state.event;
+  const { user, travel, travelName } = useParams();
   console.log(description);
+  console.log(user);
+  console.log(travel);
+  console.log(travelName);
+  console.log(useLocation().state);
   return (
     <div>
-      <h2 id="headers">place: {description.place}</h2>
-      <h2 id="headers">name: {description.name}</h2>
-      <h2 id="headers">price: {description.price}</h2>
-      <h2 id="headers">date: {description.date}</h2>
+      <Link
+        to={`/${user}/${travel}/${travelName}`}
+        // state={{ user_id: user, travel_id: travel, travelName: travelName }}
+      >
+        <h1>Divide by N</h1>
+      </Link>
+      <h2 id="headers">{description.place}</h2>
+      <div>
+        <Link
+          to={`/${user}/${travel}/${travelName}/profile/${description.name}`}
+        >
+          <h3 className="link-text" id="headers">
+            {description.name}
+          </h3>
+        </Link>
+        <h4 id="headers">₩{description.price}</h4>
+        <h4 id="headers">{description.date}</h4>
+      </div>
       <div style={{ display: "flex" }}>
         {description.participants.map((participant, id) => (
-          <h3 style={{ margin: "0 auto" }} key={id}>
-            {" "}
-            {participant}{" "}
-          </h3>
+          <Link
+            to={`/${user}/${travel}/${travelName}/profile/${participant}`}
+            style={{ margin: "auto" }}
+          >
+            <h3 className="link-text" key={id}>
+              {" "}
+              {participant}{" "}
+            </h3>
+          </Link>
         ))}
       </div>
     </div>

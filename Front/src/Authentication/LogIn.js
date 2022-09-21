@@ -93,6 +93,7 @@ const LogIn = () => {
 
   return (
     <div className="login">
+      <h1>Divide by N</h1>
       <h2>Log In</h2>
       <label htmlFor="email">Email</label>
       <input
