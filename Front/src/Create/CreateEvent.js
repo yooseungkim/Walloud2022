@@ -94,7 +94,7 @@ function CreateEvent() {
       <div className="user" onClick={onClickIcon}>
         <img className="user-icon" src={personSrc} alt="profile" />
         <br />
-        <span style={{ color: nameColor }}>{user.name}</span>
+        <h4 style={{ color: nameColor }}>{each.name}</h4>
       </div>
     );
   }
@@ -161,7 +161,7 @@ function CreateEvent() {
       <label htmlFor="create-event">Participants</label>
       <div className="box" id="create-event">
         {users.map((each) => (
-          <CreateUser each={each.name} key={each.index} />
+          <CreateUser each={each} key={each.index} />
         ))}
       </div>
       <Link to={`/${user}/${travel}/${travelName}`} onClick={onClickSubmit}>

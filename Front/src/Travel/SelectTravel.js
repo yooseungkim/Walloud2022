@@ -94,7 +94,7 @@ const SelectTravel = () => {
     <div>
       <h1>Divide by N</h1>
       <h2>My Travel List</h2>
-      <button onClick={Logout}>Logout</button>
+      <button onClick={Logout}>Log Out</button>
       <button onClick={try_Delete}>Delete</button>
       <h3>Existing Travels</h3>
 

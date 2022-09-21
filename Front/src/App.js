@@ -24,19 +24,9 @@ const App = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/calendar" element={<Calendar />} />
         <Route
-<<<<<<< HEAD
           path="/:user/:travel/:travelName/createEvent"
           element={<CreateEvent />}
         />
-=======
-          path="/:username/:userid/:travelid/createEvent"
-          element={<CreateEvent />}
-        />
-        <Route
-          path="/:username/:userid/:travelid/createUser"
-          element={<CreateUser />}
-        />
->>>>>>> c14cd8ed2c77ddbdc59fe27c74ec1096b69b3258
         <Route
           path="/:user/:travel/:travelName/createUser"
           element={<CreateUser />}
