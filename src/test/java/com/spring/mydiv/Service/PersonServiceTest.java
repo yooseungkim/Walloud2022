@@ -71,8 +71,8 @@ class PersonServiceTest {
     @DisplayName("여행 삭제")
     void deleteJoinTravel() {
         //given
-        int userId = 13;
-        int travelId = 58;
+        int userId = 16;
+        int travelId = 67;
 
         //when
         personService.deleteJoinTravel(userId, travelId);
@@ -118,6 +118,37 @@ class PersonServiceTest {
 
         //then
         System.out.println("finish!");
+    }
+
+    @Test
+    @Commit
+    @DisplayName("사람 뽑아오기")
+    void getPersonToDetailView() {
+        //given
+        int person_id = 50; //이하은
+        //when
+        PersonCreateDto.Detail detail = personService.getPersonToDetailView(person_id);
+        //then
+        System.out.println("personID: " + detail.getPersonId());
+        System.out.println("personID: " + detail.getUserName());
+        System.out.println("personID: " + detail.getUserEmail());
+        System.out.println("personID: " + detail.getUserAccount());
+        System.out.println("personID: " + detail.getSumSend());
+        System.out.println("personID: " + detail.getSumGet());
+        System.out.println("personID: " + detail.getDifference());
+        System.out.println("personID: " + detail.getTravelRole());
+    }
+    @Test
+    @Commit
+    @DisplayName("사람 뽑아오기")
+    void getPayerInTravel() {
+        //given
+        int travelId = 57; // 서울 여행
+        //when
+        PersonCreateDto.HomeView tmp = personService.getPayerInTravel(travelId);
+        //then
+        System.out.println("payer : " + tmp.getId());
+        System.out.println("payer : " + tmp.getName());
     }
 
 //    @Test

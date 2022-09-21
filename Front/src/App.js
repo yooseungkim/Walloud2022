@@ -33,6 +33,7 @@ const App = () => {
         />
         <Route
           path="/:user/:travel/:travelName/:event"
+
           element={<EventDescription />}
         />
         <Route path="/selectTravel" element={<SelectTravel />} />

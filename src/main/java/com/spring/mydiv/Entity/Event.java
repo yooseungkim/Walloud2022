@@ -1,6 +1,7 @@
 package com.spring.mydiv.Entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 import lombok.*;
@@ -14,7 +15,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "event")
-public class Event {
+public class Event implements Serializable {
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "event_id", length = 20)

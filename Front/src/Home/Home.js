@@ -2,30 +2,36 @@ import React, { useEffect, useState } from "react";
 import NavigationBar from "../js/NavigationBar";
 import DisplayUsers from "./DisplayUsers";
 import Events from "./Events";
-import { Link, useParams } from "react-router-dom";
-import { users, eventlist } from "../js/Var";
+import { Link, useLocation, useParams } from "react-router-dom";
+import plusSrc from "../img/plus.jpg";
 import axios from "axios";
 
 const Home = () => {
-  const { user, travel, travelName } = useParams();
-  const [userList, setuserList] = useState(users);
-  const [eventList, seteventList] = useState(eventlist);
+  const user = useLocation().state.user_id;
+  const travel = useLocation().state.travel_id;
+
+  const [userList, setuserList] = useState([]);
+  const [eventList, seteventList] = useState([]);
   //받아오는 거를 eventList에서 eventlist로 수정
 
   ////////////////////////////////////
 
   useEffect(() => {
     console.log(user);
+    getEventandUser();
   }, []);
 
   // parameter = user info,
-  const getEvent_User = async () => {
-    await axios.all([axios.get(`/`), axios.get(`/`)]).then(
-      axios.spread((res_users, res_travel) => {
-        console.log(res_users.data);
-      })
-    );
-  };
+  const getEventandUser = async () => {
+    await axios.get(`/api/${user}/${travel}`)
+    .then((response) => {
+      console.log("Resonsed Data : ",response.data);
+      seteventList(response.data.eventList);
+      setuserList(response.data.personList);
+    }).catch((error) => {
+      console.log(error);
+    })
+  }
 
   /////////////////////////////////
 
@@ -62,15 +68,12 @@ const Home = () => {
           </div>
           <hr />
           {eventList.map((event) => (
-            <div>
-              <Events event={event} key={event.index} />
-              <hr />
+                <Events event={event} key={event.id} />
+              ))}
             </div>
-          ))}
-        </div>
-        <Link to="createEvent" key={(user, travel)}>
-          <button>Add Event</button>
-        </Link>
+            <Link to="createEvent" state={{userList : userList}}>
+              <button>Add Event</button>
+            </Link>
       </div>
       <div className="big-box">
         <h2>Participants</h2>

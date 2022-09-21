@@ -27,13 +27,15 @@ function DisplayUsers({ users, preferences }) {
   }
 
   function CreateType({ type }) {
+    let isDepositor = (type === "Depositors") ? true : false;
+
     const onClickDescription = (event) => {
       if (type === "Depositors") {
-        console.log("Depositors have to send money");
+        alert("Depositors have to send money");
       } else if (type === "Manager") {
-        console.log("Manager is the one who spent the most money");
+        alert("Manager is the one who spent the most money");
       } else if (type === "Recipients") {
-        console.log(
+        alert(
           "Recipients are the ones who spent more money; in some cases, there can be no Recipients"
         );
       }
@@ -45,9 +47,9 @@ function DisplayUsers({ users, preferences }) {
         </h4>
         <div>
           {users
-            .filter((each) => each.type === type)
-            .map((each) => (
-              <CreateUser username={each.name} key={each.index} />
+            .filter((user) => user.role === isDepositor)
+            .map((user) => (
+              <CreateUser user={user} key={user.id} />
             ))}
         </div>
       </div>

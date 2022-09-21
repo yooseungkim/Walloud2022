@@ -1,41 +1,16 @@
 import React, { useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import { users } from "../js/Var";
+import { useLocation } from "react-router-dom";
 import personSrc from "../img/person.png";
-import API from "../API";
 
-var eventList = [
-  {
-    index: 1,
-    place: "newEvent",
-    name: "me",
-    price: "101010",
-    date: "2022/02/28",
-    participants: ["sungjun", "haeun", "jangwon", "yooseung"],
-  },
-  {
-    index: 2,
-    place: "place",
-    name: "name",
-    price: "price",
-    date: "date",
-    participants: [
-      "sungjun",
-      "haeun",
-      "jangwon",
-      "yooseung",
-      "doyoon",
-      "heejeong",
-    ],
-  },
-];
-
-var payer = [];
-var participants = [...users];
 function CreateEvent() {
+  const users = useLocation().state.userList
+  const payer = [];
+  const participants = [...users];
   // const user = useLocation().state.user;
   // const travel = useLocation().state.travel;
-  const { user, travel, travelName } = useParams();
+  // const username = test["username"];
+  // const travelName = test["travel"];
+
   const [inputs, setInputs] = useState({
     place: "",
     price: "",
@@ -52,23 +27,7 @@ function CreateEvent() {
     });
   };
 
-  function CreateUser({ each }) {
-    //////////////////////////
-    const create_user_func = async () => {
-      await API.post("/createUser", {
-        place: place,
-        price: price,
-        date: date,
-      })
-        .then((response) => {
-          console.log(response);
-          window.alert("Successfully Added");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    };
-
+  function CreateUser({ user }) {
     const [participate, setParticipate] = useState("participate");
     const [nameColor, setNameColor] = useState("green");
     const onClickIcon = () => {
@@ -102,16 +61,16 @@ function CreateEvent() {
   const onClickSubmit = (e) => {
     if (payer.length === 1) {
       console.log("okay");
-      const newEvent = {
-        index: eventList.length + 1,
-        place: document.querySelector("#place").value,
-        name: payer[0],
-        price: document.querySelector("#price").value,
-        date: document.querySelector("#date").value,
-        participants: participants,
-      };
-      console.log(participants);
-      eventList.push(newEvent);
+      // const newEvent = {
+      //   index: eventList.length + 1,
+      //   place: document.querySelector("#place").value,
+      //   name: payer[0],
+      //   price: document.querySelector("#price").value,
+      //   date: document.querySelector("#date").value,
+      //   participants: participants,
+      // };
+      // console.log(participants);
+      // eventList.push(newEvent);
     } else if (payer.length > 1) {
       alert("결제자는 한 명이어야 합니다\nError: Too Many Payers");
     } else if (payer.length === 0) {
@@ -160,15 +119,13 @@ function CreateEvent() {
       </div>
       <label htmlFor="create-event">Participants</label>
       <div className="box" id="create-event">
-        {users.map((each) => (
-          <CreateUser each={each} key={each.index} />
+        {users.map((user) => (
+          <CreateUser user={user} key={user.id} />
         ))}
       </div>
-      <Link to={`/${user}/${travel}/${travelName}`} onClick={onClickSubmit}>
-        <button>이벤트 추가</button>
-      </Link>
+      <button onClick={onClickSubmit}>이벤트 추가</button>
     </div>
   );
 }
 
-export { CreateEvent, eventList };
+export { CreateEvent};
