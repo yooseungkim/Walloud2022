@@ -23,12 +23,15 @@ const Home = () => {
   }, []);
 
   // parameter = user info,
-  const getEvent_User = async () => {
-    await axios.all([axios.get(`/`), axios.get(`/`)]).then(
-      axios.spread((res_users, res_travel) => {
-        console.log(res_users.data);
-      })
-    )
+  const getEventandUser = async () => {
+    await axios.get(`/api/${user_id}/${travel_id}`)
+    .then((response) => {
+      console.log("Resonsed Data : ",response.data);
+      seteventList(response.data.eventList);
+      setuserList(response.data.personList);
+    }).catch((error) => {
+      console.log(error);
+    })
   }
 
   /////////////////////////////////
@@ -64,8 +67,8 @@ const Home = () => {
             </Link> */}
             <div id="event-box" className="box">
               <div style={{ display: "flex" }}>
-                <h4 className="description">Event</h4>
-                <h4 className="description">Name</h4>
+                <h4 className="description">Place</h4>
+                <h4 className="description">Payer</h4>
                 <h4 className="description">Price</h4>
                 <h4 className="description">Date</h4>
               </div>
@@ -74,7 +77,7 @@ const Home = () => {
                 <Events event={event} key={event.index} />
               ))}
             </div>
-            <Link to="createEvent" key={(user, travel)}>
+            <Link to="createEvent" key={(user_id, travel_id)}>
               <button>Add Event</button>
             </Link>
           </div>
@@ -87,10 +90,10 @@ const Home = () => {
               <DisplayUsers
                 users={userList}
                 preferences={preferences}
-                travelName={travel}
+                travelName={travel_id}
               />
             </div>
-            <Link to="createEvent" key={(user, travel)}>
+            <Link to="createEvent" key={(user_id, travel_id)}>
               <button>Add User</button>
             </Link>
           </div>
