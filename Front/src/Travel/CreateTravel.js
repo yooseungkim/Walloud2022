@@ -5,7 +5,6 @@ import { Link, useNavigate } from "react-router-dom";
 const CreateTravel = (props) => {
   console.log(props);
   const navigate = useNavigate();
-  console.log(navigate);
   const travel_List = props.myTravel;
   const user_id = props.user;
   const duplicate = false;
@@ -29,7 +28,7 @@ const CreateTravel = (props) => {
     axios
       .post(`/api/${user_id}/createTravel`, { travel_name: Travel_name })
       .then(() => {
-        // navigate(`/${user_id}/${Travel_name}`, {state :{ user_id : user_id, travel:Travel_name }})
+        navigate(`/${user_id}/${Travel_name}`, {state :{ user_id : user_id, travel:Travel_name }})
         window.location.reload();
       })
       .catch((error) => {

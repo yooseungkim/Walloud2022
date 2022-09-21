@@ -7,9 +7,9 @@ import plusSrc from "../img/plus.jpg";
 import axios from "axios";
 
 const Home = () => {
-  const user = useLocation().state.user_id;
-  const travel = useLocation().state.travel_id;
-
+  // const user = useLocation().state.user_id;
+  // const travel = useLocation().state.travel_id;
+  const {user, travel, travelName} = useParams();
   const [userList, setuserList] = useState([]);
   const [eventList, seteventList] = useState([]);
   //받아오는 거를 eventList에서 eventlist로 수정
@@ -62,7 +62,7 @@ const Home = () => {
         <div id="event-box" className="box">
           <div style={{ display: "flex" }}>
             <h4 className="description">Event</h4>
-            <h4 className="description">Name</h4>
+            <h4 className="description">Payer</h4>
             <h4 className="description">Price</h4>
             <h4 className="description">Date</h4>
           </div>

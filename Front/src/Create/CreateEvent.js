@@ -1,15 +1,18 @@
 import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link, useParams } from "react-router-dom";
 import personSrc from "../img/person.png";
 
 function CreateEvent() {
   const users = useLocation().state.userList
+  const {user, travel, travelName} = useParams();
   const payer = [];
   const participants = [...users];
   // const user = useLocation().state.user;
   // const travel = useLocation().state.travel;
   // const username = test["username"];
   // const travelName = test["travel"];
+
+  console.log(users);
 
   const [inputs, setInputs] = useState({
     place: "",
@@ -27,7 +30,8 @@ function CreateEvent() {
     });
   };
 
-  function CreateUser({ user }) {
+  function CreateUser({ each }) {
+    console.log("each : ",each);
     const [participate, setParticipate] = useState("participate");
     const [nameColor, setNameColor] = useState("green");
     const onClickIcon = () => {
@@ -120,7 +124,7 @@ function CreateEvent() {
       <label htmlFor="create-event">Participants</label>
       <div className="box" id="create-event">
         {users.map((user) => (
-          <CreateUser user={user} key={user.id} />
+          <CreateUser each={user} key={user.id} />
         ))}
       </div>
       <button onClick={onClickSubmit}>이벤트 추가</button>
