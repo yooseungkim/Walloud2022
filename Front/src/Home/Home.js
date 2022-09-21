@@ -46,65 +46,57 @@ const Home = () => {
     ? localStorage.setItem("preferences", JSON.stringify(initialPreferences))
     : (preferences = JSON.parse(localStorage.getItem("preferences")));
 
-  const styleheader = {
-    backgroundColor: "#DAF1D8",
-    display: "inline-block",
-    borderRadius: "15px",
-    width: "95%",
-    height: "10%",
-    margin: "2.5%",
-  };
-
   return (
     <div>
-      <div style={{ display: "flex" }}>
-        <div className="main">
-          <div className="big-box">
-            <h2>Events</h2>
-            {/* <Link to="createEvent" key={(user, travel)}>
+      <Link
+        to={`/${user}/${travel}/${travelName}`}
+        state={{ user: user, travel: travel, travelName: travelName }}
+      >
+        <h1>Divide by N</h1>
+      </Link>
+      <div className="big-box">
+        <h2>Events</h2>
+        {/* <Link to="createEvent" key={(user, travel)}>
               <img className="plus-icon" src={plusSrc} alt="add event" />
             </Link> */}
-            <div id="event-box" className="box">
-              <div style={{ display: "flex" }}>
-                <h4 className="description">Place</h4>
-                <h4 className="description">Payer</h4>
-                <h4 className="description">Price</h4>
-                <h4 className="description">Date</h4>
-              </div>
-              <hr />
-              {eventList.map((event) => (
+        <div id="event-box" className="box">
+          <div style={{ display: "flex" }}>
+            <h4 className="description">Event</h4>
+            <h4 className="description">Name</h4>
+            <h4 className="description">Price</h4>
+            <h4 className="description">Date</h4>
+          </div>
+          <hr />
+          {eventList.map((event) => (
                 <Events event={event} key={event.id} />
               ))}
             </div>
             <Link to="createEvent" state={{userList : userList}}>
               <button>Add Event</button>
             </Link>
-          </div>
-          <div className="big-box">
-            <h2>Participants</h2>
-            {/* <Link to="createUser">
+      </div>
+      <div className="big-box">
+        <h2>Participants</h2>
+        {/* <Link to="createUser">
               <img className="plus-icon" src={plusSrc} alt="plus-icon" />
             </Link> */}
-            <div id="user-box" className="box">
-              <DisplayUsers
-                users={userList}
-                preferences={preferences}
-                travelName={travel}
-              />
-            </div>
-            <Link to="createUser" key={(user, travel)}>
-              <button>Add User</button>
-            </Link>
-          </div>
+        <div id="user-box" className="box">
+          <DisplayUsers
+            users={userList}
+            preferences={preferences}
+            travelName={travel}
+          />
         </div>
-        <div>
-          <div className="right-align">
-            <NavigationBar
-              preferences={preferences}
-              setPreferences={setPreferences}
-            />
-          </div>
-        </div>
+        <Link to="createUser" key={(user, travel)}>
+          <button>Add User</button>
+        </Link>
+      </div>
+      <div className="right-align">
+        <h4>{user}</h4>
+        <NavigationBar
+          preferences={preferences}
+          setPreferences={setPreferences}
+        />
       </div>
     </div>
   );

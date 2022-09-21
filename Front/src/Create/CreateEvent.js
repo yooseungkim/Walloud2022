@@ -34,16 +34,16 @@ function CreateEvent() {
       if (participate === "participate") {
         setParticipate("no");
         setNameColor("black");
-        participants.pop(user.name);
+        participants.pop(each.name);
       } else if (participate === "no") {
         setParticipate("payer");
         setNameColor("blue");
-        participants.push(user.name);
-        payer.push(user.name);
+        participants.push(each.name);
+        payer.push(each.name);
       } else if (participate === "payer") {
         setParticipate("participate");
         setNameColor("green");
-        payer.pop(user.name);
+        payer.pop(each.name);
       }
       console.log(payer);
       console.log(participants);
@@ -53,7 +53,7 @@ function CreateEvent() {
       <div className="user" onClick={onClickIcon}>
         <img className="user-icon" src={personSrc} alt="profile" />
         <br />
-        <span style={{ color: nameColor }}>{user.name}</span>
+        <h4 style={{ color: nameColor }}>{each.name}</h4>
       </div>
     );
   }
@@ -81,6 +81,12 @@ function CreateEvent() {
 
   return (
     <div>
+      <Link
+        to={`/${user}/${travel}/${travelName}`}
+        // state={{ user_id: userid, travel_id: travelid, travelName: travelname }}
+      >
+        <h1 className="home">Divide by N</h1>
+      </Link>
       <h2>Create Event</h2>
       <div>
         <label htmlFor="place">Place</label>

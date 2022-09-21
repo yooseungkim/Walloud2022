@@ -46,30 +46,25 @@ function NavigationBar({ preferences, setPreferences }) {
     setTabActive(tabActive === "block" ? "none" : "block");
   };
   return (
-    <div>
-      <h4>{loggedIn}</h4>
-      <br />
+    <div style={{ display: "flex" }}>
+      <h4 style={{ color: "white" }}>{loggedIn}</h4>
       <Link to="/">
         <button id="logout" onClick={onLogOutClick}>
           Log Out
         </button>
       </Link>
-      <br />
       <img
         className="barIcon"
         src={gearSrc}
         onClick={onClickPreference}
         alt="gear"
       />
-      <br />
       <PreferenceTab />
-      <img className="barIcon" src={bracketSrc} alt="leftBracket" />
-      <br />
+      {/* <img className="barIcon" src={bracketSrc} alt="leftBracket" />
       <img className="barIconReversed" src={bracketSrc} alt="rightBracket" />
-      <br />
       <Link to="/calendar">
         <img className="barIcon" src={calendarSrc} alt="calendar" />
-      </Link>
+      </Link> */}
     </div>
   );
 }

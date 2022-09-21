@@ -68,6 +68,7 @@ const Register = () => {
 
   return (
     <div>
+      <h1>Divide by N</h1>
       <h2>Register</h2>
       <form style={{ margin: "10px auto", textAlign: "center" }}>
         <div>

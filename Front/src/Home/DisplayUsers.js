@@ -1,13 +1,15 @@
 import React from "react";
 import personSrc from "../img/person.png";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
-function DisplayUsers({ users, preferences, travel }) {
+function DisplayUsers({ users, preferences }) {
   const currentLoggedIn = JSON.parse(localStorage.getItem("id"));
-  function CreateUser({ user }) {
+  const { user, travel, travelName } = useParams();
+  console.log(useParams());
+  function CreateUser({ username }) {
     return (
       <div className="user">
-        <Link to={`profile/${user.name}`}>
+        <Link to={`/${user}/${travel}/${travelName}/profile/${username}`}>
           {preferences.displayIcon ? (
             <img className="user-icon" src={personSrc} alt="profile" />
           ) : null}
@@ -16,10 +18,10 @@ function DisplayUsers({ users, preferences, travel }) {
         <span
           style={{ color: currentLoggedIn === user.name ? "blue" : "black" }}
         >
-          {user.name}
+          {username}
         </span>
         <br />
-        {preferences.displayMoney ? <span>{user.spent}</span> : null}
+        {preferences.displayMoney ? <span>{username.spent}</span> : null}
       </div>
     );
   }

@@ -1,3 +1,11 @@
+:root {
+  --illuminating: #f7ca00;
+  --ultimate-gray: #939597;
+  --very-peri: #6667ab;
+  --serenity: #93a9d1;
+  --classic-blue: #0f4c81;
+}
+
 div {
   text-align: center;
   margin: auto;
@@ -7,10 +15,10 @@ h1 {
   margin: auto;
   border-radius: 0px;
   color: white;
-  background-color: cornflowerblue;
-  padding: 5% 10% 5% 10%;
-  font-size: 3rem;
-  margin: 0 0 2% 0;
+  background-color: var(--classic-blue);
+  padding: 2% 0 2% 0;
+  font-size: 2rem;
+  font-weight: lighter;
   position: -webkit-sticky;
   position: sticky;
   top: 0px;
@@ -18,37 +26,55 @@ h1 {
 
 h2 {
   text-align: center middle;
-  font-size: 2rem;
-  color: rgb(255, 254, 254);
-  background-color: gold;
-  padding: 2% 2.5% 2% 2.5%;
-  margin: auto auto 3% auto;
-  border-radius: 2rem;
+  font-size: 3rem;
+  font-weight: 200;
+  /* background-color: var(--illuminating); */
+  background-color: var(--ultimate-gray);
+  color: white;
+  padding: 0.5% 0 1% 0;
+  margin: 2% auto 3% auto;
+  border-radius: 1.5rem;
+  width: 400px;
   max-width: 1000px;
 }
 
 h3 {
   font-size: 2rem;
-  color: cornflowerblue;
+  font-weight: 300;
+  color: var(--classic-blue);
 }
 
+h4 {
+  font-size: 1.5rem;
+  font-weight: 250;
+  color: black;
+}
+
+span {
+  font-size: 1rem;
+  font-weight: 300;
+  color: black;
+}
 label {
-  font-size: 2rem;
-  color: cornflowerblue;
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: var(--classic-blue);
+  /* font-family: "Avenir"; */
 }
 
 button {
   text-align: center;
-  background-color: cornflowerblue;
+  background-color: var(--classic-blue);
   color: white;
-  border-color: cornflowerblue;
+  border-color: var(--classic-blue);
   border-style: solid;
   border-radius: 1em;
   width: 10%;
   height: 10vh;
   display: inline-block;
+  font-family: sans-serif;
+  font-weight: 100;
   margin: 5% 10% 5% 10%;
-  font-weight: bolder;
   max-height: 50px;
   max-width: 150px;
   min-width: 100px;
@@ -57,18 +83,26 @@ button {
 
 button:hover {
   opacity: 70%;
+  color: var(--illuminating);
 }
 
 input {
   text-align: center;
   display: block;
-  width: 300px;
+  width: 400px;
   height: 3vh;
-  margin: 3vh auto;
+  margin: 1% auto 3% auto;
   border: 3px solid;
   border-radius: 10px;
-  border-color: cornflowerblue;
+  border-color: var(--ultimate-gray);
   font-size: 1rem;
+  font-family: sans-serif;
+  font-weight: 100;
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--classic-blue);
 }
 
 img {
@@ -84,6 +118,7 @@ img:hover {
 
 .footer {
   position: static;
+  font-weight: 200;
   left: 0;
   bottom: px;
   width: 100%;
@@ -120,7 +155,6 @@ Classes
 
 .event {
   width: 25%;
-  font-size: 1.2rem;
   margin: 5% 0 0 0;
   text-align: center;
 }
@@ -152,10 +186,10 @@ Classes
 
 .box {
   border-radius: 1rem;
-  padding: 5% 0 8% 0;
-  background-color: rgb(178, 216, 244);
+  /* background-color: rgb(178, 216, 244); */
+  background-color: #3d6589c2;
   height: fit-content;
-  margin: 3rem auto;
+  margin: 5% 0;
   min-width: 450px;
 }
 
@@ -172,19 +206,43 @@ Classes
   .big-box {
     align-items: center;
     display: inline-block;
-    width: 35%;
-    padding: 0 3% 0 2%;
-    margin: auto;
+    width: 45%;
+    margin: 0 1% 0 1%;
     vertical-align: middle;
   }
 
   .box {
-    height: 100vh;
+    height: 150vh;
   }
 }
 
 .right-align {
-  display: inline-block;
+  position: fixed;
+  top: 0px;
+  right: -400px;
+}
+
+#logout {
+  background-color: var(--ultimate-gray);
+  border: none;
+}
+
+/* header {
+  position: -webkit-sticky;
   position: sticky;
-  right: 20px;
+  top: 0px;
+} */
+
+.link-text:hover {
+  color: var(--illuminating);
+}
+
+.home:hover {
+  color: var(--illuminating);
+}
+
+#create-event {
+  max-width: 800px;
+  margin: 1.5% auto;
+  height: fit-content;
 }

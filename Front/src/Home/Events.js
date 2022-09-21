@@ -9,10 +9,10 @@ function Events({ event }) {
     <div style={{ display: "flex" }}>
       <Link
         className="event"
-        to={`event/${event.place}`}
+        to={`/${user}/${travel}/${travelName}/${event.place}`}
         state={{ event: event }}
       >
-        <span>{event.name}</span>
+        <span className="link-text">{event.name}</span>
       </Link>
       <span className="event">{event.payer}</span>
       <span className="event">{event.price}</span>
