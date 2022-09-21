@@ -9,7 +9,7 @@ import java.util.List;
  * @author 12nov
  */
 public interface ParticipantRepository extends JpaRepository<Participant, Long> {
-    List<Participant> findByPerson_Id(Long id);
+    List<Participant> findByPerson_Id(Long id); //here
 
     Participant findByEvent_IdAndEventRole(Long id, Boolean eventRole);
 }
