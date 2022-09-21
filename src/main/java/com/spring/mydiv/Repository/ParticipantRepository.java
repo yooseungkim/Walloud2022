@@ -9,7 +9,8 @@ import java.util.List;
  * @author 12nov
  */
 public interface ParticipantRepository extends JpaRepository<Participant, Long> {
-    List<Participant> findByPerson_Id(Long id); //here
-
+    List<Participant> findByPerson_Id(Long id);
+    List<Participant> findByEvent_Id(Long id);
+    void delete(Participant participant);
     Participant findByEvent_IdAndEventRole(Long id, Boolean eventRole);
 }

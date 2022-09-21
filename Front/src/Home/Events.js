@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import moment from "moment/moment";
 
 function Events({ event }) {
-  
+
 
   return (
     <div style={{ display: "flex" }}>

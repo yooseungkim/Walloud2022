@@ -3,8 +3,6 @@ import NavigationBar from "../js/NavigationBar";
 import DisplayUsers from "./DisplayUsers";
 import Events from "./Events";
 import { Link, useLocation, useParams } from "react-router-dom";
-import { users, eventlist } from "../js/Var";
-import API from "../API";
 import plusSrc from "../img/plus.jpg";
 import axios from "axios";
 
@@ -12,19 +10,20 @@ const Home = () => {
   const user = useLocation().state.user_id;
   const travel = useLocation().state.travel_id;
 
-  const [userList, setuserList] = useState(users);
-  const [eventList, seteventList] = useState(eventlist);
+  const [userList, setuserList] = useState([]);
+  const [eventList, seteventList] = useState([]);
   //받아오는 거를 eventList에서 eventlist로 수정
 
   ////////////////////////////////////
 
   useEffect(() => {
     console.log(user);
+    getEventandUser();
   }, []);
 
   // parameter = user info,
   const getEventandUser = async () => {
-    await axios.get(`/api/${user_id}/${travel_id}`)
+    await axios.get(`/api/${user}/${travel}`)
     .then((response) => {
       console.log("Resonsed Data : ",response.data);
       seteventList(response.data.eventList);
@@ -74,10 +73,10 @@ const Home = () => {
               </div>
               <hr />
               {eventList.map((event) => (
-                <Events event={event} key={event.index} />
+                <Events event={event} key={event.id} />
               ))}
             </div>
-            <Link to="createEvent" key={(user_id, travel_id)}>
+            <Link to="createEvent" state={{userList : userList}}>
               <button>Add Event</button>
             </Link>
           </div>
@@ -90,7 +89,7 @@ const Home = () => {
               <DisplayUsers
                 users={userList}
                 preferences={preferences}
-                travelName={travel_id}
+                travelName={travel}
               />
             </div>
             <Link to="createUser" key={(user, travel)}>

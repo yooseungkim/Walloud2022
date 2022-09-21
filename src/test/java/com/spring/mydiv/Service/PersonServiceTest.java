@@ -71,8 +71,8 @@ class PersonServiceTest {
     @DisplayName("여행 삭제")
     void deleteJoinTravel() {
         //given
-        int userId = 13;
-        int travelId = 58;
+        int userId = 16;
+        int travelId = 67;
 
         //when
         personService.deleteJoinTravel(userId, travelId);

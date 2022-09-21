@@ -2,9 +2,11 @@ package com.spring.mydiv.Service;
 
 import com.spring.mydiv.Dto.EventCreateDto;
 import com.spring.mydiv.Entity.Event;
+import com.spring.mydiv.Entity.Participant;
 import com.spring.mydiv.Entity.Person;
 import com.spring.mydiv.Entity.Travel;
 import com.spring.mydiv.Repository.EventRepository;
+import com.spring.mydiv.Repository.ParticipantRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +24,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class EventService {
     private final EventRepository eventRepository;
+    private final ParticipantRepository participantRepository;
 
     public EventCreateDto.Response createEvent(EventCreateDto.Request request){
         Event event = Event.builder()
@@ -68,6 +71,14 @@ public class EventService {
 
     public Optional<Event> getEventEntityByEventId(Long id){
         return eventRepository.findById(id);
+    }
+
+    public void deleteEvent(int eventId){
+        List<Participant> participantList = participantRepository.findByEvent_Id(Long.valueOf(eventId));
+        for(Participant participant : participantList){
+            participantRepository.delete(participant);
+        }
+        eventRepository.deleteById(Long.valueOf(eventId));
     }
 
 }
