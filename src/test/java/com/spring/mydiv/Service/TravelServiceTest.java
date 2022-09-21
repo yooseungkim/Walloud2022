@@ -41,4 +41,19 @@ class TravelServiceTest {
         //then
         System.out.println("Name: "+info.getName());
     }
+
+    // delete 메소드와 deletebyid의 차이
+    @Test
+    @Commit
+    @DisplayName("여행 자체를 삭제")
+    void deleteTravel() {
+        //given
+        int travelId = 70;
+
+        //when
+        travelService.deleteTravel(travelId); // 수정
+
+        //then
+        System.out.println("check DB please!");
+    }
 }

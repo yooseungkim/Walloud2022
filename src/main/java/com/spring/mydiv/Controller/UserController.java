@@ -78,4 +78,11 @@ public class UserController {
         personservice.deleteJoinTravel(user_id, travel_id);
     }
 
+    // 여행을 생성한 user가 여행 자체를 삭제하는 메소드
+    @DeleteMapping("/{user_id}/{travel_id}/delete")
+    public void deleteTravel(@PathVariable Travel travel) {
+        travelservice.deleteTravel(travel);
+    }
+
+
 }

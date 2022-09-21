@@ -38,4 +38,8 @@ public class TravelService {
         Optional<Travel> info = travelRepository.findById(Long.valueOf(travelId));
         return TravelCreateDto.HomeView.fromEntity(info.get());
     }
+    @Transactional
+    public void deleteTravel(Travel travel){
+        travelRepository.delete(travel);
+    }
 }
