@@ -5,8 +5,9 @@ import { Link, useParams } from "react-router-dom";
 function DisplayUsers({ users, preferences }) {
   const currentLoggedIn = JSON.parse(localStorage.getItem("id"));
   const { user, travel, travelName } = useParams();
-  console.log(useParams());
-  function CreateUser({ username }) {
+  function CreateUser({ username , spent}) {
+    console.log(username);
+
     return (
       <div className="user">
         <Link to={`/${user}/${travel}/${travelName}/profile/${username}`}>
@@ -21,7 +22,7 @@ function DisplayUsers({ users, preferences }) {
           {username}
         </span>
         <br />
-        {preferences.displayMoney ? <span>{username.spent}</span> : null}
+        {preferences.displayMoney ? <span>{spent}</span> : null}
       </div>
     );
   }
@@ -49,7 +50,7 @@ function DisplayUsers({ users, preferences }) {
           {users
             .filter((user) => user.role === isDepositor)
             .map((user) => (
-              <CreateUser user={user} key={user.id} />
+              <CreateUser username={user.name} spent={user.difference} key={user.id} />
             ))}
         </div>
       </div>
