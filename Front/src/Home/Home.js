@@ -74,29 +74,26 @@ const Home = () => {
       </div>
       <div className="big-box">
         <h2>Participants</h2>
-            {/* <Link to="createUser">
+        {/* <Link to="createUser">
               <img className="plus-icon" src={plusSrc} alt="plus-icon" />
             </Link> */}
-            <div id="user-box" className="box">
-              <DisplayUsers
-                users={userList}
-                preferences={preferences}
-                travelName={travel}
-              />
-            </div>
-            <Link to="createUser" key={(user, travel)}>
-              <button>Add User</button>
-            </Link>
-          </div>
+        <div id="user-box" className="box">
+          <DisplayUsers
+            users={userList}
+            preferences={preferences}
+            travelName={travel}
+          />
         </div>
-        <div>
-          <div className="right-align">
-            <NavigationBar
-              preferences={preferences}
-              setPreferences={setPreferences}
-            />
-          </div>
-        </div>
+        <Link to="createUser" key={(user, travel)}>
+          <button>Add User</button>
+        </Link>
+      </div>
+      <div className="right-align">
+        <h4>{user}</h4>
+        <NavigationBar
+          preferences={preferences}
+          setPreferences={setPreferences}
+        />
       </div>
     </div>
   );

@@ -3,9 +3,11 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 const CreateTravel = (props) => {
+  console.log(props);
   const navigate = useNavigate();
+  console.log(navigate);
   const travel_List = props.myTravel;
-  const user_id = props.user_id;
+  const user_id = props.user;
   const duplicate = false;
   const [Travel_name, setTravel_name] = useState("");
 
