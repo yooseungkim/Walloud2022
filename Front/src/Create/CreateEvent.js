@@ -127,7 +127,7 @@ function CreateEvent() {
     <div>
       <h2>Create Event</h2>
       <div>
-        <label for="place">Place</label>
+        <label htmlFor="place">Place</label>
         <input
           type="text"
           id="place"
@@ -136,7 +136,7 @@ function CreateEvent() {
           value={place}
           size="5"
         />
-        <label for="price">Price</label>
+        <label htmlFor="price">Price</label>
         <input
           type="text"
           id="price"
@@ -145,7 +145,7 @@ function CreateEvent() {
           value={price}
           size="5"
         />
-        <label for="date">Date</label>
+        <label htmlFor="date">Date</label>
         <input
           type="date"
           id="date"
@@ -155,7 +155,7 @@ function CreateEvent() {
           size="5"
         />
       </div>
-      <label for="create-event">Participants</label>
+      <label htmlFor="create-event">Participants</label>
       <div className="box" id="create-event">
         {users.map((user) => (
           <CreateUser user={user} key={user.index} />
