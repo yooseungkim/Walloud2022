@@ -32,7 +32,7 @@ const App = () => {
           element={<CreateUser />}
         />
         <Route
-          path="/:username/:user/:travelName/:event"
+          path="/:user/:travel/:travelName/:event"
           element={<EventDescription />}
         />
         <Route path="/selectTravel" element={<SelectTravel />} />

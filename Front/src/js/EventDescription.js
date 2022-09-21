@@ -1,22 +1,16 @@
 import React from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
-import { eventList } from "./Var";
 
-const EventDescription = ({}) => {
+const EventDescription = () => {
+  console.log("event description");
   const description = useLocation().state.event;
   const { user, travel, travelName } = useParams();
+  console.log(useParams());
   console.log(description);
-  console.log(user);
-  console.log(travel);
-  console.log(travelName);
-  console.log(useLocation().state);
   return (
     <div>
-      <Link
-        to={`/${user}/${travel}/${travelName}`}
-        // state={{ user_id: user, travel_id: travel, travelName: travelName }}
-      >
-        <h1>Divide by N</h1>
+      <Link to={`/${user}/${travel}/${travelName}`}>
+        <h1 className="home">Divide by N</h1>
       </Link>
       <h2 id="headers">{description.place}</h2>
       <div>

@@ -1,22 +1,15 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 
 function Events({ event }) {
-  const user = useLocation().state.user_id;
-  const travel = useLocation().state.travel_id;
-  const travelName = useLocation().state.travelName;
-  console.log(useLocation().state);
+  const { user, travel, travelName } = useParams();
+  console.log(useParams());
   return (
     <div style={{ display: "flex" }}>
       <Link
         className="event"
-        to={`${event.place}`}
-        state={{
-          event: event,
-          user: user,
-          travel: travel,
-          travelName: travelName,
-        }}
+        to={`/${user}/${travel}/${travelName}/${event.place}`}
+        state={{ event: event }}
       >
         <span className="link-text">{event.place}</span>
       </Link>

@@ -12,9 +12,16 @@ const Profile = () => {
     return (
       <div style={{ display: "flex" }}>
         {events.map((event, index) => (
-          <h3 style={{ display: "block", margin: "0 auto" }} key={index}>
-            {event}
-          </h3>
+          <div>
+            <Link
+              to={`/${user}/${travel}/${travelName}/${event}`}
+              state={{ event: event }}
+            >
+              <h3 className="link-text" key={index}>
+                {event}
+              </h3>
+            </Link>
+          </div>
         ))}
       </div>
     );
@@ -25,7 +32,7 @@ const Profile = () => {
         to={`/${user}/${travel}/${travelName}`}
         state={{ user: user, travel: travel, travelName: travelName }}
       >
-        <h1>Divide by N</h1>
+        <h1 className="home">Divide by N</h1>
       </Link>
       <h2>{profile.name}</h2>
       <h3>Account : {profile.account}</h3>

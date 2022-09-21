@@ -10,11 +10,6 @@ import axios from "axios";
 
 const Home = () => {
   const { user, travel, travelName } = useParams();
-  console.log("Home");
-  console.log(useLocation().state);
-  console.log(user);
-  console.log(travel);
-  console.log(travelName);
   const [userList, setuserList] = useState(users);
   const [eventList, seteventList] = useState(eventlist);
   //받아오는 거를 eventList에서 eventlist로 수정
@@ -79,16 +74,7 @@ const Home = () => {
           <hr />
           {eventList.map((event) => (
             <div>
-              <Events
-                event={event}
-                key={event.index}
-                state={{
-                  event: event,
-                  user: user,
-                  travel: travel,
-                  travelName: travelName,
-                }}
-              />
+              <Events event={event} key={event.index} />
               <hr />
             </div>
           ))}

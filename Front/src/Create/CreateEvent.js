@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { users } from "../js/Var";
 import personSrc from "../img/person.png";
 import API from "../API";
@@ -126,7 +126,7 @@ function CreateEvent() {
         to={`/${user}/${travel}/${travelName}`}
         // state={{ user_id: userid, travel_id: travelid, travelName: travelname }}
       >
-        <h1>Divide by N</h1>
+        <h1 className="home">Divide by N</h1>
       </Link>
       <h2>Create Event</h2>
       <div>

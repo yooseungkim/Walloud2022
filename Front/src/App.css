@@ -40,13 +40,13 @@ h2 {
 
 h3 {
   font-size: 2rem;
-  font-weight: 200;
+  font-weight: 300;
   color: var(--classic-blue);
 }
 
 h4 {
   font-size: 1.5rem;
-  font-weight: 200;
+  font-weight: 250;
   color: black;
 }
 
@@ -83,6 +83,7 @@ button {
 
 button:hover {
   opacity: 70%;
+  color: var(--illuminating);
 }
 
 input {
@@ -186,7 +187,7 @@ Classes
 .box {
   border-radius: 1rem;
   /* background-color: rgb(178, 216, 244); */
-  background-color: #5798d2a3;
+  background-color: #3d6589c2;
   height: fit-content;
   margin: 5% 0;
   min-width: 450px;
@@ -233,5 +234,9 @@ Classes
 } */
 
 .link-text:hover {
-  color: var(--ultimate-gray);
+  color: var(--illuminating);
+}
+
+.home:hover {
+  color: var(--illuminating);
 }

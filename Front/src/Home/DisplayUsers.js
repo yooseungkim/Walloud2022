@@ -18,10 +18,10 @@ function DisplayUsers({ users, preferences }) {
         <span
           style={{ color: currentLoggedIn === user.name ? "blue" : "black" }}
         >
-          {user.name}
+          {username}
         </span>
         <br />
-        {preferences.displayMoney ? <span>{user.spent}</span> : null}
+        {preferences.displayMoney ? <span>{username.spent}</span> : null}
       </div>
     );
   }
