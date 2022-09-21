@@ -1,5 +1,6 @@
 package com.spring.mydiv.Service;
 
+import com.spring.mydiv.Dto.EventCreateDto;
 import com.spring.mydiv.Dto.ParticipantCreateDto;
 import com.spring.mydiv.Dto.ParticipantDto;
 import com.spring.mydiv.Entity.Event;
@@ -9,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.Commit;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -41,6 +44,28 @@ class ParticipantServiceTest {
         //then
         System.out.println("status: " + ResponseEntity.ok(dto).toString());
         System.out.println("role: " + dto.getEventRole());
+    }
+
+    @Test
+    @Commit
+    @DisplayName("참가자 생성")
+    void getEventListThatPersonJoin() {
+        //given
+        int person_id = 50; //이하은
+        //when
+        List<EventCreateDto.PersonView> result = participantService.getEventListThatPersonJoin(person_id);
+        //then
+        for (EventCreateDto.PersonView e : result){
+            System.out.println(">> event:");
+            System.out.println("event id: " + e.getEventId());
+            System.out.println("event name: " + e.getEventName());
+            System.out.println("date: " + e.getDate());
+            System.out.println("total price: " + e.getPrice());
+            System.out.println("payer id: " + e.getPayerId());
+            System.out.println("payer name: " + e.getPayerName());
+            System.out.println("price/person: " + e.getDividePrice());
+            System.out.println();
+        }
     }
 
 //    @Test
