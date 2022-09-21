@@ -41,4 +41,18 @@ class TravelServiceTest {
         //then
         System.out.println("Name: "+info.getName());
     }
+
+    @Test
+    @Commit
+    @DisplayName("여행 자체를 삭제")
+    void deleteTravel() {
+        //given
+        int travelId = 57;
+
+        //when
+        travelService.deleteTravel(travelId);
+
+        //then
+        System.out.println("check DB please!");
+    }
 }

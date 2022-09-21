@@ -89,4 +89,10 @@ public class EventController {
 //        //@PathVariable = 생성한 이벤트 아이디
 //        //return service. event DB & participant DB에서 정보 리턴
 //    }
+
+    @DeleteMapping("/{userid}/{travelid}/{eventid}/delete")
+    public void deleteEvent(@PathVariable int event_id){
+        eventService.deleteEvent(event_id);
+    }
+
 }

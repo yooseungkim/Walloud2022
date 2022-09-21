@@ -11,4 +11,5 @@ import com.spring.mydiv.Entity.Travel;
  */
 public interface TravelRepository extends JpaRepository<Travel, Long>{
 	Optional<Travel> findById(Long no);
+	void deleteById(Long travelId);
 }
