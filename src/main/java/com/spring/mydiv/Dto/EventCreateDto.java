@@ -75,4 +75,36 @@ public class EventCreateDto {
                     .build();
         }
     }
+
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+    public static class PersonView {
+        @NotNull
+        private Long EventId;
+        @NotNull
+        private String EventName;
+        @NotNull
+        private java.util.Date Date;
+        @NotNull
+        private int Price;
+        @NotNull
+        private Double DividePrice;
+        @NotNull
+        private Double TakePrice;
+        private Long PayerId;
+        private String PayerName;
+        public static PersonView fromEntity(Event event) {
+            return PersonView.builder()
+                    .EventId(event.getId())
+                    .EventName(event.getName())
+                    .Date(event.getDate())
+                    .Price(event.getPrice())
+                    .DividePrice(event.getDividePrice())
+                    .TakePrice(event.getTakePrice())
+                    .build();
+        }
+    }
 }

@@ -6,6 +6,7 @@ import com.spring.mydiv.Entity.User;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 public class PersonCreateDto {
     @Getter
@@ -46,11 +47,45 @@ public class PersonCreateDto {
         private Long Id;
         private String Name;
         private Boolean Role;
+        private Double Difference;
         public static HomeView fromEntity(Person person) {
             return HomeView.builder()
                     .Id(person.getId())
                     .Name(person.getUser().getName())
                     .Role(person.getRole())
+                    .Difference(person.getDifference())
+                    .build();
+        }
+    }
+
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+    public static class Detail {
+        private Long PersonId;
+        private Double SumSend;
+        private Double SumGet;
+        private Double Difference;
+        private Boolean TravelRole;
+        private String UserName;
+        private String UserEmail;
+        private String UserAccount;
+
+        private List<EventCreateDto.PersonView> EventList;
+        private List<HomeView> PersonInTravelList;
+
+        public static Detail fromEntity(Person person) {
+            return Detail.builder()
+                    .PersonId(person.getId())
+                    .SumSend(person.getSumSend())
+                    .SumGet(person.getSumGet())
+                    .Difference(person.getDifference())
+                    .TravelRole(person.getRole())
+                    .UserName(person.getUser().getName())
+                    .UserEmail(person.getUser().getEmail())
+                    .UserAccount(person.getUser().getAccount())
                     .build();
         }
     }
