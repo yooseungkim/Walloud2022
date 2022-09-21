@@ -42,7 +42,7 @@ const Button = styled.div`
 `;
 
 const LogIn = () => {
-  const [su,setsu] = useState(true);
+  const [su, setsu] = useState(true);
   const [isLoggin, setisLogin] = useState(true);
   const [input_id, setId] = useState("");
   const [input_password, setPassword] = useState("");
@@ -56,42 +56,45 @@ const LogIn = () => {
     setPassword(event.currentTarget.value);
   };
 
-  const try_LogIn = async(event) => {
-    await axios.post("/api/login",{
-      input_id : input_id,
-      input_password : input_password
-    }).then((response) => {
-      switch(response.data){
-        case 0:
-          throw("Network Error");
-        case -1:
-          alert("Wrong Password");
-          navigate('/login');
-          break;
-        case -2:
-          alert("Wrong Email");
-          navigate('/login');
-          break;
-        default:
-          alert("Login Success!");
-          navigate('/selectTravel', {state :{ id: response.data }});
-          break;
-      }
-    }).catch((error) => {
-      event.preventDefault();
-      console.log(error);
-      alert("Error");
-    })
-  }
+  const try_LogIn = async (event) => {
+    await axios
+      .post("/api/login", {
+        input_id: input_id,
+        input_password: input_password,
+      })
+      .then((response) => {
+        switch (response.data) {
+          case 0:
+            throw "Network Error";
+          case -1:
+            alert("Wrong Password");
+            navigate("/login");
+            break;
+          case -2:
+            alert("Wrong Email");
+            navigate("/login");
+            break;
+          default:
+            alert("Login Success!");
+            navigate("/selectTravel", { state: { id: response.data } });
+            break;
+        }
+      })
+      .catch((error) => {
+        event.preventDefault();
+        console.log(error);
+        alert("Error");
+      });
+  };
 
   const onSubmit = (event) => {
-    try_LogIn(event)
+    try_LogIn(event);
   };
 
   return (
     <div className="login">
       <h2>Log In</h2>
-      <label for="email">Email</label>
+      <label htmlFor="email">Email</label>
       <input
         type="email"
         name="email"
@@ -99,7 +102,7 @@ const LogIn = () => {
         value={input_id}
         onChange={onIdHandler}
       />
-      <label for="password">Password</label>
+      <label htmlFor="password">Password</label>
       <input
         type="password"
         name="password"
@@ -107,9 +110,9 @@ const LogIn = () => {
         value={input_password}
         onChange={onPasswordHandler}
       />
-        <button type="submit" onClick={onSubmit}>
-          Log In
-        </button>
+      <button type="submit" onClick={onSubmit}>
+        Log In
+      </button>
       <h5 style={{ margin: "5rem 0 0 0 " }}>
         If you don't have ID, register first
       </h5>

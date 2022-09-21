@@ -93,7 +93,7 @@ const Home = () => {
                 travelName={travel_id}
               />
             </div>
-            <Link to="createEvent" key={(user_id, travel_id)}>
+            <Link to="createUser" key={(user, travel)}>
               <button>Add User</button>
             </Link>
           </div>
