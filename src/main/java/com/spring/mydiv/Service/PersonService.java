@@ -4,6 +4,7 @@ import javax.transaction.Transactional;
 
 import com.spring.mydiv.Dto.ParticipantCreateDto;
 import com.spring.mydiv.Dto.PersonCreateDto;
+import com.spring.mydiv.Dto.TravelCreateDto;
 import com.spring.mydiv.Entity.Travel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -120,5 +121,18 @@ public class PersonService {
             personRepository.updateSumSendAndSumGetAndDifferenceAndRoleById(p.getSumSend(),
                     p.getSumGet(), p.getDifference(), p.getRole(),
                     p.getId());
+    }
+
+
+    public PersonCreateDto.Detail getPersonToDetailView(int personId){
+        //- 사용자 개인 정보 -> user(name, email, account)
+        //- travel에서의 정보 -> person(sumsend, sumget, diff, travelrole)
+        Optional<Person> info = personRepository.findById(Long.valueOf(personId));
+        return PersonCreateDto.Detail.fromEntity(info.get());
+    }
+
+    public PersonCreateDto.HomeView getPayerInTravel(int travelId){
+        return PersonCreateDto.HomeView.fromEntity(personRepository
+                .findByTravel_IdAndRole(Long.valueOf(travelId), true));
     }
 }
