@@ -27,13 +27,13 @@ class EventServiceTest {
     @DisplayName("이벤트 생성")
     void createEvent() {
         //given
-        Date date = new Date(22, 9, 20);
+        Date date = new Date(22, 9, 1);
         EventCreateDto.Request request = EventCreateDto.Request.builder()
-                .Name("은마아파트")
-                .Travel(travelService.getTravelInfo(57)) //서울 여행
+                .Name("우버 (포츠담 -> 호텔) ")
+                .Travel(travelService.getTravelInfo(78)) //서울 여행
                 .Date(date)
-                .Price(25000)
-                .PartiCount(2)
+                .Price(65000)
+                .PartiCount(4)
                 .build();
         //when
         EventCreateDto.Response eventDto = eventService.createEvent(request);

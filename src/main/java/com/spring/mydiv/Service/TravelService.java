@@ -23,9 +23,9 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class TravelService {
+    private final EventService eventService;
 	private final TravelRepository travelRepository;
     private final EventRepository eventRepository;
-
     private final PersonRepository personRepository;
 
     @Transactional
@@ -51,7 +51,7 @@ public class TravelService {
         List<Event> eventList = eventRepository.findByTravel_Id(Long.valueOf(travelId));
         List<Person> personList = personRepository.findByTravel_Id(Long.valueOf(travelId));
         for(Event event : eventList){
-            eventRepository.delete(event);
+            eventService.deleteEvent(event.getId().intValue());
         }
         for(Person person : personList){
             personRepository.delete(person);
