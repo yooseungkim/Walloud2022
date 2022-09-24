@@ -92,10 +92,10 @@ public class PersonService {
         for (Person p : personList){
             // update sumget & sumsend
             if (p.getId().equals(payer_person_id)){ // payer
-                if (p.getSumSend() == null) p.setSumGet(takePrice);
+                if (p.getSumGet() == null) p.setSumGet(takePrice);
                 else p.setSumGet(p.getSumGet() + takePrice);
             } else { // ~payer
-                if (p.getSumGet() == null) p.setSumSend(dividePrice);
+                if (p.getSumSend() == null) p.setSumSend(dividePrice);
                 else p.setSumSend(p.getSumSend() + dividePrice);
             }
 
