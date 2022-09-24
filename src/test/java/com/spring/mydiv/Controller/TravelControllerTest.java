@@ -21,6 +21,7 @@ class TravelControllerTest {
     void getTravelToMainView(){
         //given
         int travelId = 57;
+        String travelName = "서울 여행";
 
         //when
         TravelCreateDto.HomeView homeView = travelController.getTravelToMainView(travelId);

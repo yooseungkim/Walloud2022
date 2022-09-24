@@ -27,7 +27,7 @@ public class PersonController {
     private final PersonService personService;
     private final ParticipantService participantService;
 
-    @PostMapping("/{userid}/{travelid}/invitePerson")
+    @PostMapping("/{userid}/{travelid}/createUser")
     public String createPerson2Travel(@PathVariable int travelid,
                                       @RequestBody Map map){
         String user_email = map.get("user_email").toString();
