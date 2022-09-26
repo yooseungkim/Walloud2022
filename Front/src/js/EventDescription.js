@@ -22,7 +22,7 @@ const EventDescription = () => {
     };
 
     function enterkey() {
-      if (window.event.keyCode == 13) {
+      if (window.event.keyCode === 13) {
         if (document.getElementById("price").value !== "") {
           setPrice(document.getElementById("price").value);
         } else {
@@ -60,7 +60,7 @@ const EventDescription = () => {
     };
 
     function enterkey() {
-      if (window.event.keyCode == 13) {
+      if (window.event.keyCode === 13) {
         if (document.getElementById("date").value !== "") {
           setDate(document.getElementById("date").value);
         } else {
