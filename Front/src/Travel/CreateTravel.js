@@ -28,9 +28,6 @@ const CreateTravel = (props) => {
     axios
       .post(`/api/${user_id}/createTravel`, { travel_name: Travel_name })
       .then(() => {
-        navigate(`/${user_id}/${Travel_name}`, {
-          state: { user_id: user_id, travel: Travel_name },
-        });
         window.location.reload();
       })
       .catch((error) => {
