@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { useLocation, Link, useParams } from "react-router-dom";
+import { useLocation, Link, useParams, useNavigate } from "react-router-dom";
 import personSrc from "../img/person.png";
 
 function CreateEvent() {
@@ -8,6 +8,7 @@ function CreateEvent() {
   const {user, travel, travelName} = useParams();
   const payer = [];
   const participants = [...users];
+  const navigate = useNavigate();
   // const user = useLocation().state.user;
   // const travel = useLocation().state.travel;
   // const username = test["username"];
@@ -116,7 +117,7 @@ function CreateEvent() {
           break;
         case 200:
           alert("Success");
-          
+          navigate(`/${user}/${travel}/${travelName}`)
           break;
         default:
           throw "Network Error";
@@ -144,6 +145,7 @@ function CreateEvent() {
           onChange={onChange}
           value={place}
           size="5"
+          autoFocus
         />
         <label htmlFor="price">Price</label>
         <input
