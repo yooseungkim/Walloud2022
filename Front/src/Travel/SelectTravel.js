@@ -6,6 +6,8 @@ import CreateTravel from "./CreateTravel";
 const SelectTravel = () => {
   const user = useLocation().state.id;
   const [myTravel, setTravellist] = useState([]);
+
+  
   const [try_del, setDelete] = useState(false);
   const [checkallbutton, setcheckallbutton] = useState("전체 선택");
   const [checkedItems, setCheckedItems] = useState([]);

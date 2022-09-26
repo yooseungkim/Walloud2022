@@ -36,5 +36,4 @@ public class TravelController {
         homeView.setPeriod(eventService.getTravelPeriod(travelId));
         return homeView;
     }
-
 }
