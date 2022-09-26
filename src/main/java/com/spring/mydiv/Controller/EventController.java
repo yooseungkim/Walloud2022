@@ -46,17 +46,21 @@ public class EventController {
                 .PartiCount(partiCount)
                 .build();
         //set dividePrice, takePrice(get은 method랑 혼동될 것 같아 이름 변경했습니다!)
+        System.out.println("!!!!!!!!!");
         EventCreateDto.Response eventDto = eventService.createEvent(request);
         //get event dto(eventId)
+        System.out.println("???????");
 
         if (ResponseEntity.ok(eventDto).getStatusCodeValue() == 200){ //success to create event
             Long eventId = eventDto.getId();
             List<Person> personList = new ArrayList<>();
-
+            System.out.println(partiDtoList.size());
             //set parti dto(personId, eventId, role)
             for (Map partiDto : partiDtoList){
+                System.out.println(partiDto.get("id").toString());
+                System.out.println("here!!!!");
                 Person person = personService.getPersonEntityByPersonId(Long
-                        .valueOf(partiDto.get("person_id").toString())).get();
+                        .valueOf(partiDto.get("id").toString())).get();
                 personList.add(person);
 
                 ParticipantCreateDto.Request partiRequest = ParticipantCreateDto.Request.builder()
