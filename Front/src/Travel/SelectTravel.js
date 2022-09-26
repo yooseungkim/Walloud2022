@@ -7,7 +7,6 @@ const SelectTravel = () => {
   const user = useLocation().state.id;
   const [myTravel, setTravellist] = useState([]);
 
-  
   const [try_del, setDelete] = useState(false);
   const [checkallbutton, setcheckallbutton] = useState("전체 선택");
   const [checkedItems, setCheckedItems] = useState([]);
@@ -135,8 +134,9 @@ const SelectTravel = () => {
           ></input>
           {checkallbutton}
           {myTravel.map((travel, idx) => (
-            <label key={idx} className="innerBox">
+            <div>
               <input
+                className="travel-checkbox"
                 type="checkbox"
                 value={travel.id}
                 onChange={(e) => checkHandler(e.target.checked, travel)}
@@ -151,9 +151,9 @@ const SelectTravel = () => {
                   travelName: travel.name,
                 }}
               >
-                <h3>{travel.name}</h3>
+                <h3 style={{ display: "inline-block" }}>{travel.name}</h3>
               </Link>
-            </label>
+            </div>
           ))}
         </div>
       )}

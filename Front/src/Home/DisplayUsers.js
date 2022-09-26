@@ -5,30 +5,34 @@ import { Link, useParams } from "react-router-dom";
 function DisplayUsers({ users, preferences }) {
   const currentLoggedIn = JSON.parse(localStorage.getItem("id"));
   const { user, travel, travelName } = useParams();
-  function CreateUser({ username , spent}) {
+  function CreateUser({ username, spent }) {
     console.log(username);
 
     return (
-      <div className="user">
-        <Link to={`/${user}/${travel}/${travelName}/profile/${username}`}>
+      <Link to={`/${user}/${travel}/${travelName}/profile/${username}`}>
+        <div className="user">
           {preferences.displayIcon ? (
             <img className="user-icon" src={personSrc} alt="profile" />
           ) : null}
-        </Link>
+          <br />
+          <h4
+            className="caption"
+            style={{ color: currentLoggedIn === user.name ? "blue" : "black" }}
+          >
+            {username}
+          </h4>
+          <br />
+          {preferences.displayMoney ? (
+            <h4 className="caption">₩{Math.round(spent)}</h4>
+          ) : null}
+        </div>
         <br />
-        <span
-          style={{ color: currentLoggedIn === user.name ? "blue" : "black" }}
-        >
-          {username}
-        </span>
-        <br />
-        {preferences.displayMoney ? <span>{spent}</span> : null}
-      </div>
+      </Link>
     );
   }
 
   function CreateType({ type }) {
-    let isDepositor = (type === "Depositors") ? true : false;
+    let isDepositor = type === "Depositors" ? true : false;
 
     const onClickDescription = (event) => {
       if (type === "Depositors") {
@@ -42,15 +46,19 @@ function DisplayUsers({ users, preferences }) {
       }
     };
     return (
-      <div>
+      <div className="home-type">
         <h4 className="type" onClick={() => onClickDescription({ type })}>
           {type}
         </h4>
-        <div>
+        <div style={{ alignItems: "center" }}>
           {users
             .filter((user) => user.role === isDepositor)
             .map((user) => (
-              <CreateUser username={user.name} spent={user.difference} key={user.id} />
+              <CreateUser
+                username={user.name}
+                spent={user.difference}
+                key={user.id}
+              />
             ))}
         </div>
       </div>
@@ -59,11 +67,12 @@ function DisplayUsers({ users, preferences }) {
 
   return (
     <div className="users">
-      <CreateType users={users} type="Depositors" />
-      <hr />
       <CreateType users={users} type="Manager" />
       <hr />
-      <CreateType users={users} type="Recipients" />
+      <div style={{ display: "flex" }}>
+        <CreateType users={users} type="Depositors" />
+        <CreateType users={users} type="Recipients" />
+      </div>
     </div>
   );
 }
