@@ -28,7 +28,9 @@ const CreateTravel = (props) => {
     axios
       .post(`/api/${user_id}/createTravel`, { travel_name: Travel_name })
       .then(() => {
-        navigate(`/${user_id}/${Travel_name}`, {state :{ user_id : user_id, travel:Travel_name }})
+        navigate(`/${user_id}/${Travel_name}`, {
+          state: { user_id: user_id, travel: Travel_name },
+        });
         window.location.reload();
       })
       .catch((error) => {
@@ -36,11 +38,22 @@ const CreateTravel = (props) => {
       });
   };
 
+  function enterkey() {
+    if (window.event.keyCode == 13) {
+      onSubmit();
+    }
+  }
+
   return (
     <div>
       <br />
       <label for="travel-name">New Travel</label>
-      <input onChange={onChange} value={Travel_name} id="travel-name" />
+      <input
+        onKeyDown={enterkey}
+        onChange={onChange}
+        value={Travel_name}
+        id="travel-name"
+      />
       <button
         style={{ display: "block", margin: "20px auto" }}
         onClick={onSubmit}
