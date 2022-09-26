@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import moment from "moment";
-import ReactDOM from "react-dom/client";
 
 const EventDescription = () => {
   console.log("event description");
   const description = useLocation().state.event;
-  console.log("evnet : ", description);
+  console.log("event : ", description);
   const { user, travel, travelName } = useParams();
 
   const onDelete = () => {
@@ -44,7 +43,7 @@ const EventDescription = () => {
             placeholder={price}
           />
         ) : (
-          <h3 onDoubleClick={onDoubleClick}>{price}</h3>
+          <h3 onDoubleClick={onDoubleClick}>₩{price}</h3>
         )}
       </div>
     );
