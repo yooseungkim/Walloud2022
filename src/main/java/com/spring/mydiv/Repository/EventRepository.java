@@ -9,6 +9,7 @@ import java.util.List;
 /**
  * @author 12nov
  */
+
 public interface EventRepository extends JpaRepository<Event, Long> {
     List<Event> findByTravel_Id(Long id);
 

@@ -83,6 +83,4 @@ public class UserController {
     public void deleteTravel(@PathVariable int travel_id) {
         travelservice.deleteTravel(travel_id);
     }
-
-
 }
