@@ -86,19 +86,26 @@ function CreateEvent() {
   };
 
   const event_info = async() => {
-    let temp_list = participants.map(function(row) {
+    let temp_list = [...participants].map(function(row) {
       delete row.name;
       delete row.difference;
 
       return row;
     })
 
+    console.log("event json",{
+      parti_list : temp_list,
+      event_name : place,
+      event_date : date,
+      price : price,
+      payer_person_id : payer[0]})
+
     await axios.post(`/api/${user}/${travel}/CreateEvent`,{
       parti_list : temp_list,
       event_name : place,
       event_date : date,
       price : price,
-      payer_person_id : payer
+      payer_person_id : payer[0]
     }).then((res) => {
       switch(res.data) {
         case -1:
@@ -109,6 +116,7 @@ function CreateEvent() {
           break;
         case 200:
           alert("Success");
+          
           break;
         default:
           throw "Network Error";
