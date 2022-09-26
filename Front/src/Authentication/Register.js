@@ -66,6 +66,12 @@ const Register = () => {
     }
   };
 
+  function enterkey() {
+    if (window.event.keyCode == 13) {
+      onSubmit();
+    }
+  }
+
   return (
     <div>
       <h1>Divide by N</h1>
@@ -78,6 +84,8 @@ const Register = () => {
             id="email"
             value={user_email}
             onChange={onEmailHandler}
+            autoFocus
+            required
           />
         </div>
         <div>
@@ -87,6 +95,7 @@ const Register = () => {
             id="name"
             value={user_name}
             onChange={onUserHandler}
+            required
           />
         </div>
         <div>
@@ -96,6 +105,7 @@ const Register = () => {
             id="account"
             value={user_account}
             onChange={onAccountHandler}
+            required
           />
         </div>
         <div>
@@ -105,20 +115,24 @@ const Register = () => {
             id="password"
             value={user_password}
             onChange={onPasswordHandler}
+            required
           />
         </div>
         <div>
-          <label htmlFor="confirm-password">Confirm Password</label>
+          <label htmlFor="confirm-password" onKeyDown={enterkey}>
+            Confirm Password
+          </label>
           <input
             type="password"
             id="confirm-password"
             value={confirmPassword}
             onChange={onConfirmPasswordHandler}
+            required
           />
         </div>
         <Link to="/login">
           <div>
-            <button type="submit" onClick={onSubmit}>
+            <button type="submit" onKeyDown={enterkey} onClick={onSubmit}>
               Submit
             </button>
           </div>
