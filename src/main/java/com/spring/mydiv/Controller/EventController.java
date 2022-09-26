@@ -88,14 +88,9 @@ public class EventController {
     /**이벤트 생성하고 디테일뷰에서 해당 내용 불러오기
      * -> 자세히 어떤 내용 필요할지는 논의 후 작성
      * */
-//    @PostMapping("/{userid}/{travelid}/{eventid}")
-//    public Event getEventInfoByEventId(@PathVariable int eventid){
-//        //@PathVariable = 생성한 이벤트 아이디
-//        //return service. event DB & participant DB에서 정보 리턴
-//    }
 
     @DeleteMapping("/{userid}/{travelid}/{eventid}/delete")
-    public void deleteEvent(@PathVariable int event_id){
+    public void deleteEvent(@PathVariable("eventid") int event_id){
         eventService.deleteEvent(event_id);
     }
 

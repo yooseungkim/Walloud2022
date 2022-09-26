@@ -74,6 +74,7 @@ public class EventService {
     }
 
     public void deleteEvent(int eventId){
+        // System.out.println("Enter to Service Layer");
         List<Participant> participantList = participantRepository.findByEvent_Id(Long.valueOf(eventId));
         for(Participant participant : participantList){
             participantRepository.delete(participant);

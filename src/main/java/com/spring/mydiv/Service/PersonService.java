@@ -123,7 +123,6 @@ public class PersonService {
                     p.getId());
     }
 
-
     public PersonCreateDto.Detail getPersonToDetailView(int personId){
         //- 사용자 개인 정보 -> user(name, email, account)
         //- travel에서의 정보 -> person(sumsend, sumget, diff, travelrole)
