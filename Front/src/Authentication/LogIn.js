@@ -91,17 +91,25 @@ const LogIn = () => {
     try_LogIn(event);
   };
 
+  const enterkey = () => {
+    if (window.event.keyCode == 13) {
+      onSubmit();
+    }
+  };
+
   return (
     <div className="login">
       <h1>Divide by N</h1>
       <h2>Log In</h2>
       <label htmlFor="email">Email</label>
       <input
-        type="email"
+        type="text"
         name="email"
         id="email"
         value={input_id}
         onChange={onIdHandler}
+        required
+        autoFocus
       />
       <label htmlFor="password">Password</label>
       <input
@@ -110,8 +118,11 @@ const LogIn = () => {
         id="password"
         value={input_password}
         onChange={onPasswordHandler}
+        onKeyDown={enterkey}
+        required
+        // autoFocus
       />
-      <button type="submit" onClick={onSubmit}>
+      <button id="log-in" type="submit" onClick={onSubmit}>
         Log In
       </button>
       <h5 style={{ margin: "5rem 0 0 0 " }}>
