@@ -50,7 +50,6 @@ const EventDescription = () => {
   };
 
   const ModifiableDate = ({ value }) => {
-    console.log(value);
     const [date, setDate] = useState(value);
     const [dblClicked, setDblClicked] = useState(false);
 

@@ -1,10 +1,37 @@
-import React from "react";
-import { Link, useLocation, useParams } from "react-router-dom";
+import axios from "axios";
+import React, { useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 const CreateUser = () => {
   const { travel, travelName, user } = useParams();
-  // const user = useLocation().state.user;
-  // const travel = useLocation().state.travel;
+  const [email, setEmail] = useState("");
+  const navigate = useNavigate();
+
+  const onChange = (event) => {
+    setEmail(event.currentTarget.value);
+  }
+
+  const onClick = async() => {
+    await axios.post(`/api/${user}/${travel}/createUser`,{
+      user_email : email
+    }).then((res) => {
+      switch(res.data) {
+        case -1:
+          alert("check the email is correct");
+          break;
+        case -2:
+          alert("Network Error");
+          break;
+        case 200:
+          alert("Successfully Created");
+          navigate(`/${user}/${travel}/${travelName}`);
+          break;
+      }
+    }).error((error) => {
+      console.log(error);
+    })
+  }
+
   return (
     <div>
       <Link
@@ -15,9 +42,9 @@ const CreateUser = () => {
       </Link>
       <h2>Add User</h2>
       <label htmlFor="email">Email</label>
-      <input id="email" type="email" />
-      <Link to={`/${user}/${travel}`} state={{ user: user, travel: travel }}>
-        <button>Submit</button>
+      <input id="email" type="email" onChange={onChange} />
+      <Link to={`/${user}/${travel}/${travelName}`}>
+        <button onClick={onClick}>Submit</button>
       </Link>
     </div>
   );
