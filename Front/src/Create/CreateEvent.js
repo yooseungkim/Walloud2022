@@ -4,8 +4,8 @@ import { useLocation, Link, useParams, useNavigate } from "react-router-dom";
 import personSrc from "../img/person.png";
 
 function CreateEvent() {
-  const users = useLocation().state.userList
-  const {user, travel, travelName} = useParams();
+  const users = useLocation().state.userList;
+  const { user, travel, travelName } = useParams();
   const payer = [];
   const participants = [...users];
   const navigate = useNavigate();
@@ -30,37 +30,37 @@ function CreateEvent() {
     });
   };
 
-  function CreateUser({ each }) {
-    const [participate, setParticipate] = useState("participate");
-    const [nameColor, setNameColor] = useState("green");
-    const onClickIcon = () => {
-      if (participate === "participate") {
-        setParticipate("no");
-        setNameColor("black");
-        participants.pop(each);
-      } else if (participate === "no") {
-        setParticipate("payer");
-        setNameColor("blue");
-        participants.push(each);
-        payer.push(each.id);
-      } else if (participate === "payer") {
-        setParticipate("participate");
-        setNameColor("green");
-        payer.pop(each);
-      }
-      console.log(payer);
-      console.log(participants);
-    };
-    return (
-      <div className="user" onClick={onClickIcon}>
-        <img className="user-icon" src={personSrc} alt="profile" />
-        <br />
-        <h4 style={{ color: nameColor }}>{each.name}</h4>
-      </div>
-    );
-  }
+  // function CreateUser({ each }) {
+  //   const [participate, setParticipate] = useState("participate");
+  //   const [nameColor, setNameColor] = useState("green");
+  //   const onClickIcon = () => {
+  //     if (participate === "participate") {
+  //       setParticipate("no");
+  //       setNameColor("black");
+  //       participants.pop(each);
+  //     } else if (participate === "no") {
+  //       setParticipate("payer");
+  //       setNameColor("blue");
+  //       participants.push(each);
+  //       payer.push(each.id);
+  //     } else if (participate === "payer") {
+  //       setParticipate("participate");
+  //       setNameColor("green");
+  //       payer.pop(each);
+  //     }
+  //     console.log(payer);
+  //     console.log(participants);
+  //   };
+  //   return (
+  //     <div className="user" onClick={onClickIcon}>
+  //       <img className="user-icon" src={personSrc} alt="profile" />
+  //       <br />
+  //       <h4 style={{ color: nameColor }}>{each.name}</h4>
+  //     </div>
+  //   );
+  // }
 
-  const onClickSubmit = (e) => {
+  const onSubmit = (e) => {
     if (payer.length === 1) {
       console.log("okay");
       // const newEvent = {
@@ -73,11 +73,10 @@ function CreateEvent() {
       // };
       // console.log(participants);
       // eventList.push(newEvent);
-      console.log('payer : ',payer);
-      console.log('participant : ',participants);
+      console.log("payer : ", payer);
+      console.log("participant : ", participants);
 
       event_info();
-
     } else if (payer.length > 1) {
       alert("결제자는 한 명이어야 합니다\nError: Too Many Payers");
     } else if (payer.length === 0) {
@@ -86,46 +85,50 @@ function CreateEvent() {
     }
   };
 
-  const event_info = async() => {
-    let temp_list = [...participants].map(function(row) {
+  const event_info = async () => {
+    let temp_list = [...participants].map(function (row) {
       delete row.name;
       delete row.difference;
 
       return row;
-    })
+    });
 
-    console.log("event json",{
-      parti_list : temp_list,
-      event_name : place,
-      event_date : date,
-      price : price,
-      payer_person_id : payer[0]})
+    console.log("event json", {
+      parti_list: temp_list,
+      event_name: place,
+      event_date: date,
+      price: price,
+      payer_person_id: payer[0],
+    });
 
-    await axios.post(`/api/${user}/${travel}/CreateEvent`,{
-      parti_list : temp_list,
-      event_name : place,
-      event_date : date,
-      price : price,
-      payer_person_id : payer[0]
-    }).then((res) => {
-      switch(res.data) {
-        case -1:
-          alert("fail to create event");
-          break;
-        case -2:
-          alert("fail to create participate");
-          break;
-        case 200:
-          alert("Success");
-          navigate(`/${user}/${travel}/${travelName}`)
-          break;
-        default:
-          throw "Network Error";
-      }
-    }).catch((error) => {
-      console.log(error);
-    })
-  }
+    await axios
+      .post(`/api/${user}/${travel}/CreateEvent`, {
+        parti_list: temp_list,
+        event_name: place,
+        event_date: date,
+        price: price,
+        payer_person_id: payer[0],
+      })
+      .then((res) => {
+        switch (res.data) {
+          case -1:
+            alert("fail to create event");
+            break;
+          case -2:
+            alert("fail to create participate");
+            break;
+          case 200:
+            alert("Success");
+            navigate(`/${user}/${travel}/${travelName}`);
+            break;
+          default:
+            throw "Network Error";
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
     <div>
@@ -166,15 +169,51 @@ function CreateEvent() {
           size="5"
         />
       </div>
-      <label htmlFor="create-event">Participants</label>
-      <div className="box" id="create-event">
+      {/* <label htmlFor="create-event">Participants</label> */}
+      {/* <div className="box" id="create-event">
         {users.map((user) => (
           <CreateUser each={user} key={user.id} />
         ))}
+      </div> */}
+      <div>
+        <label htmlFor="participants">Payer</label>
+        <select id="participants">
+          {users.map((user, id) => (
+            <option value={user.id} key={id}>
+              {user.name}
+            </option>
+          ))}
+        </select>
       </div>
-      <button onClick={onClickSubmit}>이벤트 추가</button>
+      <label>Participants</label>
+      <br />
+      <div
+        style={{
+          width: "400px",
+          marginTop: "2%",
+          verticalAlign: "center",
+        }}
+      >
+        {users.map((user, id) => (
+          <div
+            style={{
+              display: "inline-block",
+              minWidth: "33%",
+              alignItems: "center",
+              marginBottom: "3%",
+            }}
+            key={id}
+          >
+            <input className="checkbox" type="checkbox" id={user.id} />
+            <label className="checkbox-text" htmlFor={user.id}>
+              {user.name}
+            </label>
+          </div>
+        ))}
+      </div>
+      <button onClick={onSubmit}>이벤트 추가</button>
     </div>
   );
 }
 
-export { CreateEvent};
+export { CreateEvent };

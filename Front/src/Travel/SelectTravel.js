@@ -8,9 +8,9 @@ const SelectTravel = () => {
   const [myTravel, setTravellist] = useState([]);
 
   const [try_del, setDelete] = useState(false);
-  const [checkallbutton, setcheckallbutton] = useState("전체 선택");
+  const [checkAllButton, setCheckAllButton] = useState("전체 선택");
   const [checkedItems, setCheckedItems] = useState([]);
-  const [checekdTravels, setCheckedTravel] = useState([]);
+  const [checkedTravel, setCheckedTravel] = useState([]);
 
   useEffect(() => {
     getInfor();
@@ -39,7 +39,7 @@ const SelectTravel = () => {
       if (checkedItems.length !== 0) {
         if (
           window.confirm(
-            checekdTravels + " 이 선택되었습니다.\n 삭제하시겠습니까?"
+            checkedTravel + " 이 선택되었습니다.\n 삭제하시겠습니까?"
           )
         ) {
           checkedItems.map((travel_id, idx) => {
@@ -66,14 +66,14 @@ const SelectTravel = () => {
       console.log(elem, "push", checkedItems);
     } else {
       setCheckedItems(checkedItems.filter((e) => e !== elem.id));
-      setCheckedTravel(checekdTravels.filter((e) => e !== elem.name));
+      setCheckedTravel(checkedTravel.filter((e) => e !== elem.name));
       console.log(elem, "pop", checkedItems);
     }
   };
 
   const handleAllCheck = (checked) => {
     if (checked) {
-      setcheckallbutton("전체 선택");
+      setCheckAllButton("전체 선택");
       const idArray = [];
       const travelArray = [];
       myTravel.forEach((e) => {
@@ -84,7 +84,7 @@ const SelectTravel = () => {
       setCheckedTravel(travelArray);
       console.log("checked all", checkedItems);
     } else {
-      setcheckallbutton("전체 선택");
+      setCheckAllButton("전체 선택");
       setCheckedItems([]);
       setCheckedTravel([]);
       console.log("unchecked all", checkedItems);
@@ -132,7 +132,7 @@ const SelectTravel = () => {
             onChange={(e) => handleAllCheck(e.target.checked)}
             checked={checkedItems.length === myTravel.length ? true : false}
           ></input>
-          {checkallbutton}
+          {checkAllButton}
           {myTravel.map((travel, idx) => (
             <div>
               <input
