@@ -26,8 +26,10 @@ const CreateUser = () => {
           alert("Successfully Created");
           navigate(`/${user}/${travel}/${travelName}`);
           break;
+        default:
+          throw res;
       }
-    }).error((error) => {
+    }).catch((error) => {
       console.log(error);
     })
   }

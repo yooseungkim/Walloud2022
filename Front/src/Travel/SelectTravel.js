@@ -44,12 +44,12 @@ const SelectTravel = () => {
         ) {
           checkedItems.map((travel_id, idx) => {
             axios
-              .delete(`/api/${user}/${travel_id}/deleteTravel`)
+              .delete(`/api/${user}/${travel_id}/deleteTravel`).then(()=>{
+                alert("삭제되었습니다.");})
               .catch((error) => {
                 console.log(error);
               });
           });
-          alert("삭제되었습니다.");
           window.location.reload();
         } else {
           alert("취소되었습니다.");
@@ -98,8 +98,8 @@ const SelectTravel = () => {
       <button onClick={Logout}>Log Out</button>
       <button onClick={try_Delete}>Delete</button>
       <h3>Existing Travels</h3>
-
-      {!try_del ? (
+      {myTravel.length === 0 ? <div>
+        {!try_del ? (
         <div>
           {myTravel.map((travel, idx) => (
             <Link
@@ -157,6 +157,8 @@ const SelectTravel = () => {
           ))}
         </div>
       )}
+      </div> : <div>Create</div>}
+      
       <CreateTravel user={user} myTravel={myTravel} />
     </div>
   );
