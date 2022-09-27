@@ -42,8 +42,6 @@ const Button = styled.div`
 `;
 
 const LogIn = () => {
-  const [su, setsu] = useState(true);
-  const [isLoggin, setisLogin] = useState(true);
   const [input_id, setId] = useState("");
   const [input_password, setPassword] = useState("");
   const navigate = useNavigate();

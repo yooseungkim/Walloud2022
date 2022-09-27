@@ -32,9 +32,8 @@ function DisplayUsers({ users, preferences }) {
   }
 
   function CreateType({ type }) {
-    let isDepositor = type === "Depositors" ? true : false;
 
-    const onClickDescription = (event) => {
+    const onClickDescription = () => {
       if (type === "Depositors") {
         alert("Depositors have to send money");
       } else if (type === "Manager") {
@@ -52,7 +51,7 @@ function DisplayUsers({ users, preferences }) {
         </h4>
         <div style={{ alignItems: "center" }}>
           {users
-            .filter((user) => user.role === isDepositor)
+            .filter((user) => ((user.role === true && type === "Manager") || (user.difference > 0 && type === "Depositors") || (user.difference < 0 && type === "Recipients")))
             .map((user) => (
               <CreateUser
                 username={user.name}
