@@ -14,6 +14,8 @@ import com.spring.mydiv.Service.UserService;
 
 import lombok.RequiredArgsConstructor;
 
+import static java.lang.Boolean.TRUE;
+
 /**
  * @author 12nov
  */
@@ -65,22 +67,13 @@ public class UserController {
         PersonCreateDto.Request request = new PersonCreateDto.Request(
                 userservice.getUserInfo(no),
                 travelservice.createTravel(travelInfo));
-        return ResponseEntity.ok(personservice.createPerson(request));
-    }
-
-    /**user가 참가한 여행을 삭제하는 메소드
-     * -> 여행 자체를 삭제하는 것 or
-     * -> 여행에서 참가하지 않는 것?
-     * 일단은 후자로 작성했음.
-     * */
-    @DeleteMapping("/{user_id}/{travel_id}/deleteTravel")
-    public void deleteJoinTravel(@PathVariable int user_id, @PathVariable int travel_id) {
-        personservice.deleteJoinTravel(user_id, travel_id);
+        return ResponseEntity.ok(personservice.createPerson(request, TRUE));
     }
 
     // 여행을 생성한 user가 여행 자체를 삭제하는 메소드
     @DeleteMapping("/{user_id}/{travel_id}/delete")
     public void deleteTravel(@PathVariable int travel_id) {
+
         travelservice.deleteTravel(travel_id);
     }
 }

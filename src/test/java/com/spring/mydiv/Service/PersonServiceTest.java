@@ -16,6 +16,8 @@ import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.Boolean.FALSE;
+
 @SpringBootTest
 class PersonServiceTest {
     @Autowired(required=true)
@@ -42,7 +44,7 @@ class PersonServiceTest {
                 .build();
 
         //when
-        PersonDto person = personService.createPerson(request);
+        PersonDto person = personService.createPerson(request, FALSE);
 
         //then
         System.out.println("User name = " + person.getUser().getName());
@@ -68,14 +70,13 @@ class PersonServiceTest {
 
     @Test
     @Commit
-    @DisplayName("여행 삭제")
+    @DisplayName("여행에서 참가자 삭제")
     void deleteJoinTravel() {
         //given
-        int userId = 16;
-        int travelId = 67;
+        int personId = 100;
 
         //when
-        personService.deleteJoinTravel(userId, travelId);
+        personService.deleteJoinTravel(personId);
 
         //then
         System.out.println("check DB please!");

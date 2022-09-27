@@ -19,6 +19,9 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
 	Person findByTravel_IdAndRole(Long id, Boolean role);
 	List<Person> findByTravel_Id(Long id);
 	void deleteByUser_IdAndTravel_Id(Long userid, Long travelid);
+
+	void deleteById(Long id);
+
 	void delete(Person person);
 	int countDistinctByTravel_Id(Long id);
 

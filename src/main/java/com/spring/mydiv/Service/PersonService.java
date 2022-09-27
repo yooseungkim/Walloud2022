@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static java.lang.Boolean.FALSE;
+
 /**
  * @author 12nov
  */
@@ -29,7 +31,7 @@ public class PersonService {
 	private final PersonRepository personRepository;
 	
     @Transactional
-    public PersonDto createPerson(PersonCreateDto.Request request) {
+    public PersonDto createPerson(PersonCreateDto.Request request, boolean superUser) {
         Person person = Person.builder()
         		.user(User.builder()
                         .id(request.getUser().getId())
@@ -42,14 +44,19 @@ public class PersonService {
                         .id(request.getTravel().getId())
                         .name(request.getTravel().getName())
                         .build())
+                .sumGet(0.0)
+                .sumSend(0.0)
+                .difference(0.0)
+                .role(FALSE)
+                .isSuper(superUser)
                 .build();
         personRepository.save(person);
         return PersonDto.fromEntity(person);
     }
 
     @Transactional
-    public void deleteJoinTravel(int userId, int travelId) {
-        personRepository.deleteByUser_IdAndTravel_Id(Long.valueOf(userId), Long.valueOf(travelId));
+    public void deleteJoinTravel(int personId) {
+        personRepository.deleteById(Long.valueOf(personId));
     }
 
     public List<PersonCreateDto.Simple> getPersonNameInTravel(int travelId){

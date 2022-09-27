@@ -1,9 +1,7 @@
 package com.spring.mydiv.Controller;
 
-import com.spring.mydiv.Dto.PersonCreateDto;
-import com.spring.mydiv.Dto.PersonDto;
-import com.spring.mydiv.Dto.TravelCreateDto;
-import com.spring.mydiv.Dto.UserDetailDto;
+import com.spring.mydiv.Dto.*;
+import com.spring.mydiv.Entity.Person;
 import com.spring.mydiv.Service.ParticipantService;
 import com.spring.mydiv.Service.PersonService;
 import com.spring.mydiv.Service.TravelService;
@@ -14,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import static java.lang.Boolean.FALSE;
 
 /**
  * @author 12nov
@@ -38,10 +38,23 @@ public class PersonController {
             PersonCreateDto.Request request = new PersonCreateDto.Request(
                     userDetailDto,
                     travelService.getTravelInfo(travelid));
-            PersonDto personDto = personService.createPerson(request);
+            PersonDto personDto = personService.createPerson(request, FALSE);
             if (personDto != null)
                 return "200"; //success
             else return "-2"; //fail
+        }
+    }
+
+    @PostMapping("/{userid}/{travelid}/deleteUser")
+    public String deletePerson2Travel(@PathVariable int travelid,
+                                      @RequestBody Map map){
+        int person_id = Integer.parseInt(map.get("person_id").toString());
+        if (participantService.getSizeOfJoinedEventList(person_id) == 0){
+            personService.deleteJoinTravel(person_id);
+            return "200";
+        }
+        else {
+            return "-1";
         }
     }
 

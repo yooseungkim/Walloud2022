@@ -66,4 +66,8 @@ public class ParticipantService {
         }
         return result;
     }
+
+    public int getSizeOfJoinedEventList(int personId){
+        return participantRepository.findByPerson_Id(Long.valueOf(personId)).size();
+    }
 }

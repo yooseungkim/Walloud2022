@@ -33,14 +33,12 @@ public class Person implements Serializable {
 	@ManyToOne
 	@JoinColumns({
 			@JoinColumn(name = "user_id", referencedColumnName = "user_id"),
-			@JoinColumn(name = "user_name", referencedColumnName = "user_name")
 	})
 	private User user;
 
 	@ManyToOne
 	@JoinColumns({
 			@JoinColumn(name = "travel_id", referencedColumnName = "travel_id"),
-			@JoinColumn(name = "travel_name", referencedColumnName = "travel_name")
 	})
 	private Travel travel;
 	
@@ -53,10 +51,13 @@ public class Person implements Serializable {
 	@Column(name = "person_difference", nullable = false)
 	private Double difference;
 	
-	@Column(name = "person_travelrole")
+	@Column(name = "person_travelrole", nullable = false)
 	private Boolean role;
 	/**travel Role
 	 * 1, true: TAKER
 	 * 0, false: SENDER*/
+
+	@Column(name = "person_superuser", nullable = false)
+	private Boolean isSuper;
 	
 }
