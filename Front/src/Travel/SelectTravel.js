@@ -52,6 +52,9 @@ const SelectTravel = () => {
           });
           window.location.reload();
         } else {
+          setCheckedItems([]);
+          setCheckedTravel([]);
+          console.log("unchecked all", checkedItems);
           alert("취소되었습니다.");
         }
       }
@@ -127,34 +130,48 @@ const SelectTravel = () => {
         </div>
       ) : (
         <div className="contStyle">
-          <input
-            type="checkbox"
-            onChange={(e) => handleAllCheck(e.target.checked)}
-            checked={checkedItems.length === myTravel.length ? true : false}
-          ></input>
-          {checkAllButton}
-          {myTravel.map((travel, idx) => (
-            <div>
-              <input
-                className="travel-checkbox"
-                type="checkbox"
-                value={travel.id}
-                onChange={(e) => checkHandler(e.target.checked, travel)}
-                checked={checkedItems.includes(travel.id) ? true : false}
-              />
-              <Link
-                key={idx}
-                to={`/${user}/${travel.id}/${travel.name}`}
-                state={{
-                  user: user,
-                  travel: travel.id,
-                  travelName: travel.name,
+          <div style={{ alignItems: "center" }}>
+            {myTravel.map((travel, idx) => (
+              <div
+                style={{
+                  display: "inline-block",
+                  minWidth: "33%",
+                  alignItems: "center",
+                  marginBottom: "3%",
                 }}
               >
-                <h3 style={{ display: "inline-block" }}>{travel.name}</h3>
-              </Link>
-            </div>
-          ))}
+                <input
+                  id={travel}
+                  style={{ display: "inline-block", margin: "0" }}
+                  className="checkbox"
+                  type="checkbox"
+                  value={travel.id}
+                  onChange={(e) => checkHandler(e.target.checked, travel)}
+                  checked={checkedItems.includes(travel.id) ? true : false}
+                />
+                <label htmlFor={travel} className="checkbox-text">
+                  {travel.name}
+                </label>
+              </div>
+            ))}
+          </div>
+          <div
+            style={{
+              display: "inline-block",
+              marginBottom: "3%",
+            }}
+          >
+            <input
+              id="checkAll"
+              type="checkbox"
+              className="checkbox"
+              onChange={(e) => handleAllCheck(e.target.checked)}
+              checked={checkedItems.length === myTravel.length ? true : false}
+            ></input>
+            <label htmlFor="checkAll" className="checkbox-text">
+              {checkAllButton}
+            </label>
+          </div>
         </div>
       )}
       </div> : <div>Create</div>}
