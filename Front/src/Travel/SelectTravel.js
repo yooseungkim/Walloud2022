@@ -101,7 +101,7 @@ const SelectTravel = () => {
       <button onClick={Logout}>Log Out</button>
       <button onClick={try_Delete}>Delete</button>
       <h3>Existing Travels</h3>
-      {myTravel.length === 0 ? <div>
+      {myTravel.length !== 0 ? <div>
         {!try_del ? (
         <div>
           {myTravel.map((travel, idx) => (
