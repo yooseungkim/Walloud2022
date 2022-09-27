@@ -55,11 +55,11 @@ span {
   font-weight: 300;
   color: black;
 }
+
 label {
   font-size: 1.5rem;
   font-weight: 300;
   color: var(--classic-blue);
-  /* font-family: "Avenir"; */
 }
 
 button {
@@ -252,10 +252,40 @@ Classes
   font-size: 1rem;
 }
 
-.home-type {
+/* .home-type {
   margin: 0 auto;
   width: 100;
   border-width: 4px;
   border-color: #6667ab;
   border-style: solid;
+} */
+
+.checkbox {
+  display: inline-block;
+  width: 1.5rem;
+  font-size: 1rem;
+  height: fit-content;
+  background-color: #939597;
+}
+.checkbox-text {
+  display: inline-block;
+  font-size: 1rem;
+  margin-top: 0;
+  height: fit-content;
+  min-width: 20%;
+  color: black;
+}
+
+select {
+  text-align: center;
+  display: block;
+  width: 400px;
+  height: 4vh;
+  margin: 1% auto 3% auto;
+  border: 3px solid;
+  border-radius: 10px;
+  border-color: var(--ultimate-gray);
+  font-size: 1rem;
+  font-family: sans-serif;
+  font-weight: 100;
 }
