@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 const CreateUser = () => {
+  
   const { travel, travelName, user } = useParams();
   const [email, setEmail] = useState("");
   const navigate = useNavigate();

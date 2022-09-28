@@ -44,7 +44,7 @@ const SelectTravel = () => {
         ) {
           checkedItems.map((travel_id, idx) => {
             axios
-              .delete(`/api/${user}/${travel_id}/deleteTravel`).then(()=>{
+              .delete(`/api/${user}/${travel_id}/delete`).then(()=>{
                 alert("삭제되었습니다.");})
               .catch((error) => {
                 console.log(error);
@@ -141,7 +141,7 @@ const SelectTravel = () => {
                 }}
               >
                 <input
-                  id={travel}
+                  id={travel.id}
                   style={{ display: "inline-block", margin: "0" }}
                   className="checkbox"
                   type="checkbox"
@@ -149,7 +149,7 @@ const SelectTravel = () => {
                   onChange={(e) => checkHandler(e.target.checked, travel)}
                   checked={checkedItems.includes(travel.id) ? true : false}
                 />
-                <label htmlFor={travel} className="checkbox-text">
+                <label htmlFor={travel.id} className="checkbox-text">
                   {travel.name}
                 </label>
               </div>
