@@ -1,9 +1,8 @@
 package com.spring.mydiv.Service;
 
-import com.spring.mydiv.Dto.EventCreateDto;
-import com.spring.mydiv.Dto.ParticipantCreateDto;
-import com.spring.mydiv.Dto.ParticipantDto;
+import com.spring.mydiv.Dto.*;
 import com.spring.mydiv.Entity.Event;
+import com.spring.mydiv.Entity.Person;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,14 +67,19 @@ class ParticipantServiceTest {
         }
     }
 
-//    @Test
-//    @Commit
-//    @DisplayName("참가자 생성")
-//    void createParticipant() {
-//        //given
-//
-//        //when
-//
-//        //then
-//    }
+    @Test
+    @Commit
+    @DisplayName("이벤트에 참가한 참여자 확인")
+    void findParticipantfromEvent() {
+        //given
+        int event_id = 78;
+        //when
+        ParticipantDetailDto.peopleList result = participantService.getJoinedPeopleInEvent(event_id);
+        //then
+        for (Person p : result.getJoinedPerson()){
+            System.out.println(p.getUser().getName());
+        }
+
+        System.out.println(result.getPayer().getId());
+    } // checked
 }

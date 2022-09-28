@@ -1,6 +1,8 @@
 package com.spring.mydiv.Service;
 
 import com.spring.mydiv.Dto.EventCreateDto;
+import com.spring.mydiv.Dto.EventDetailDto;
+import com.spring.mydiv.Dto.ParticipantDetailDto;
 import com.spring.mydiv.Entity.Event;
 import com.spring.mydiv.Entity.Participant;
 import com.spring.mydiv.Entity.Person;
@@ -25,6 +27,7 @@ import java.util.Optional;
 public class EventService {
     private final EventRepository eventRepository;
     private final ParticipantRepository participantRepository;
+    private final ParticipantService participantService;
 
     public EventCreateDto.Response createEvent(EventCreateDto.Request request){
         Event event = Event.builder()
@@ -81,8 +84,18 @@ public class EventService {
         return eventRepository.findById(id);
     }
 
+    public EventDetailDto.deleteRequest getEventDetail(int eventId){
+        ParticipantDetailDto.peopleList peopleList = participantService.getJoinedPeopleInEvent(eventId);
+        Optional<Event> event = eventRepository.findById(Long.valueOf(eventId));
+
+        return EventDetailDto.deleteRequest.builder()
+                .joinedPerson(peopleList.getJoinedPerson())
+                .payerId(peopleList.getPayer().getId())
+                .DividePrice(event.get().getDividePrice())
+                .TakePrice(event.get().getTakePrice()).build();
+    }
+
     public void deleteEvent(int eventId){
-        // System.out.println("Enter to Service Layer");
         List<Participant> participantList = participantRepository.findByEvent_Id(Long.valueOf(eventId));
         for(Participant participant : participantList){
             participantRepository.delete(participant);

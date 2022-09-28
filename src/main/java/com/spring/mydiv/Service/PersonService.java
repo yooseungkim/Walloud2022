@@ -91,47 +91,6 @@ public class PersonService {
         return personRepository.countDistinctByTravel_Id(Long.valueOf(travelId));
     }
 
-    @Transactional
-    public void updatePersonWithEvent(List<Person> personList,
-                                      Long payer_person_id,
-                                      Double dividePrice,
-                                      Double takePrice){
-        int TAKER_index = -1; // ?
-        Double tmpDifference = Double.MIN_VALUE;
-        int index = 0;
-
-        for (Person p : personList){
-            // update sumget & sumsend
-            if (p.getId().equals(payer_person_id)){ // payer
-                p.setSumGet(p.getSumGet() + takePrice);
-            } else { // ~payer
-                p.setSumSend(p.getSumSend() + dividePrice);
-            }
-
-            // update difference
-            if (p.getSumGet() == null) p.setDifference(-p.getSumSend());
-            else if (p.getSumSend() == null) p.setDifference(p.getSumGet());
-            else p.setDifference(p.getSumGet() - p.getSumSend());
-
-            if (p.getDifference() > tmpDifference) {
-                TAKER_index = index;
-                tmpDifference = p.getDifference();
-            }
-
-            // set default Role
-            p.setRole(false);
-
-            index++;
-        }
-        // update TAKER role
-        personList.get(TAKER_index).setRole(true); // ERROR 발생
-
-        for (Person p : personList)
-            personRepository.updateSumSendAndSumGetAndDifferenceAndRoleById(p.getSumSend(),
-                    p.getSumGet(), p.getDifference(), p.getRole(),
-                    p.getId());
-    }
-
     public PersonCreateDto.Detail getPersonToDetailView(int personId){
         //- 사용자 개인 정보 -> user(name, email, account)
         //- travel에서의 정보 -> person(sumsend, sumget, diff, travelrole)
@@ -143,6 +102,37 @@ public class PersonService {
         return PersonCreateDto.HomeView.fromEntity(personRepository
                 .findByTravel_IdAndRole(Long.valueOf(travelId), true));
     }
+
+    public void updatePersonMoneyByCreating(List<Person> personList, Long payer_personId,
+                                       Double dividePrice, Double takePrice){
+        for (Person p : personList){
+            if (p.getId().equals(payer_personId)){ // payer
+                p.setSumGet(p.getSumGet() + takePrice);
+                p.setDifference(p.getDifference() + takePrice);
+                personRepository.updateSumGetAndDifferenceById(p.getSumGet(), p.getDifference(), p.getId());
+            } else { // ~payer
+                p.setSumSend(p.getSumSend() + dividePrice);
+                p.setDifference(p.getDifference() - dividePrice);
+                personRepository.updateSumSendAndDifferenceById(p.getSumSend(), p.getDifference(), p.getId());
+            }
+        }
+    }
+
+    public void updatePersonMoneyByDeleting(List<Person> personList, Long payer_personId,
+                                            Double dividePrice, Double takePrice){
+        for (Person p : personList){
+            if (p.getId().equals(payer_personId)){ // payer
+                p.setSumGet(p.getSumGet() - takePrice);
+                p.setDifference(p.getDifference() - takePrice);
+                personRepository.updateSumGetAndDifferenceById(p.getSumGet(), p.getDifference(), p.getId());
+            } else { // ~payer
+                p.setSumSend(p.getSumSend() - dividePrice);
+                p.setDifference(p.getDifference() + dividePrice);
+                personRepository.updateSumSendAndDifferenceById(p.getSumSend(), p.getDifference(), p.getId());
+            }
+        }
+    }
+
 
     public void updatePersonRole(int travelId){
         Optional<List<Person>> People = personRepository.findByTravel_Id(Long.valueOf(travelId));

@@ -3,6 +3,7 @@ package com.spring.mydiv.Service;
 import com.spring.mydiv.Dto.EventCreateDto;
 import com.spring.mydiv.Dto.TravelCreateDto;
 import com.spring.mydiv.Entity.Event;
+import com.spring.mydiv.Entity.Person;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.Commit;
 
 import java.util.Date;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -51,16 +53,21 @@ class EventServiceTest {
          */
     }
 
+    /*
     @Test
     @Commit
-    @DisplayName("이벤트 생성")
+    @DisplayName("이벤트에 참여한 사람들 return")
     void getEventInfoInTravel() {
         //given
-
+        int event_id = 78;
         //when
-
+        List<Person> People = eventService.getJoinedPeopleInEvent(event_id);
         //then
+        for (Person p : People) {
+            System.out.println(p.getId());
+        }
     }
+    */
 
     @Test
     @Commit
