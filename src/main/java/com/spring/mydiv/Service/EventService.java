@@ -61,17 +61,20 @@ public class EventService {
         return eventRepository.countByTravel_Id(Long.valueOf(travelId));
     }
 
-    public String getTravelPeriod(int travelId){
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-        Date format1 = eventRepository.findFirstByTravel_IdOrderByDateDesc(Long.valueOf(travelId))
-                .getDate(); //latest
-        Date format2 = eventRepository.findFirstByTravel_IdOrderByDateAsc(Long.valueOf(travelId))
-                .getDate(); //oldest
-        long diffSec = (format1.getTime() - format2.getTime()) / 1000;
-        long diffDays = diffSec / (24*60*60);
-        String periodFormat = dateFormat.format(format2) + " ~ " + dateFormat.format(format1)
-                + ", " + diffDays + " days";
-        return periodFormat;
+    public String getTravelPeriod(int travelId, int eventCount){
+        if (eventCount == 0) return null;
+        else {
+            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+            Date format1 = eventRepository.findFirstByTravel_IdOrderByDateDesc(Long.valueOf(travelId))
+                    .getDate(); //latest
+            Date format2 = eventRepository.findFirstByTravel_IdOrderByDateAsc(Long.valueOf(travelId))
+                    .getDate(); //oldest
+            long diffSec = (format1.getTime() - format2.getTime()) / 1000;
+            long diffDays = diffSec / (24*60*60);
+            String periodFormat = dateFormat.format(format2) + " ~ " + dateFormat.format(format1)
+                    + ", " + diffDays + " days";
+            return periodFormat;
+        }
     }
 
     public Optional<Event> getEventEntityByEventId(Long id){
