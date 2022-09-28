@@ -33,7 +33,7 @@ public class TravelController {
         homeView.setPersonCount(personService.getPersonCountInTravel(travelId));
         homeView.setEventList(eventService.getEventInfoInTravel(travelId));
         homeView.setEventCount(eventService.getEventCountInTravel(travelId));
-        homeView.setPeriod(eventService.getTravelPeriod(travelId));
+        homeView.setPeriod(eventService.getTravelPeriod(travelId, homeView.getEventCount()));
         return homeView;
     }
 }
