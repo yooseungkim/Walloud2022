@@ -47,6 +47,8 @@ public class EventService {
         List<EventCreateDto.HomeView> result = new ArrayList<EventCreateDto.HomeView>();
         for (Event e : list){
             EventCreateDto.HomeView event = EventCreateDto.HomeView.fromEntity(e);
+            Participant payer = participantRepository.findByEvent_IdAndEventRole(event.getId(),true);
+            event.setPayer(payer.getPerson().getUser().getName());
             result.add(event);
         }
         return result;
