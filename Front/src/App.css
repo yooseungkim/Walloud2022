@@ -184,15 +184,6 @@ Classes
   min-width: 80px;
 }
 
-.box {
-  border-radius: 1rem;
-  /* background-color: rgb(178, 216, 244); */
-  background-color: #3d6589c2;
-  height: fit-content;
-  margin: 5% 0;
-  min-width: 450px;
-}
-
 .type {
   font-size: 180%;
   margin: 0 0 3% 0;
@@ -200,20 +191,6 @@ Classes
 
 :any-link {
   text-decoration: none;
-}
-
-@media (width > 1000px) {
-  .big-box {
-    align-items: center;
-    display: inline-block;
-    width: 45%;
-    margin: 0 1% 0 1%;
-    vertical-align: middle;
-  }
-
-  .box {
-    height: 150vh;
-  }
 }
 
 .right-align {
@@ -253,11 +230,16 @@ Classes
 }
 
 /* .home-type {
-  margin: 0 auto;
+  margin: 2% auto 5% 0;
   width: 100;
-  border-width: 4px;
-  border-color: #6667ab;
-  border-style: solid;
+  border-top: solid var(--illuminating) 4px;
+}
+.home-type:last-child {
+  margin: 2% auto;
+  padding-top: 5%;
+  width: 100;
+  border-left: solid var(--illuminating) 4px;
+  border-top: solid var(--illuminating) 4px;
 } */
 
 .checkbox {
@@ -288,4 +270,86 @@ select {
   font-size: 1rem;
   font-family: sans-serif;
   font-weight: 100;
+}
+
+/* .box {
+  display: inline-block;
+  background-color: #5986adc2;
+  margin: 5% 0;
+  width: 100%;
+}
+
+
+/* @media (orientation: landscape) {
+  #event-box {
+    width: 48%;
+    margin: 0 1% 0 1%;
+    height: 70vh;
+    overflow-y: scroll;
+  }
+
+  #user-box {
+    width: 48%;
+    margin: auto 1% auto 1%;
+    height: 70vh;
+    overflow-y: scroll;
+  }
+}
+
+*/
+
+.home-h2 {
+  width: 40%;
+  font-size: 2rem;
+  padding: 0.5% 0 0.5% 0;
+  margin: 1% auto 1% auto;
+}
+
+.home-button {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.box {
+  border-radius: 1rem;
+  /* background-color: rgb(178, 216, 244); */
+  background-color: #3d6589c2;
+  height: fit-content;
+  margin: 5% 0;
+  min-width: 450px;
+}
+
+@media (width > 1000px) {
+  .big-box {
+    align-items: center;
+    display: inline-block;
+    width: 45%;
+    margin: 0 1% 0 1%;
+    vertical-align: middle;
+  }
+
+  .box {
+    min-height: 100vh;
+    /* height: 60vh; */
+    /* overflow-y: scroll; */
+  }
+}
+
+.home-type {
+  margin: 0 auto;
+  border-bottom: 1px solid white;
+  border-left: 1px solid white;
+  border-right: 1px solid white;
+  /* background-color: #3d6589c2; */
+}
+
+::-webkit-scrollbar {
+  background-color: #5986adc2;
+  border-top-right-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--ultimate-gray);
+  border-radius: 1rem;
 }

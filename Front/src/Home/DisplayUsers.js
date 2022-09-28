@@ -9,7 +9,10 @@ function DisplayUsers({ users, preferences }) {
     console.log(username);
 
     return (
-      <Link to={`/${user}/${travel}/${travelName}/profile/${username}`} state={{personid : personid }}>
+      <Link
+        to={`/${user}/${travel}/${travelName}/profile/${username}`}
+        state={{ personid: personid }}
+      >
         <div className="user">
           {preferences.displayIcon ? (
             <img className="user-icon" src={personSrc} alt="profile" />
@@ -23,40 +26,32 @@ function DisplayUsers({ users, preferences }) {
           </h4>
           <br />
           {preferences.displayMoney ? (
-            <h4 className="caption">₩{Math.round(spent)}</h4>
+            <h4 className="caption">
+              {spent >= 0 ? `₩${Math.round(spent)}` : `-₩${-Math.round(spent)}`}
+            </h4>
           ) : null}
         </div>
-        <br />
       </Link>
     );
   }
 
   function CreateType({ type }) {
-
-    const onClickDescription = () => {
-      if (type === "Depositors") {
-        alert("Depositors have to send money");
-      } else if (type === "Manager") {
-        alert("Manager is the one who spent the most money");
-      } else if (type === "Recipients") {
-        alert(
-          "Recipients are the ones who spent more money; in some cases, there can be no Recipients"
-        );
-      }
-    };
     return (
       <div className="home-type">
-        <h4 className="type" onClick={() => onClickDescription({ type })}>
-          {type}
-        </h4>
-        <div style={{ alignItems: "center" }}>
+        <h4 className="type">{type}</h4>
+        <div style={{ verticalAlign: "center", alignItems: "center" }}>
           {users
-            .filter((user) => ((user.role === true && type === "Manager") || (user.difference > 0 && type === "Depositors") || (user.difference < 0 && type === "Recipients")))
+            .filter(
+              (user) =>
+                (user.role === true && type === "Manager") ||
+                (user.difference > 0 && type === "Depositors") ||
+                (user.difference < 0 && type === "Recipients")
+            )
             .map((user) => (
               <CreateUser
                 username={user.name}
                 spent={user.difference}
-                personid = {user.id}
+                personid={user.id}
                 key={user.id}
               />
             ))}
@@ -68,11 +63,8 @@ function DisplayUsers({ users, preferences }) {
   return (
     <div className="users">
       <CreateType users={users} type="Manager" />
-      <hr />
-      <div style={{ display: "flex" }}>
-        <CreateType users={users} type="Depositors" />
-        <CreateType users={users} type="Recipients" />
-      </div>
+      <CreateType users={users} type="Depositors" />
+      <CreateType users={users} type="Recipients" />
     </div>
   );
 }
