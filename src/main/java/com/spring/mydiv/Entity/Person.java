@@ -31,15 +31,11 @@ public class Person implements Serializable {
 	private Long id;
 	
 	@ManyToOne
-	@JoinColumns({
-			@JoinColumn(name = "user_id", referencedColumnName = "user_id"),
-	})
+	@JoinColumn(name = "user_id", referencedColumnName = "user_id")
 	private User user;
 
 	@ManyToOne
-	@JoinColumns({
-			@JoinColumn(name = "travel_id", referencedColumnName = "travel_id"),
-	})
+	@JoinColumn(name = "travel_id", referencedColumnName = "travel_id")
 	private Travel travel;
 	
 	@Column(name = "person_sumsend", nullable = false)
