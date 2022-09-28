@@ -6,8 +6,8 @@ import personSrc from "../img/person.png";
 function CreateEvent() {
   const users = useLocation().state.userList;
   const { user, travel, travelName } = useParams();
-  const payer = [];
-  const participants = [...users];
+  const [payer,setPayer] = useState(users[0].id);
+  const [participants, setparticipants] = useState([]);
   const navigate = useNavigate();
   // const user = useLocation().state.user;
   // const travel = useLocation().state.travel;
@@ -28,6 +28,15 @@ function CreateEvent() {
       ...inputs,
       [name]: value,
     });
+  };
+
+  const checkHandler = (checked, elem) => {
+    if (checked) {
+      setparticipants((prev) => [...prev,elem]);
+      console.log(elem,"push",participants);
+    } else {
+      setparticipants(participants.filter((e) => e !== elem));
+    }
   };
 
   // function CreateUser({ each }) {
@@ -61,29 +70,26 @@ function CreateEvent() {
   // }
 
   const onSubmit = (e) => {
-    if (payer.length === 1) {
-      console.log("okay");
-      // const newEvent = {
-      //   index: eventList.length + 1,
-      //   place: document.querySelector("#place").value,
-      //   name: payer[0],
-      //   price: document.querySelector("#price").value,
-      //   date: document.querySelector("#date").value,
-      //   participants: participants,
-      // };
-      // console.log(participants);
-      // eventList.push(newEvent);
-      console.log("payer : ", payer);
-      console.log("participant : ", participants);
-
+    if (place === "") {
+      alert("Set place\n");
+    }
+    else if(price === "") {
+      alert("Set price\n");
+    }
+    else if(date === "") {
+      alert("Set date\n");
+    }
+    else{
+      console.log(participants);
+      console.log("payer : ", payer); 
+      console.log("participant : ", participants);  
       event_info();
-    } else if (payer.length > 1) {
-      alert("결제자는 한 명이어야 합니다\nError: Too Many Payers");
-    } else if (payer.length === 0) {
-      alert("결제자는 한 명이어야 합니다\nError: No Payer");
-      e.preventDefault();
     }
   };
+
+  const setSelectedPayer = (e) => {
+    setPayer(e.target.value);
+  }
 
   const event_info = async () => {
     let temp_list = [...participants].map(function (row) {
@@ -98,7 +104,7 @@ function CreateEvent() {
       event_name: place,
       event_date: date,
       price: price,
-      payer_person_id: payer[0],
+      payer_person_id: payer,
     });
 
     await axios
@@ -136,7 +142,7 @@ function CreateEvent() {
         to={`/${user}/${travel}/${travelName}`}
         // state={{ user_id: userid, travel_id: travelid, travelName: travelname }}
       >
-        <h1 className="home">Divide by N</h1>
+        <h1 className="home">{travelName}</h1>
       </Link>
       <h2>Create Event</h2>
       <div>
@@ -177,7 +183,7 @@ function CreateEvent() {
       </div> */}
       <div>
         <label htmlFor="participants">Payer</label>
-        <select id="participants">
+        <select id="participants" onChange={setSelectedPayer}>
           {users.map((user, id) => (
             <option value={user.id} key={id}>
               {user.name}
@@ -204,7 +210,7 @@ function CreateEvent() {
             }}
             key={id}
           >
-            <input className="checkbox" type="checkbox" id={user.id} />
+            <input className="checkbox" type="checkbox" id={user.id} onChange={(e) => checkHandler(e.target.checked, user)} />
             <label className="checkbox-text" htmlFor={user.id}>
               {user.name}
             </label>

@@ -1,13 +1,14 @@
 import axios from "axios";
 import React, {  useState, useEffect } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
-import { eventlist, users } from "./Var";
 
 const Profile = () => {
   const { user, travel, travelName, username } = useParams();
   const personid = useLocation().state.personid;
   
   const [profile, setProfile] = useState({});
+  const [person_in_List, seteventList] = useState([]);
+
   useEffect(() => {
     getProfile();
   },[]);
@@ -17,6 +18,10 @@ const Profile = () => {
     ).then((res) => {
       console.log(res.data);
       setProfile(res.data);
+      console.log(res.data.eventList);
+      // setList(res.data.eventList);
+      seteventList(res.data.eventList);
+      console.log(person_in_List)
     }).catch((error) => {
       console.log(error);
     })
@@ -49,28 +54,29 @@ const Profile = () => {
       <Link
         to={`/${user}/${travel}/${travelName}`}
       >
-        <h1 className="home">Divide by N</h1>
+        <h1 className="home">{travelName}</h1>
       </Link>
       <h2>{profile.userName}</h2>
       <h3>Account : {profile.userAccount}</h3>
-      <h3 style={{ color: profile.type === "Depositors" ? "red" : "blue" }}>
-        Spent: {profile.sumGet}₩
+      {profile.travelRole ? <h3>Manager</h3> : <></>}
+      <h3 style={{ color: profile.difference > 0 ? "red" : "blue" }}>
+        Spent: {profile.difference}₩
       </h3>
       <h3 id="headers">Participated Events: </h3>
-      {/* <div style={{ display: "flex" }}>
-        {profile.eventList.map((event, index) => (
+      <div style={{ display: "flex" }}>
+        {person_in_List.map((event, index) => (
           <div>
             <Link
-              to={`/${user}/${travel}/${travelName}/${event}`}
+              to={`/${user}/${travel}/${travelName}/${event.eventName}`}
               state={{ event: event }}
             >
               <h3 className="link-text" key={index}>
-                {event}
+                {event.eventName}
               </h3>
             </Link>
           </div>
         ))}
-      </div> */}
+      </div>
       <br />
     </div>
   );

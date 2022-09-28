@@ -1,13 +1,11 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const CreateTravel = (props) => {
   console.log(props);
-  const navigate = useNavigate();
   const travel_List = props.myTravel;
   const user_id = props.user;
-  const duplicate = false;
   const [Travel_name, setTravel_name] = useState("");
 
   const onChange = (event) => {

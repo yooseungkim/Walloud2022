@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import NavigationBar from "../js/NavigationBar";
 import DisplayUsers from "./DisplayUsers";
 import Events from "./Events";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import plusSrc from "../img/plus.jpg";
 import axios from "axios";
 
@@ -53,7 +53,7 @@ const Home = () => {
         to={`/${user}/${travel}/${travelName}`}
         state={{ user: user, travel: travel, travelName: travelName }}
       >
-        <h1>Divide by N</h1>
+        <h1>{travelName}</h1>
       </Link>
       <div className="big-box">
         <h2>Events</h2>

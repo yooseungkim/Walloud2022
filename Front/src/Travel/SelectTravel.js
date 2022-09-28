@@ -131,7 +131,7 @@ const SelectTravel = () => {
       ) : (
         <div className="contStyle">
           <div style={{ alignItems: "center" }}>
-            {myTravel.map((travel, idx) => (
+            {myTravel.map((travel) => (
               <div
                 style={{
                   display: "inline-block",
