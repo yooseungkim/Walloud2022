@@ -91,7 +91,7 @@ const EventDescription = () => {
   return (
     <div>
       <Link to={`/${user}/${travel}/${travelName}`}>
-        <h1 className="home">Divide by N</h1>
+        <h1 className="home">{travelName}</h1>
       </Link>
       <h2 id="headers">{description.name}</h2>
       <div>

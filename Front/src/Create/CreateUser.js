@@ -40,7 +40,7 @@ const CreateUser = () => {
         to={`/${user}/${travel}/${travelName}`}
         state={{ user: user, travel: travel, travelName: travelName }}
       >
-        <h1 className="home">Divide by N</h1>
+        <h1 className="home">{travelName}</h1>
       </Link>
       <h2>Add User</h2>
       <label htmlFor="email">Email</label>
