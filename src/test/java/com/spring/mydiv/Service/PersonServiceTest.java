@@ -152,6 +152,21 @@ class PersonServiceTest {
         System.out.println("payer : " + tmp.getName());
     }
 
+    @Test
+    @Commit
+    @DisplayName("역할 세팅 테스트")
+    void setRoleTest() {
+        //given
+        int travelId = 91; // 베를린 여행
+        //when
+        personService.updatePersonRole(travelId);
+        //then
+        System.out.println("CheckOUT DB");
+    }
+
+
+
+
 //    @Test
 //    @Commit
 //    @DisplayName("사람 뽑아오기")

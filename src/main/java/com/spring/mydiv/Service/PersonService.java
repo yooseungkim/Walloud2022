@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
 
 /**
  * @author 12nov
@@ -47,7 +48,7 @@ public class PersonService {
                 .sumGet(0.0)
                 .sumSend(0.0)
                 .difference(0.0)
-                .role(FALSE)
+                .role(superUser)
                 .isSuper(superUser)
                 .build();
         personRepository.save(person);
@@ -95,18 +96,16 @@ public class PersonService {
                                       Long payer_person_id,
                                       Double dividePrice,
                                       Double takePrice){
-        int TAKER_index = -1;
+        int TAKER_index = -1; // ?
         Double tmpDifference = Double.MIN_VALUE;
         int index = 0;
 
         for (Person p : personList){
             // update sumget & sumsend
             if (p.getId().equals(payer_person_id)){ // payer
-                if (p.getSumGet() == null) p.setSumGet(takePrice);
-                else p.setSumGet(p.getSumGet() + takePrice);
+                p.setSumGet(p.getSumGet() + takePrice);
             } else { // ~payer
-                if (p.getSumSend() == null) p.setSumSend(dividePrice);
-                else p.setSumSend(p.getSumSend() + dividePrice);
+                p.setSumSend(p.getSumSend() + dividePrice);
             }
 
             // update difference
@@ -125,7 +124,7 @@ public class PersonService {
             index++;
         }
         // update TAKER role
-        personList.get(TAKER_index).setRole(true);
+        personList.get(TAKER_index).setRole(true); // ERROR 발생
 
         for (Person p : personList)
             personRepository.updateSumSendAndSumGetAndDifferenceAndRoleById(p.getSumSend(),
@@ -143,5 +142,21 @@ public class PersonService {
     public PersonCreateDto.HomeView getPayerInTravel(int travelId){
         return PersonCreateDto.HomeView.fromEntity(personRepository
                 .findByTravel_IdAndRole(Long.valueOf(travelId), true));
+    }
+
+    public void updatePersonRole(int travelId){
+        Optional<List<Person>> People = personRepository.findByTravel_Id(Long.valueOf(travelId));
+        Person currManager = personRepository.findByTravel_IdAndRole(Long.valueOf(travelId), true);
+        personRepository.updateRoleById(FALSE, currManager.getId());
+        Double maxDifference = currManager.getDifference();
+
+        for(Person p : People.get()) {
+            Double currDifference = p.getDifference();
+            if (currDifference > maxDifference) {
+                maxDifference = currDifference;
+                currManager = p;
+            }
+        }
+        personRepository.updateRoleById(TRUE, currManager.getId());
     }
 }

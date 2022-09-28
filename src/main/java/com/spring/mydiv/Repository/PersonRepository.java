@@ -18,8 +18,8 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
 	List<Person> findByUser_Id(@Param(value = "user_id") Long id);
 
 	Person findByTravel_IdAndRole(Long id, Boolean role);
+
 	Optional<List<Person>> findByTravel_Id(Long id);
-	void deleteByUser_IdAndTravel_Id(Long userid, Long travelid);
 
 	void deleteById(Long id);
 
@@ -30,6 +30,12 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
 	@Modifying
 	@Query("update Person p set p.sumSend = ?1, p.sumGet = ?2, p.difference = ?3, p.role = ?4 where p.id = ?5")
 	int updateSumSendAndSumGetAndDifferenceAndRoleById(Double sumSend, Double sumGet, Double difference, Boolean role, Long id);
+
+	@Transactional
+	@Modifying
+	@Query("update Person p set p.role = ?1 where p.id = ?2")
+	void updateRoleById(Boolean role, Long id);
+
 
 }
 

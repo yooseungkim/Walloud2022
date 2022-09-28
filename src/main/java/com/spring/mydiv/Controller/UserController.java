@@ -75,7 +75,6 @@ public class UserController {
     // 여행을 생성한 user가 여행 자체를 삭제하는 메소드
     @DeleteMapping("/{user_id}/{travel_id}/delete")
     public void deleteTravel(@PathVariable int travel_id) {
-
         travelservice.deleteTravel(travel_id);
     }
 }
