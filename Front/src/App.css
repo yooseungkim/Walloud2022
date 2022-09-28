@@ -319,7 +319,7 @@ select {
   min-width: 450px;
 }
 
-@media (width > 1000px) {
+@media (orientation: landscape) {
   .big-box {
     align-items: center;
     display: inline-block;
@@ -337,6 +337,7 @@ select {
 
 .home-type {
   margin: 0 auto;
+  /* width: 49%; */
   border-bottom: 1px solid white;
   border-left: 1px solid white;
   border-right: 1px solid white;

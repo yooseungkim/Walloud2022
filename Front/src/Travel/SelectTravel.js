@@ -44,8 +44,10 @@ const SelectTravel = () => {
         ) {
           checkedItems.map((travel_id, idx) => {
             axios
-              .delete(`/api/${user}/${travel_id}/deleteTravel`).then(()=>{
-                alert("삭제되었습니다.");})
+              .delete(`/api/${user}/${travel_id}/deleteTravel`)
+              .then(() => {
+                alert("삭제되었습니다.");
+              })
               .catch((error) => {
                 console.log(error);
               });
@@ -100,82 +102,88 @@ const SelectTravel = () => {
       <h2>My Travel List</h2>
       <button onClick={Logout}>Log Out</button>
       <button onClick={try_Delete}>Delete</button>
-      <h3>Existing Travels</h3>
-      {myTravel.length !== 0 ? <div>
-        {!try_del ? (
+      {myTravel.length !== 0 ? (
         <div>
-          {myTravel.map((travel, idx) => (
-            <Link
-              key={idx}
-              to={`/${user}/${travel.id}/${travel.name}`}
-              state={{
-                user: user,
-                travel: travel.id,
-                travelName: travel.name,
-              }}
-            >
-              <h4
-                className="link-text"
-                style={{
-                  display: "block",
-                  margin: "auto",
-                  textAlign: "center",
-                }}
-              >
-                {travel.name}
-              </h4>
-              <br />
-            </Link>
-          ))}
-        </div>
-      ) : (
-        <div className="contStyle">
-          <div style={{ alignItems: "center" }}>
-            {myTravel.map((travel) => (
+          <h3>Existing Travels</h3>
+          {!try_del ? (
+            <div>
+              {myTravel.map((travel, idx) => (
+                <Link
+                  key={idx}
+                  to={`/${user}/${travel.id}/${travel.name}`}
+                  state={{
+                    user: user,
+                    travel: travel.id,
+                    travelName: travel.name,
+                  }}
+                >
+                  <h4
+                    className="link-text"
+                    style={{
+                      display: "block",
+                      margin: "auto",
+                      textAlign: "center",
+                    }}
+                  >
+                    {travel.name}
+                  </h4>
+                  <br />
+                </Link>
+              ))}
+            </div>
+          ) : (
+            <div className="contStyle">
+              <div style={{ alignItems: "center" }}>
+                {myTravel.map((travel) => (
+                  <div
+                    style={{
+                      display: "inline-block",
+                      minWidth: "33%",
+                      alignItems: "center",
+                      marginBottom: "3%",
+                    }}
+                  >
+                    <input
+                      id={travel}
+                      style={{ display: "inline-block", margin: "0" }}
+                      className="checkbox"
+                      type="checkbox"
+                      value={travel.id}
+                      onChange={(e) => checkHandler(e.target.checked, travel)}
+                      checked={checkedItems.includes(travel.id) ? true : false}
+                    />
+                    <label htmlFor={travel} className="checkbox-text">
+                      {travel.name}
+                    </label>
+                  </div>
+                ))}
+              </div>
               <div
                 style={{
                   display: "inline-block",
-                  minWidth: "33%",
-                  alignItems: "center",
                   marginBottom: "3%",
                 }}
               >
                 <input
-                  id={travel}
-                  style={{ display: "inline-block", margin: "0" }}
-                  className="checkbox"
+                  id="checkAll"
                   type="checkbox"
-                  value={travel.id}
-                  onChange={(e) => checkHandler(e.target.checked, travel)}
-                  checked={checkedItems.includes(travel.id) ? true : false}
-                />
-                <label htmlFor={travel} className="checkbox-text">
-                  {travel.name}
+                  className="checkbox"
+                  onChange={(e) => handleAllCheck(e.target.checked)}
+                  checked={
+                    checkedItems.length === myTravel.length ? true : false
+                  }
+                ></input>
+                <label htmlFor="checkAll" className="checkbox-text">
+                  {checkAllButton}
                 </label>
               </div>
-            ))}
-          </div>
-          <div
-            style={{
-              display: "inline-block",
-              marginBottom: "3%",
-            }}
-          >
-            <input
-              id="checkAll"
-              type="checkbox"
-              className="checkbox"
-              onChange={(e) => handleAllCheck(e.target.checked)}
-              checked={checkedItems.length === myTravel.length ? true : false}
-            ></input>
-            <label htmlFor="checkAll" className="checkbox-text">
-              {checkAllButton}
-            </label>
-          </div>
+            </div>
+          )}
         </div>
+      ) : (
+        <h4>Create New Travel to Start!</h4>
       )}
-      </div> : <div>Create</div>}
-      
+
       <CreateTravel user={user} myTravel={myTravel} />
     </div>
   );
