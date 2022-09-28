@@ -1,6 +1,7 @@
 package com.spring.mydiv.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.spring.mydiv.Entity.Person;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,7 +18,7 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
 	List<Person> findByUser_Id(@Param(value = "user_id") Long id);
 
 	Person findByTravel_IdAndRole(Long id, Boolean role);
-	List<Person> findByTravel_Id(Long id);
+	Optional<List<Person>> findByTravel_Id(Long id);
 	void deleteByUser_IdAndTravel_Id(Long userid, Long travelid);
 
 	void deleteById(Long id);

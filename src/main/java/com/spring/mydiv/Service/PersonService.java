@@ -60,9 +60,9 @@ public class PersonService {
     }
 
     public List<PersonCreateDto.Simple> getPersonNameInTravel(int travelId){
-        List<Person> list = personRepository.findByTravel_Id(Long.valueOf(travelId));
+        Optional<List<Person>> list = personRepository.findByTravel_Id(Long.valueOf(travelId));
         List<PersonCreateDto.Simple> result = new ArrayList<PersonCreateDto.Simple>();
-        for (Person p : list){
+        for (Person p : list.get()){
             PersonCreateDto.Simple person = PersonCreateDto.Simple.fromEntity(p);
             result.add(person);
         }
@@ -74,12 +74,15 @@ public class PersonService {
     }
 
     public List<PersonCreateDto.HomeView> getPersonInfoInTravel(int travelId){
-        List<Person> list = personRepository.findByTravel_Id(Long.valueOf(travelId));
+        Optional<List<Person>> list = personRepository.findByTravel_Id(Long.valueOf(travelId));
         List<PersonCreateDto.HomeView> result = new ArrayList<PersonCreateDto.HomeView>();
-        for (Person p : list){
-            PersonCreateDto.HomeView person = PersonCreateDto.HomeView.fromEntity(p);
-            result.add(person);
-        }
+        list.ifPresent(
+                list_ ->
+                {for (Person p : list_){
+                    PersonCreateDto.HomeView person = PersonCreateDto.HomeView.fromEntity(p);
+                    result.add(person);
+                }}
+        );
         return result;
     }
 
