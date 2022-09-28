@@ -60,14 +60,16 @@ public class UserController {
     }
 
     @PostMapping("/{no}/createTravel")
-    public ResponseEntity<PersonDto> joinTravel(@PathVariable int no, @RequestBody Map map){
+    public int joinTravel(@PathVariable int no, @RequestBody Map map){
         String travel_name = map.get("travel_name").toString();
 //        TravelCreateDto.Request travelInfo = new TravelCreateDto.Request(map.get("travel_name").toString());
         TravelCreateDto.Request travelInfo = new TravelCreateDto.Request(travel_name);
         PersonCreateDto.Request request = new PersonCreateDto.Request(
                 userservice.getUserInfo(no),
                 travelservice.createTravel(travelInfo));
-        return ResponseEntity.ok(personservice.createPerson(request, TRUE));
+        if (ResponseEntity.ok(personservice.createPerson(request, TRUE)).getStatusCodeValue() == 200)
+            return request.getTravel().getId().intValue();
+        else return -1;
     }
 
     // 여행을 생성한 user가 여행 자체를 삭제하는 메소드
