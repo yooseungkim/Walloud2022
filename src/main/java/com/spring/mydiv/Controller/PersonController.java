@@ -58,7 +58,7 @@ public class PersonController {
         }
     }
 
-    @GetMapping("/{userid}/{travelid}/{personid}")
+    @GetMapping("/{userid}/{travelid}/{personid}/personDetail")
     public PersonCreateDto.Detail getPersonToDetailView(@PathVariable("travelid") int travelid,
                                                         @PathVariable("personid") int personid){
         PersonCreateDto.Detail detailView = personService.getPersonToDetailView(personid);

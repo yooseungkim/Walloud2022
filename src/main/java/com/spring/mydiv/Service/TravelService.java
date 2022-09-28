@@ -48,12 +48,12 @@ public class TravelService {
     }
     @Transactional
     public void deleteTravel(int travelId){
-        List<Event> eventList = eventRepository.findByTravel_Id(Long.valueOf(travelId));
-        List<Person> personList = personRepository.findByTravel_Id(Long.valueOf(travelId));
-        for(Event event : eventList){
+        Optional<List<Event>> eventList = eventRepository.findByTravel_Id(Long.valueOf(travelId));
+        Optional<List<Person>> personList = personRepository.findByTravel_Id(Long.valueOf(travelId));
+        for(Event event : eventList.get()){
             eventService.deleteEvent(event.getId().intValue());
         }
-        for(Person person : personList){
+        for(Person person : personList.get()){
             personRepository.delete(person);
         }
         travelRepository.deleteById(Long.valueOf(travelId));

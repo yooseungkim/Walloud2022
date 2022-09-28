@@ -43,12 +43,17 @@ public class EventService {
     }
 
     public List<EventCreateDto.HomeView> getEventInfoInTravel(int travelId){
-        List<Event> list = eventRepository.findByTravel_Id(Long.valueOf(travelId));
+        Optional<List<Event>> list = eventRepository.findByTravel_Id(Long.valueOf(travelId));
         List<EventCreateDto.HomeView> result = new ArrayList<EventCreateDto.HomeView>();
-        for (Event e : list){
-            EventCreateDto.HomeView event = EventCreateDto.HomeView.fromEntity(e);
-            result.add(event);
-        }
+        list.ifPresent(
+                list_ ->
+                {for (Event e : list_){
+                    EventCreateDto.HomeView event = EventCreateDto.HomeView.fromEntity(e);
+                    Participant payer = participantRepository.findByEvent_IdAndEventRole(event.getId(),true);
+                    event.setPayer(payer.getPerson().getUser().getName());
+                    result.add(event);
+                }}
+        );
         return result;
     }
 

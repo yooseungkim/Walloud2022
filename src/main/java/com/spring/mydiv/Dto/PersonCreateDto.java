@@ -48,12 +48,14 @@ public class PersonCreateDto {
         private String Name;
         private Boolean Role;
         private Double Difference;
+        private Long UserId;
         public static HomeView fromEntity(Person person) {
             return HomeView.builder()
                     .Id(person.getId())
                     .Name(person.getUser().getName())
                     .Role(person.getRole())
                     .Difference(person.getDifference())
+                    .UserId(person.getUser().getId())
                     .build();
         }
     }

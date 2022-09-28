@@ -26,10 +26,7 @@ public class Participant implements Serializable {
 	private Person person;
 
 	@ManyToOne
-	@JoinColumns({
-			@JoinColumn(name = "event_id", referencedColumnName = "event_id"),
-			@JoinColumn(name = "event_name", referencedColumnName = "event_name")
-	})
+	@JoinColumn(name = "event_id", referencedColumnName = "event_id")
 	private Event event;
 	
 	@Column(name = "participant_eventrole", length = 1)
