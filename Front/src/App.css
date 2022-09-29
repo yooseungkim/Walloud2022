@@ -16,7 +16,8 @@ h1 {
   border-radius: 0px;
   color: white;
   background-color: var(--classic-blue);
-  padding: 2% 0 2% 0;
+  padding: 1.5% 0 1.5% 0;
+  width: 100%;
   font-size: 2rem;
   font-weight: lighter;
   position: -webkit-sticky;
@@ -155,8 +156,14 @@ Classes
 
 .event {
   width: 25%;
-  margin: 5% 0 0 0;
+  padding: 2.5% 0 2.5% 0;
   text-align: center;
+  border-right: 1px solid white;
+  /* border-bottom: 1px solid white; */
+}
+
+.event:last-child {
+  border-right: none;
 }
 
 .eventName {
@@ -166,10 +173,18 @@ Classes
   text-align: center;
 }
 
+.event-row {
+  display: flex;
+}
+
+.event-row:last-child {
+  border-bottom: 1px solid white;
+}
+
 .description {
   width: 25%;
   font-size: 1.2rem;
-  margin: 0 0 3% 0;
+  margin: 1.5% 0 1.5% 0;
   text-align: center;
 }
 
@@ -302,7 +317,7 @@ select {
   width: 40%;
   font-size: 2rem;
   padding: 0.5% 0 0.5% 0;
-  margin: 1% auto 1% auto;
+  margin: 2% auto 0 auto;
 }
 
 .home-button {
@@ -316,7 +331,7 @@ select {
   background-color: #3d6589c2;
   height: fit-content;
   margin: 5% 0;
-  min-width: 450px;
+  min-width: 250px;
 }
 
 @media (orientation: landscape) {
@@ -336,21 +351,19 @@ select {
 }
 
 .home-type {
-  margin: 0 auto;
-  /* width: 49%; */
+  margin: auto;
   border-bottom: 1px solid white;
-  border-left: 1px solid white;
-  border-right: 1px solid white;
   /* background-color: #3d6589c2; */
 }
 
 ::-webkit-scrollbar {
-  background-color: #5986adc2;
-  border-top-right-radius: 1rem;
-  border-bottom-right-radius: 1rem;
+  /* background-color: #5986adc2; */
+  background-color: var(--ultimate-gray);
+  -webkit-appearance: none;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: var(--ultimate-gray);
-  border-radius: 1rem;
+  /* background-color: var(--ultimate-gray); */
+  background-color: #0f4c81;
+  /* border-radius: 1rem; */
 }

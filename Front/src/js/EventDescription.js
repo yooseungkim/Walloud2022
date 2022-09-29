@@ -44,6 +44,7 @@ const EventDescription = () => {
           />
         ) : (
           <h3 onDoubleClick={onDoubleClick}>₩{price}</h3>
+          // <h4>₩{price / userList.length} per person</h4> //userList 추가시 인당 가격 추가
         )}
       </div>
     );
