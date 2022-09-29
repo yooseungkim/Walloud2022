@@ -56,7 +56,7 @@ const CreateUser = () => {
     form.id = no.current++;
     setInvite(inviteList.concat(form));
   }
-
+  
   const onDel = (id) => {
     setInvite(inviteList.filter(e => e.id !== id))
   }
@@ -100,6 +100,7 @@ const CreateUser = () => {
         to={`/${user}/${travel}/${travelName}`}
         state={{ user: user, travel: travel, travelName: travelName }}
       >
+      
        <h1 className="home">{travelName}</h1>
      </Link>
      <h2>Add User</h2>
@@ -111,6 +112,7 @@ const CreateUser = () => {
         {inviteList && inviteList.map(friend => <UserInvite key={friend.id} friend={friend} onDel = {onDel}/>)}
       </ul>
       <button onClick = {sendInvite}>Submit</button>
+
     </div>
   )
 

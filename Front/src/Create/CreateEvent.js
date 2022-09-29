@@ -6,7 +6,7 @@ import personSrc from "../img/person.png";
 function CreateEvent() {
   const users = useLocation().state.userList;
   const { user, travel, travelName } = useParams();
-  const [payer,setPayer] = useState(users[0].id);
+  const [payer, setPayer] = useState(users[0].id);
   const [participants, setparticipants] = useState([]);
   const navigate = useNavigate();
 
@@ -28,8 +28,8 @@ function CreateEvent() {
 
   const checkHandler = (checked, elem) => {
     if (checked) {
-      setparticipants((prev) => [...prev,elem]);
-      console.log(elem,"push",participants);
+      setparticipants((prev) => [...prev, elem]);
+      console.log(elem, "push", participants);
     } else {
       setparticipants(participants.filter((e) => e !== elem));
     }
@@ -38,24 +38,21 @@ function CreateEvent() {
   const onSubmit = (e) => {
     if (place === "") {
       alert("Set place\n");
-    }
-    else if(price === "") {
+    } else if (price === "") {
       alert("Set price\n");
-    }
-    else if(date === "") {
+    } else if (date === "") {
       alert("Set date\n");
-    }
-    else{
+    } else {
       console.log(participants);
-      console.log("payer : ", payer); 
-      console.log("participant : ", participants);  
+      console.log("payer : ", payer);
+      console.log("participant : ", participants);
       event_info();
     }
   };
 
   const setSelectedPayer = (e) => {
     setPayer(e.target.value);
-  }
+  };
 
   const event_info = async () => {
     let temp_list = [...participants].map(function (row) {
@@ -176,7 +173,13 @@ function CreateEvent() {
             }}
             key={id}
           >
-            <input className="checkbox" type="checkbox" id={user.id} onChange={(e) => checkHandler(e.target.checked, user)} />
+            <input
+              className="checkbox"
+              defaultChecked
+              type="checkbox"
+              id={user.id}
+              onChange={(e) => checkHandler(e.target.checked, user)}
+            />
             <label className="checkbox-text" htmlFor={user.id}>
               {user.name}
             </label>

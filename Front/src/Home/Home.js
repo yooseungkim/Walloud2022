@@ -67,13 +67,18 @@ const Home = () => {
               <img className="plus-icon" src={plusSrc} alt="add event" />
             </Link> */}
         <div id="event-box" className="box">
-          <div style={{ display: "flex" }}>
+          <div
+            style={{
+              display: "flex",
+              margin: "0",
+              borderBottom: "1px solid white",
+            }}
+          >
             <h4 className="description">Event</h4>
             <h4 className="description">Payer</h4>
             <h4 className="description">Price</h4>
             <h4 className="description">Date</h4>
           </div>
-          <hr />
           {eventList.map((event) => (
             <Events event={event} key={event.id}></Events>
           ))}
