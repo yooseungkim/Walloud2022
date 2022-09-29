@@ -5,7 +5,7 @@ import moment from "moment/moment";
 function Events({ event }) {
   const { user, travel, travelName } = useParams();
   return (
-    <div style={{ display: "flex" }}>
+    <div className="event-row">
       <Link
         className="event"
         to={`/${user}/${travel}/${travelName}/${event.name}`}
@@ -14,10 +14,8 @@ function Events({ event }) {
         <span className="link-text">{event.name}</span>
       </Link>
       <span className="event">{event.payer}</span>
-      <span className="event">{event.price}</span>
-      <span className="event">
-        {moment(event.date).utc().format("YYYY-MM-DD")}
-      </span>
+      <span className="event">₩{event.price}</span>
+      <span className="event">{moment(event.date).utc().format("MM/DD")}</span>
     </div>
   );
 }
