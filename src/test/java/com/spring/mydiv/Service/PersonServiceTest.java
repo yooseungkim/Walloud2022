@@ -101,24 +101,50 @@ class PersonServiceTest {
 
     @Test
     @Commit
-    @DisplayName("이벤트로 person 정보 업데이트")
+    @DisplayName("이벤트 생성으로 person 정보 업데이트")
     void updatePersonWithEvent() {
         //given
-        Event event = eventService.getEventEntityByEventId(Long.valueOf(2)).get(); //대치동
         List<Person> personList = new ArrayList<>();
-        Person person1 = personService.getPersonEntityByPersonId(Long.valueOf(50)).get();
+        Person person1 = personService.getPersonEntityByPersonId(Long.valueOf(92)).get();
         personList.add(person1);
-        Person person2 = personService.getPersonEntityByPersonId(Long.valueOf(52)).get();
+        Person person2 = personService.getPersonEntityByPersonId(Long.valueOf(93)).get();
         personList.add(person2);
-        Long payer_person_id = Long.valueOf(52);
-        Double dividePrice = event.getDividePrice();
-        Double takePrice = event.getTakePrice();
+        Person person3 = personService.getPersonEntityByPersonId(Long.valueOf(94)).get();
+        personList.add(person3);
+        Long payer_person_id = Long.valueOf(94);
+        Double dividePrice = 70000.0;
+        Double takePrice = 140000.0;
 
         //when
-        personService.updatePersonWithEvent(personList, payer_person_id, dividePrice, takePrice);
+        personService.updatePersonMoneyByCreating(personList, payer_person_id, dividePrice, takePrice);
+        personService.updatePersonRole(91);
 
         //then
-        System.out.println("finish!");
+        System.out.println("check DB");
+    }
+
+    @Test
+    @Commit
+    @DisplayName("이벤트 삭제로 person 정보 업데이트")
+    void updatePersonWithEventDelete() {
+        //given
+        List<Person> personList = new ArrayList<>();
+        Person person1 = personService.getPersonEntityByPersonId(Long.valueOf(92)).get();
+        personList.add(person1);
+        Person person2 = personService.getPersonEntityByPersonId(Long.valueOf(93)).get();
+        personList.add(person2);
+        Person person3 = personService.getPersonEntityByPersonId(Long.valueOf(94)).get();
+        personList.add(person3);
+        Long payer_person_id = Long.valueOf(94);
+        Double dividePrice = 70000.0;
+        Double takePrice = 140000.0;
+
+        //when
+        personService.updatePersonMoneyByDeleting(personList, payer_person_id, dividePrice, takePrice);
+        personService.updatePersonRole(91);
+
+        //then
+        System.out.println("check DB");
     }
 
     @Test

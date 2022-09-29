@@ -46,10 +46,8 @@ public class EventController {
                 .PartiCount(partiCount)
                 .build();
         //set dividePrice, takePrice(get은 method랑 혼동될 것 같아 이름 변경했습니다!)
-        System.out.println("!!!!!!!!!");
         EventCreateDto.Response eventDto = eventService.createEvent(request);
         //get event dto(eventId)
-        System.out.println("???????");
 
         if (ResponseEntity.ok(eventDto).getStatusCodeValue() == 200){ //success to create event
             Long eventId = eventDto.getId();
@@ -57,8 +55,6 @@ public class EventController {
             System.out.println(partiDtoList.size());
             //set parti dto(personId, eventId, role)
             for (Map partiDto : partiDtoList){
-                System.out.println(partiDto.get("id").toString());
-                System.out.println("here!!!!");
                 Person person = personService.getPersonEntityByPersonId(Long
                         .valueOf(partiDto.get("id").toString())).get();
                 personList.add(person);
@@ -73,13 +69,15 @@ public class EventController {
                     return -2; //fail to create participate
             }
 
+            System.out.println(eventDto.getDividePrice());
+
             //set person dto(sumsend, sumget, difference, travelRole)
-            personService.updatePersonWithEvent(personList,
+            personService.updatePersonMoneyByCreating(personList,
                     Long.valueOf(map.get("payer_person_id").toString()),
                     eventDto.getDividePrice(),
                     eventDto.getTakePrice());
 //                return -3; //fail to update person
-
+            personService.updatePersonRole(travelId);
             return 200; //success all
         } else
             return -1; //fail to create event
@@ -89,9 +87,14 @@ public class EventController {
      * -> 자세히 어떤 내용 필요할지는 논의 후 작성
      * */
 
-    @DeleteMapping("/{userid}/{travelid}/{eventid}/delete")
-    public void deleteEvent(@PathVariable("eventid") int event_id){
+    @DeleteMapping("/{userid}/{travelid}/{eventid}/deleteEvent")
+    public void deleteEvent(@PathVariable("eventid") int event_id)
+    {
+        EventDetailDto.deleteRequest DeleteRequest = eventService.getEventDetail(event_id);
+        personService.updatePersonMoneyByDeleting(DeleteRequest.getJoinedPerson(),
+                DeleteRequest.getPayerId(),
+                DeleteRequest.getDividePrice(),
+                DeleteRequest.getTakePrice());
         eventService.deleteEvent(event_id);
     }
-
 }

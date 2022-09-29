@@ -36,6 +36,16 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
 	@Query("update Person p set p.role = ?1 where p.id = ?2")
 	void updateRoleById(Boolean role, Long id);
 
+	@Transactional
+	@Modifying
+	@Query("update Person p set p.sumSend = ?1, p.difference = ?2 where p.id = ?3")
+	int updateSumSendAndDifferenceById(Double sumSend, Double difference, Long id);
+
+	@Transactional
+	@Modifying
+	@Query("update Person p set p.sumGet = ?1, p.difference = ?2 where p.id = ?3")
+	int updateSumGetAndDifferenceById(Double sumGet, Double difference, Long id);
+
 
 }
 

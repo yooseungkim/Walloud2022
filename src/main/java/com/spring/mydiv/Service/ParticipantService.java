@@ -2,6 +2,7 @@ package com.spring.mydiv.Service;
 
 import com.spring.mydiv.Dto.EventCreateDto;
 import com.spring.mydiv.Dto.ParticipantCreateDto;
+import com.spring.mydiv.Dto.ParticipantDetailDto;
 import com.spring.mydiv.Dto.ParticipantDto;
 import com.spring.mydiv.Entity.Participant;
 import com.spring.mydiv.Entity.Person;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author 12nov
@@ -69,5 +71,19 @@ public class ParticipantService {
 
     public int getSizeOfJoinedEventList(int personId){
         return participantRepository.findByPerson_Id(Long.valueOf(personId)).size();
+    }
+
+    public ParticipantDetailDto.peopleList getJoinedPeopleInEvent(int eventId){
+        List<Participant> participantList = participantRepository.findByEvent_Id(Long.valueOf(eventId));
+        List<Person> joinedPeople = new ArrayList<Person>();
+        Person Payer = new Person();
+        for(Participant participant : participantList){
+            joinedPeople.add(participant.getPerson());
+            if (participant.getEventRole() == Boolean.TRUE){
+                Payer = participant.getPerson();
+            }
+        }
+        ParticipantDetailDto.peopleList peopleList = new ParticipantDetailDto.peopleList(joinedPeople, Payer);
+        return peopleList;
     }
 }

@@ -44,10 +44,9 @@ const SelectTravel = () => {
         ) {
           checkedItems.map((travel_id, idx) => {
             axios
-              .delete(`/api/${user}/${travel_id}/deleteTravel`)
-              .then(() => {
-                alert("삭제되었습니다.");
-              })
+
+              .delete(`/api/${user}/${travel_id}/delete`).then(()=>{
+                alert("삭제되었습니다.");})
               .catch((error) => {
                 console.log(error);
               });
@@ -165,16 +164,17 @@ const SelectTravel = () => {
                 }}
               >
                 <input
-                  id="checkAll"
-                  type="checkbox"
+
+                  id={travel.id}
+                  style={{ display: "inline-block", margin: "0" }}
                   className="checkbox"
-                  onChange={(e) => handleAllCheck(e.target.checked)}
-                  checked={
-                    checkedItems.length === myTravel.length ? true : false
-                  }
-                ></input>
-                <label htmlFor="checkAll" className="checkbox-text">
-                  {checkAllButton}
+                  type="checkbox"
+                  value={travel.id}
+                  onChange={(e) => checkHandler(e.target.checked, travel)}
+                  checked={checkedItems.includes(travel.id) ? true : false}
+                />
+                <label htmlFor={travel.id} className="checkbox-text">
+                  {travel.name}
                 </label>
               </div>
             </div>

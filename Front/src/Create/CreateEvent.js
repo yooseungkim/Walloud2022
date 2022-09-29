@@ -9,10 +9,6 @@ function CreateEvent() {
   const [payer, setPayer] = useState(users[0].id);
   const [participants, setparticipants] = useState([]);
   const navigate = useNavigate();
-  // const user = useLocation().state.user;
-  // const travel = useLocation().state.travel;
-  // const username = test["username"];
-  // const travelName = test["travel"];
 
   const [inputs, setInputs] = useState({
     place: "",
@@ -38,36 +34,6 @@ function CreateEvent() {
       setparticipants(participants.filter((e) => e !== elem));
     }
   };
-
-  // function CreateUser({ each }) {
-  //   const [participate, setParticipate] = useState("participate");
-  //   const [nameColor, setNameColor] = useState("green");
-  //   const onClickIcon = () => {
-  //     if (participate === "participate") {
-  //       setParticipate("no");
-  //       setNameColor("black");
-  //       participants.pop(each);
-  //     } else if (participate === "no") {
-  //       setParticipate("payer");
-  //       setNameColor("blue");
-  //       participants.push(each);
-  //       payer.push(each.id);
-  //     } else if (participate === "payer") {
-  //       setParticipate("participate");
-  //       setNameColor("green");
-  //       payer.pop(each);
-  //     }
-  //     console.log(payer);
-  //     console.log(participants);
-  //   };
-  //   return (
-  //     <div className="user" onClick={onClickIcon}>
-  //       <img className="user-icon" src={personSrc} alt="profile" />
-  //       <br />
-  //       <h4 style={{ color: nameColor }}>{each.name}</h4>
-  //     </div>
-  //   );
-  // }
 
   const onSubmit = (e) => {
     if (place === "") {

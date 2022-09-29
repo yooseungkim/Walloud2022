@@ -7,6 +7,7 @@ const CreateTravel = (props) => {
   const travel_List = props.myTravel;
   const user_id = props.user;
   const [Travel_name, setTravel_name] = useState("");
+  const navigate = useNavigate();
 
   const onChange = (event) => {
     setTravel_name(event.currentTarget.value);
@@ -16,21 +17,23 @@ const CreateTravel = (props) => {
     if (Travel_name === "") {
       alert("Travel Name is blank!");
     }
-
-    for (let i = 0; i < travel_List.length; i++) {
-      if (travel_List[i].name === Travel_name) {
-        alert("Travel Name exist");
-        return;
+    else {
+      for (let i = 0; i < travel_List.length; i++) {
+        if (travel_List[i].name === Travel_name) {
+          alert("Travel Name exist");
+          return;
+        }
       }
-    }
     axios
       .post(`/api/${user_id}/createTravel`, { travel_name: Travel_name })
-      .then(() => {
-        window.location.reload();
+      .then((res) => {
+        console.log(res.data);
+        navigate(`/${user_id}/${res.data}/${Travel_name}/`, { state: { existUser : false } });
       })
       .catch((error) => {
         console.log(error);
       });
+    }
   };
 
   function enterkey() {
