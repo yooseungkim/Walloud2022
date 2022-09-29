@@ -84,6 +84,10 @@ public class UserService {
 
     public UserDetailDto getUserInfoByEmail(String email){
         Optional<User> user = userRepository.findByEmail(email);
+        if (!user.isPresent()){
+            return null;
+        }
+
         UserDetailDto dto = UserDetailDto.builder()
                 .Id(user.get().getId())
                 .Name(user.get().getName())

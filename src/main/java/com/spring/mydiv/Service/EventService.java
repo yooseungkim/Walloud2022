@@ -52,7 +52,7 @@ public class EventService {
                 list_ ->
                 {for (Event e : list_){
                     EventCreateDto.HomeView event = EventCreateDto.HomeView.fromEntity(e);
-                    Participant payer = participantRepository.findByEvent_IdAndEventRole(event.getId(),true);
+                    Participant payer = participantRepository.findByEvent_IdAndEventRole(event.getId(),true); // payer가 participant에 포함되어 있지 않을 시 에러
                     event.setPayer(payer.getPerson().getUser().getName());
                     result.add(event);
                 }}

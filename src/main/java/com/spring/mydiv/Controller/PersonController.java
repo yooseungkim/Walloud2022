@@ -33,7 +33,7 @@ public class PersonController {
         String user_email = map.get("user_email").toString();
         UserDetailDto userDetailDto = userService.getUserInfoByEmail(user_email);
         if (userDetailDto == null){
-            return "-1";
+            return "-1"; // not matchable user
         } else {
             PersonCreateDto.Request request = new PersonCreateDto.Request(
                     userDetailDto,
