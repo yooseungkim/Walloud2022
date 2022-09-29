@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import NavigationBar from "../js/NavigationBar";
 import DisplayUsers from "./DisplayUsers";
 import Events from "./Events";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import plusSrc from "../img/plus.jpg";
 import axios from "axios";
 import { min } from "moment";
@@ -14,12 +14,12 @@ const Home = () => {
   const [userList, setuserList] = useState([]);
   const [eventList, seteventList] = useState([]);
   const [period, setPeriod] = useState("");
+  const navigate = useNavigate();
   //받아오는 거를 eventList에서 eventlist로 수정
 
   ////////////////////////////////////
 
   useEffect(() => {
-    console.log(user);
     getEventandUser();
   }, []);
 
@@ -27,8 +27,11 @@ const Home = () => {
   const getEventandUser = async () => {
     await axios
       .get(`/api/${user}/${travel}`)
-      .then((response) => {
-        console.log("Resonsed Data : ", response.data);
+      .then((response) => {   
+        console.log(response.data)
+        if ( response.data.personCount === 1 ) {
+            navigate(`/${user}/${travel}/${travelName}/createUser`);
+        }
         seteventList(response.data.eventList);
         setuserList(response.data.personList);
         setPeriod(response.data.period);
