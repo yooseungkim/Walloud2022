@@ -70,6 +70,10 @@ public class PersonService {
         return result;
     }
 
+    public boolean checkisUserinTravel(Long userId, int travelId){
+        return personRepository.existsByUser_IdAndTravel_Id(userId, Long.valueOf(travelId));
+    }
+
     public Optional<Person> getPersonEntityByPersonId(Long id){
         return personRepository.findById(id);
     }

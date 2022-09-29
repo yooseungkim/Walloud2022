@@ -75,8 +75,13 @@ const CreateUser = () => {
             break;
           case -1:
             alert("check the email (" + invite_elem.email + ") is correct");
+            break;
           case -2:
             alert("Network Error");
+            break;
+          case -3:
+            alert("User is already existed.");
+            break;
           default:
             afterError(sended);
             break;
