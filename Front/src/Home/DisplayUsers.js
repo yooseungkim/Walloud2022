@@ -43,9 +43,9 @@ function DisplayUsers({ users, preferences }) {
           {users
             .filter(
               (user) =>
-                (user.role === true && type === "Manager") ||
-                (user.difference > 0 && type === "Depositors") ||
-                (user.difference < 0 && type === "Recipients")
+                (user.role && type === "Manager") ||
+                (!user.role && (user.difference >= 0 && (type === "Depositors")) ||
+                (user.difference < 0 && type === "Recipients"))
             )
             .map((user) => (
               <CreateUser
