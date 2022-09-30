@@ -15,10 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * @author 12nov
@@ -30,7 +27,13 @@ public class EventService {
     private final ParticipantRepository participantRepository;
     private final ParticipantService participantService;
 
-    public EventCreateDto.Response createEvent(EventCreateDto.Request request){
+    public EventCreateDto.Response createEvent(EventCreateDto.Request request, boolean isPayerinParti){
+        Double dividePrice = (double)request.getPrice()/request.getPartiCount();
+        Double takePrice = (double)request.getPrice() - dividePrice;
+        if (!isPayerinParti){
+            takePrice = (double)request.getPrice();
+        }
+
         Event event = Event.builder()
                 .name(request.getName())
                 .date(request.getDate())
@@ -39,11 +42,19 @@ public class EventService {
                         .id(request.getTravel().getId())
                         .name(request.getTravel().getName())
                         .build())
-                .dividePrice((double)request.getPrice()/request.getPartiCount())
-                .takePrice((double)request.getPrice()/request.getPartiCount()*(request.getPartiCount()-1))
+                .dividePrice(dividePrice)
+                .takePrice(takePrice)
                 .build();
         eventRepository.save(event);
         return EventCreateDto.Response.fromEntity(event);
+    }
+
+    public boolean checkPayerInParticipant(List<Map> partiList, Long payerId){
+        List<Long> partiIds = new ArrayList<>();
+        for (Map parti : partiList){
+            partiIds.add(Long.valueOf(parti.get("id").toString()));
+        }
+        return partiIds.contains(payerId);
     }
 
     public List<EventCreateDto.HomeView> getEventInfoInTravel(int travelId){

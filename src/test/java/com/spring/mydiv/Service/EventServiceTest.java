@@ -38,7 +38,7 @@ class EventServiceTest {
                 .PartiCount(4)
                 .build();
         //when
-        EventCreateDto.Response eventDto = eventService.createEvent(request);
+        EventCreateDto.Response eventDto = eventService.createEvent(request, true);
 
         //then
         System.out.println("status: " + ResponseEntity.ok(eventDto).toString());
