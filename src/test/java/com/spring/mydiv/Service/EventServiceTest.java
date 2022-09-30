@@ -93,7 +93,7 @@ class EventServiceTest {
         //given
         Long event_id = Long.valueOf(1); //대치동
         //when
-        Event event = eventService.getEventEntityByEventId(event_id).get();
+        Event event = eventService.getEventEntityByEventId(event_id);
         //then
         System.out.println("name: " + event.getName());
     }

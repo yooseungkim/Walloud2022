@@ -5,6 +5,7 @@ import com.spring.mydiv.Entity.Event;
 import com.spring.mydiv.Entity.Participant;
 import com.spring.mydiv.Entity.Person;
 import com.spring.mydiv.Entity.Travel;
+import com.spring.mydiv.Exception.DefaultException;
 import com.spring.mydiv.Repository.EventRepository;
 import com.spring.mydiv.Repository.ParticipantRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Service;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
+
+import static com.spring.mydiv.Code.ErrorCode.*;
 
 /**
  * @author 12nov
@@ -86,8 +89,9 @@ public class EventService {
         }
     } //fin
 
-    public Optional<Event> getEventEntityByEventId(Long id){
-        return eventRepository.findById(id);
+    public Event getEventEntityByEventId(Long id){
+        return eventRepository.findById(id)
+                .orElseThrow(()-> new DefaultException(NO_EVENT));
     }
 
     public EventDto.deleteRequest getEventDetailforDelete(int eventId){

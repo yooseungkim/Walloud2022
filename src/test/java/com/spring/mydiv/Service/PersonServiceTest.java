@@ -85,8 +85,7 @@ class PersonServiceTest {
         //given
         Long person_id = Long.valueOf(50); //이하은
         //when
-        Person person = personService.getPersonEntityByPersonId(person_id)
-                .get();
+        Person person = personService.getPersonEntityByPersonId(person_id);
         //then
         System.out.println("id: " + person.getId());
         System.out.println("id: " + person.getSumSend());
@@ -101,11 +100,11 @@ class PersonServiceTest {
     void updatePersonWithEvent() {
         //given
         List<Person> personList = new ArrayList<>();
-        Person person1 = personService.getPersonEntityByPersonId(Long.valueOf(92)).get();
+        Person person1 = personService.getPersonEntityByPersonId(Long.valueOf(92));
         personList.add(person1);
-        Person person2 = personService.getPersonEntityByPersonId(Long.valueOf(93)).get();
+        Person person2 = personService.getPersonEntityByPersonId(Long.valueOf(93));
         personList.add(person2);
-        Person person3 = personService.getPersonEntityByPersonId(Long.valueOf(94)).get();
+        Person person3 = personService.getPersonEntityByPersonId(Long.valueOf(94));
         personList.add(person3);
         Long payer_person_id = Long.valueOf(94);
         Double dividePrice = 70000.0;
@@ -125,11 +124,11 @@ class PersonServiceTest {
     void updatePersonWithEventDelete() {
         //given
         List<Person> personList = new ArrayList<>();
-        Person person1 = personService.getPersonEntityByPersonId(Long.valueOf(92)).get();
+        Person person1 = personService.getPersonEntityByPersonId(Long.valueOf(92));
         personList.add(person1);
-        Person person2 = personService.getPersonEntityByPersonId(Long.valueOf(93)).get();
+        Person person2 = personService.getPersonEntityByPersonId(Long.valueOf(93));
         personList.add(person2);
-        Person person3 = personService.getPersonEntityByPersonId(Long.valueOf(94)).get();
+        Person person3 = personService.getPersonEntityByPersonId(Long.valueOf(94));
         personList.add(person3);
         Long payer_person_id = Long.valueOf(94);
         Double dividePrice = 70000.0;

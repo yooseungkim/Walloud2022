@@ -1,7 +1,6 @@
 package com.spring.mydiv.Controller;
 
 import com.spring.mydiv.Dto.*;
-import com.spring.mydiv.Entity.Person;
 import com.spring.mydiv.Service.ParticipantService;
 import com.spring.mydiv.Service.PersonService;
 import com.spring.mydiv.Service.TravelService;
@@ -35,7 +34,7 @@ public class PersonController {
         if (userDetailDto == null){
             return "-1"; // not matchable user
         } else {
-            if (personService.checkisUserinTravel(userDetailDto.getId(), travelId)){
+            if (personService.checkIsUserinTravel(userDetailDto.getId(), travelId)){
                 return "-3"; // already existed
             }
             PersonDto.Request request = new PersonDto.Request(
@@ -49,8 +48,7 @@ public class PersonController {
     } //return int -> orElseThrow (?)
 
     @PostMapping("/{userId}/{travelId}/deleteUser")
-    public String deletePerson2Travel(@PathVariable int travelId,
-                                      @RequestBody Map map){
+    public String deletePerson2Travel(@RequestBody Map map){ //@PathVariable int travelId,
         int person_id = Integer.parseInt(map.get("person_id").toString());
         if (participantService.getSizeOfJoinedEventList(person_id) == 0){
             personService.deleteJoinTravel(person_id);
@@ -67,7 +65,7 @@ public class PersonController {
         PersonDto.Detail detailView = personService.getPersonToDetailView(personid);
         detailView.setEventList(participantService.getEventListThatPersonJoin(personid));
         //이 여행에서 해야하는 order 프린트를 위한 list(travelrole, diff에 따라)
-        if (detailView.getTravelRole()==true){ // =총무 -> (여행 참여 전원) id, name, 이사람에게(받을/줄)돈
+        if (detailView.getTravelRole()){ // =총무 -> (여행 참여 전원) id, name, 이사람에게(받을/줄)돈
             detailView.setPersonInTravelList(personService.getPersonInfoInTravel(travelid));
         } else { // ~총무 -> 총무id, 총무name, 내가총무에게(받을/줄)돈
             List<PersonDto.HomeView> PersonInTravelList = new ArrayList<>();

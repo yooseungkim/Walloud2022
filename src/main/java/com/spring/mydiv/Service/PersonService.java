@@ -3,6 +3,7 @@ package com.spring.mydiv.Service;
 import javax.transaction.Transactional;
 
 import com.spring.mydiv.Entity.Travel;
+import com.spring.mydiv.Exception.DefaultException;
 import org.springframework.stereotype.Service;
 
 import com.spring.mydiv.Dto.PersonDto;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static com.spring.mydiv.Code.ErrorCode.NO_USER;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 
@@ -66,12 +68,13 @@ public class PersonService {
         return result;
     }
 
-    public boolean checkisUserinTravel(Long userId, int travelId){
+    public boolean checkIsUserinTravel(Long userId, int travelId){
         return personRepository.existsByUser_IdAndTravel_Id(userId, Long.valueOf(travelId));
     }
 
-    public Optional<Person> getPersonEntityByPersonId(Long id){
-        return personRepository.findById(id);
+    public Person getPersonEntityByPersonId(Long id){
+        return personRepository.findById(id)
+                .orElseThrow(()-> new DefaultException(NO_USER));
     }
 
     public List<PersonDto.HomeView> getPersonInfoInTravel(int travelId){

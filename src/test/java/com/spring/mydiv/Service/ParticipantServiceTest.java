@@ -32,8 +32,8 @@ class ParticipantServiceTest {
         Long person_id = Long.valueOf(50); //이하은
         Long event_id = Long.valueOf(2); //대치동
         ParticipantDto.Request partiRequest = ParticipantDto.Request.builder()
-                .person(personService.getPersonEntityByPersonId(person_id).get())
-                .event(eventService.getEventEntityByEventId(event_id).get())
+                .person(personService.getPersonEntityByPersonId(person_id))
+                .event(eventService.getEventEntityByEventId(event_id))
                 .role(false)
                 .build();
 

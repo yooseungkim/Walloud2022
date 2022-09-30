@@ -27,10 +27,10 @@ public class EventController {
     private final TravelService travelService;
     private final ParticipantService participantService;
 
-    @GetMapping("/{userid}/{travelid}/createEvent") //don't use this
-    public List<PersonDto.Simple> getPersonNameInTravel(@PathVariable("travelid") int travelid){
-        return personService.getPersonNameInTravel(travelid);
-    }
+//    @GetMapping("/{userid}/{travelid}/createEvent") //don't use this
+//    public List<PersonDto.Simple> getPersonNameInTravel(@PathVariable("travelid") int travelid){
+//        return personService.getPersonNameInTravel(travelid);
+//    }
 
     @PostMapping("/{userid}/{travelid}/CreateEvent")
     public int createEvent(@PathVariable("travelid") int travelId, @RequestBody Map map) throws ParseException {
@@ -41,7 +41,7 @@ public class EventController {
         EventDto.Request request = EventDto.Request.builder()
                 .Name(map.get("event_name").toString())
                 .Travel(travelService.getTravelInfo(travelId))
-                .Date((Date) simpleDateFormat.parse(map.get("event_date").toString()))
+                .Date(simpleDateFormat.parse(map.get("event_date").toString()))
                 .Price(Integer.parseInt(map.get("price").toString()))
                 .PartiCount(partiCount)
                 .build();
@@ -52,19 +52,18 @@ public class EventController {
         //get event dto(eventId)
 
         if (ResponseEntity.ok(eventDto).getStatusCodeValue() == 200){ //success to create event
-            Long eventId = eventDto.getId();
             List<Person> personList = new ArrayList<>();
             System.out.println(partiDtoList.size());
             //set parti dto(personId, eventId, role)
             for (Map partiDto : partiDtoList){ // 결제자가 참가자에 들어가지 않을 경우를 handling 해야함
                 Person person = personService.getPersonEntityByPersonId(Long
-                        .valueOf(partiDto.get("id").toString())).get();
+                        .valueOf(partiDto.get("id").toString())); //orElseThrow
                 personList.add(person);
 
                 ParticipantDto.Request partiRequest = ParticipantDto.Request.builder()
                         .person(person)
                         .event(eventService.getEventEntityByEventId(Long
-                                        .valueOf(eventDto.getId().toString())).get())
+                                        .valueOf(eventDto.getId().toString()))) //orElseThrow
                         .role(Boolean.valueOf(partiDto.get("role").toString()))
                         .build();
                 if (ResponseEntity.ok(participantService.createParticipant(partiRequest)).getStatusCodeValue() != 200)
