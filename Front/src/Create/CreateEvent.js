@@ -30,19 +30,26 @@ function CreateEvent() {
     if (checked) {
       setparticipants((prev) => [...prev, elem]);
       console.log(elem, "push", participants);
-    } else {
+    } else{
       setparticipants(participants.filter((e) => e !== elem));
     }
   };
 
+  const payer_in_parti = () => {
+    return participants.length === participants.filter(e => e.id !== payer).length;
+  }
+
   const onSubmit = (e) => {
     if (place === "") {
       alert("Set place\n");
-    } else if (price === "") {
+    }else if (price === "") {
       alert("Set price\n");
     }else if (date === "") {
       alert("Set date\n");
-    } else {
+    }else if (payer_in_parti()) {
+      alert("payer should be in participants");
+    }
+    else {
       console.log(participants);
       console.log("payer : ", payer);
       console.log("participant : ", participants);
@@ -71,33 +78,33 @@ function CreateEvent() {
       payer_person_id: payer,
     });
 
-    await axios
-      .post(`/api/${user}/${travel}/CreateEvent`, {
-        parti_list: temp_list,
-        event_name: place,
-        event_date: date,
-        price: price,
-        payer_person_id: payer,
-      })
-      .then((res) => {
-        switch (res.data) {
-          case -1:
-            alert("fail to create event");
-            break;
-          case -2:
-            alert("fail to create participate");
-            break;
-          case 200:
-            alert("Success");
-            navigate(`/${user}/${travel}/${travelName}`);
-            break;
-          default:
-            throw "Network Error";
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    // await axios
+    //   .post(`/api/${user}/${travel}/CreateEvent`, {
+    //     parti_list: temp_list,
+    //     event_name: place,
+    //     event_date: date,
+    //     price: price,
+    //     payer_person_id: payer,
+    //   })
+    //   .then((res) => {
+    //     switch (res.data) {
+    //       case -1:
+    //         alert("fail to create event");
+    //         break;
+    //       case -2:
+    //         alert("fail to create participate");
+    //         break;
+    //       case 200:
+    //         alert("Success");
+    //         navigate(`/${user}/${travel}/${travelName}`);
+    //         break;
+    //       default:
+    //         throw "Network Error";
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
   };
 
   return (
