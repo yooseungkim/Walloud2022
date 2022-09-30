@@ -31,7 +31,7 @@ public class UserService {
 	private final PersonRepository personRepository;
 	private final TravelRepository travelRepository;
 	
-    @Transactional
+    @Transactional //error ing
     public UserCreateDto.Response createUser(UserCreateDto.Request request) {
         User user = User.builder()
                 .name(request.getName())
@@ -48,17 +48,22 @@ public class UserService {
     public int login(UserCreateDto.Login loginUser) {
         Optional<User> info = userRepository.findByEmail(loginUser.getEmail());
         info.ifPresentOrElse(
-            user ->
+            user -> //"Wrong Password!"
                 {if (loginUser.getPassword().toString().equals(user.getPassword().toString())) {
                     result = user.getId().intValue();}
-                else{result = -1;}}, //"Wrong Password!"
+                else{result = -1;}},
             ()-> {if(loginUser.getEmail()!=null){result = -2;}} //"Wrong Email!"
         );
         return result;
     }
 
-    public UserDetailDto getUserInfo(int no){ //travellist없이 user 정보만 리턴
+    public UserDetailDto getUserInfo(int no){ // null 처리 하는 중
+        UserDetailDto answer = null;
         Optional<User> info = userRepository.findById(Long.valueOf(no));
+
+//        userRepository.findById(Long.valueOf(no))
+//                .ifPresent(info -> UserDetailDto.fromEntity(info));
+
         return UserDetailDto.fromEntity(info.get());
     }
 
