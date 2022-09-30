@@ -21,7 +21,7 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
 
 	boolean existsByUser_IdAndTravel_Id(Long id, Long id1);
 
-	Optional<List<Person>> findByTravel_Id(Long id);
+	List<Person> findByTravel_Id(Long id);
 
 	void deleteById(Long id);
 

@@ -53,7 +53,7 @@ public class PersonService {
                 .build();
         personRepository.save(person);
         return PersonDto.fromEntity(person);
-    }
+    } //fin
 
     @Transactional
     public void deleteJoinTravel(int personId) {
@@ -61,9 +61,9 @@ public class PersonService {
     }
 
     public List<PersonCreateDto.Simple> getPersonNameInTravel(int travelId){
-        Optional<List<Person>> list = personRepository.findByTravel_Id(Long.valueOf(travelId));
+        List<Person> list = personRepository.findByTravel_Id(Long.valueOf(travelId));
         List<PersonCreateDto.Simple> result = new ArrayList<PersonCreateDto.Simple>();
-        for (Person p : list.get()){
+        for (Person p : list){
             PersonCreateDto.Simple person = PersonCreateDto.Simple.fromEntity(p);
             result.add(person);
         }
@@ -79,21 +79,18 @@ public class PersonService {
     }
 
     public List<PersonCreateDto.HomeView> getPersonInfoInTravel(int travelId){
-        Optional<List<Person>> list = personRepository.findByTravel_Id(Long.valueOf(travelId));
-        List<PersonCreateDto.HomeView> result = new ArrayList<PersonCreateDto.HomeView>();
-        list.ifPresent(
-                list_ ->
-                {for (Person p : list_){
-                    PersonCreateDto.HomeView person = PersonCreateDto.HomeView.fromEntity(p);
-                    result.add(person);
-                }}
-        );
+        List<Person> list = personRepository.findByTravel_Id(Long.valueOf(travelId));
+        List<PersonCreateDto.HomeView> result = new ArrayList<>();
+        for (Person p : list){
+            PersonCreateDto.HomeView person = PersonCreateDto.HomeView.fromEntity(p);
+            result.add(person);
+        }
         return result;
-    }
+    } //fin
 
     public int getPersonCountInTravel(int travelId){
         return personRepository.countDistinctByTravel_Id(Long.valueOf(travelId));
-    }
+    } //fin
 
     public PersonCreateDto.Detail getPersonToDetailView(int personId){
         //- 사용자 개인 정보 -> user(name, email, account)
@@ -139,12 +136,12 @@ public class PersonService {
 
 
     public void updatePersonRole(int travelId){
-        Optional<List<Person>> People = personRepository.findByTravel_Id(Long.valueOf(travelId));
+        List<Person> People = personRepository.findByTravel_Id(Long.valueOf(travelId));
         Person currManager = personRepository.findByTravel_IdAndRole(Long.valueOf(travelId), true);
         personRepository.updateRoleById(FALSE, currManager.getId());
         Double maxDifference = currManager.getDifference();
 
-        for(Person p : People.get()) {
+        for(Person p : People) {
             Double currDifference = p.getDifference();
             if (currDifference > maxDifference) {
                 maxDifference = currDifference;

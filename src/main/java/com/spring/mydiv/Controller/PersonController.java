@@ -27,29 +27,29 @@ public class PersonController {
     private final PersonService personService;
     private final ParticipantService participantService;
 
-    @PostMapping("/{userid}/{travelid}/createUser")
-    public String createPerson2Travel(@PathVariable int travelid,
+    @PostMapping("/{userId}/{travelId}/createUser")
+    public String createPerson2Travel(@PathVariable int travelId,
                                       @RequestBody Map map){
         String user_email = map.get("user_email").toString();
         UserDetailDto userDetailDto = userService.getUserInfoByEmail(user_email);
         if (userDetailDto == null){
             return "-1"; // not matchable user
         } else {
-            if (personService.checkisUserinTravel(userDetailDto.getId(), travelid)){
+            if (personService.checkisUserinTravel(userDetailDto.getId(), travelId)){
                 return "-3"; // already existed
             }
             PersonCreateDto.Request request = new PersonCreateDto.Request(
                     userDetailDto,
-                    travelService.getTravelInfo(travelid));
+                    travelService.getTravelInfo(travelId));
             PersonDto personDto = personService.createPerson(request, FALSE);
             if (personDto != null)
                 return "200"; //success
             else return "-2"; //fail
         }
-    }
+    } //return int -> orElseThrow (?)
 
-    @PostMapping("/{userid}/{travelid}/deleteUser")
-    public String deletePerson2Travel(@PathVariable int travelid,
+    @PostMapping("/{userId}/{travelId}/deleteUser")
+    public String deletePerson2Travel(@PathVariable int travelId,
                                       @RequestBody Map map){
         int person_id = Integer.parseInt(map.get("person_id").toString());
         if (participantService.getSizeOfJoinedEventList(person_id) == 0){
@@ -59,7 +59,7 @@ public class PersonController {
         else {
             return "-1";
         }
-    }
+    } //return int -> orElseThrow (?)
 
     @GetMapping("/{userid}/{travelid}/{personid}/personDetail")
     public PersonCreateDto.Detail getPersonToDetailView(@PathVariable("travelid") int travelid,

@@ -11,7 +11,7 @@ import java.util.Optional;
  */
 
 public interface EventRepository extends JpaRepository<Event, Long> {
-    Optional<List<Event>> findByTravel_Id(Long id);
+    List<Event> findByTravel_Id(Long id);
 
     int countByTravel_Id(Long id);
 

@@ -58,23 +58,20 @@ public class EventService {
     }
 
     public List<EventCreateDto.HomeView> getEventInfoInTravel(int travelId){
-        Optional<List<Event>> list = eventRepository.findByTravel_Id(Long.valueOf(travelId));
-        List<EventCreateDto.HomeView> result = new ArrayList<EventCreateDto.HomeView>();
-        list.ifPresent(
-                list_ ->
-                {for (Event e : list_){
-                    EventCreateDto.HomeView event = EventCreateDto.HomeView.fromEntity(e);
-                    Participant payer = participantRepository.findByEvent_IdAndEventRole(event.getId(),true); // payer가 participant에 포함되어 있지 않을 시 에러
-                    event.setPayer(payer.getPerson().getUser().getName());
-                    result.add(event);
-                }}
-        );
+        List<Event> list = eventRepository.findByTravel_Id(Long.valueOf(travelId));
+        List<EventCreateDto.HomeView> result = new ArrayList<>();
+        for (Event e : list){
+            EventCreateDto.HomeView event = EventCreateDto.HomeView.fromEntity(e);
+            Participant payer = participantRepository.findByEvent_IdAndEventRole(event.getId(),true); // payer가 participant에 포함되어 있지 않을 시 에러
+            event.setPayer(payer.getPerson().getUser().getName());
+            result.add(event);
+        }
         return result;
-    }
+    } //ing - payer가 parti에 없을 경우 ifpresentorelse로 person에서 찾도록 수정
 
     public int getEventCountInTravel(int travelId){
         return eventRepository.countByTravel_Id(Long.valueOf(travelId));
-    }
+    } //fin
 
     public String getTravelPeriod(int travelId, int eventCount){
         if (eventCount == 0) return null;
@@ -90,7 +87,7 @@ public class EventService {
                     + ", " + diffDays + " days";
             return periodFormat;
         }
-    }
+    } //fin
 
     public Optional<Event> getEventEntityByEventId(Long id){
         return eventRepository.findById(id);

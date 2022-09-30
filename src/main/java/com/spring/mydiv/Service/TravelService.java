@@ -5,6 +5,7 @@ import javax.transaction.Transactional;
 import com.spring.mydiv.Dto.TravelCreateDto;
 import com.spring.mydiv.Entity.Event;
 import com.spring.mydiv.Entity.Person;
+import com.spring.mydiv.Exception.DefaultException;
 import com.spring.mydiv.Repository.EventRepository;
 import com.spring.mydiv.Repository.PersonRepository;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,8 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import java.util.Optional;
+
+import static com.spring.mydiv.Code.ErrorCode.*;
 
 /**
  * @author 12nov
@@ -35,7 +38,7 @@ public class TravelService {
                 .build();
         travelRepository.save(travel);
         return TravelCreateDto.Response.fromEntity(travel);
-    }
+    } //fin
 
     public TravelCreateDto.Response getTravelInfo(int no){
         Optional<Travel> info = travelRepository.findById(Long.valueOf(no));
@@ -43,17 +46,19 @@ public class TravelService {
     }
 
     public TravelCreateDto.HomeView getTravelToMainView(int travelId){
-        Optional<Travel> info = travelRepository.findById(Long.valueOf(travelId));
-        return TravelCreateDto.HomeView.fromEntity(info.get());
-    }
+        return travelRepository.findById(Long.valueOf(travelId))
+                .map(TravelCreateDto.HomeView::fromEntity)
+                .orElseThrow(()-> new DefaultException(NO_TRAVEL));
+    } //fin
+
     @Transactional
     public void deleteTravel(int travelId){
-        Optional<List<Event>> eventList = eventRepository.findByTravel_Id(Long.valueOf(travelId));
-        Optional<List<Person>> personList = personRepository.findByTravel_Id(Long.valueOf(travelId));
-        for(Event event : eventList.get()){
+        List<Event> eventList = eventRepository.findByTravel_Id(Long.valueOf(travelId));
+        List<Person> personList = personRepository.findByTravel_Id(Long.valueOf(travelId));
+        for(Event event : eventList){
             eventService.deleteEvent(event.getId().intValue());
         }
-        for(Person person : personList.get()){
+        for(Person person : personList){
             personRepository.delete(person);
         }
         travelRepository.deleteById(Long.valueOf(travelId));
