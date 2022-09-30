@@ -90,11 +90,16 @@ public class EventController {
     @DeleteMapping("/{userid}/{travelid}/{eventid}/deleteEvent")
     public void deleteEvent(@PathVariable("eventid") int event_id)
     {
-        EventDetailDto.deleteRequest DeleteRequest = eventService.getEventDetail(event_id);
+        EventDetailDto.deleteRequest DeleteRequest = eventService.getEventDetailforDelete(event_id);
         personService.updatePersonMoneyByDeleting(DeleteRequest.getJoinedPerson(),
                 DeleteRequest.getPayerId(),
                 DeleteRequest.getDividePrice(),
                 DeleteRequest.getTakePrice());
         eventService.deleteEvent(event_id);
+    }
+
+    @GetMapping("/{userid}/{travelid}/{eventid}/detail")
+    public List<ParticipantDetailDto.detailView> getDetailInEvent(@PathVariable("eventid") int eventid){
+        return participantService.getParticipantInEvent(eventid);
     }
 }

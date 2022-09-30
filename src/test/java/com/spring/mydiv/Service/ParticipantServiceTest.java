@@ -82,4 +82,19 @@ class ParticipantServiceTest {
 
         System.out.println(result.getPayer().getId());
     } // checked
+
+    @Test
+    @Commit
+    @DisplayName("이벤트에 참가한 참여자 디테일 보기")
+    void findParticipantDetail() {
+        //given
+        int event_id = 90;
+        //when
+        List<ParticipantDetailDto.detailView> result = participantService.getParticipantInEvent(event_id);
+        //then
+        for (ParticipantDetailDto.detailView detail : result){
+            System.out.println(detail.getName());
+            System.out.println(detail.isEventRole());
+        }
+    } // checked
 }

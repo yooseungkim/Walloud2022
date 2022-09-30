@@ -3,6 +3,7 @@ package com.spring.mydiv.Service;
 import com.spring.mydiv.Dto.EventCreateDto;
 import com.spring.mydiv.Dto.EventDetailDto;
 import com.spring.mydiv.Dto.ParticipantDetailDto;
+import com.spring.mydiv.Dto.PersonCreateDto;
 import com.spring.mydiv.Entity.Event;
 import com.spring.mydiv.Entity.Participant;
 import com.spring.mydiv.Entity.Person;
@@ -84,7 +85,7 @@ public class EventService {
         return eventRepository.findById(id);
     }
 
-    public EventDetailDto.deleteRequest getEventDetail(int eventId){
+    public EventDetailDto.deleteRequest getEventDetailforDelete(int eventId){
         ParticipantDetailDto.peopleList peopleList = participantService.getJoinedPeopleInEvent(eventId);
         Optional<Event> event = eventRepository.findById(Long.valueOf(eventId));
 
