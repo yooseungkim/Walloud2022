@@ -2,15 +2,12 @@ package com.spring.mydiv.Service;
 
 import javax.transaction.Transactional;
 
-import com.spring.mydiv.Dto.TravelCreateDto;
-import com.spring.mydiv.Dto.UserDetailDto;
+import com.spring.mydiv.Dto.*;
 import com.spring.mydiv.Entity.Person;
 import com.spring.mydiv.Exception.DefaultException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import com.spring.mydiv.Dto.TravelDto;
-import com.spring.mydiv.Dto.UserCreateDto;
 import com.spring.mydiv.Entity.Travel;
 import com.spring.mydiv.Entity.User;
 import com.spring.mydiv.Repository.PersonRepository;
@@ -37,7 +34,7 @@ public class UserService {
 	private final TravelRepository travelRepository;
 	
     @Transactional
-    public UserCreateDto.Response createUser(UserCreateDto.Request request) {
+    public UserDto.Response createUser(UserDto.Request request) {
         User user = User.builder()
                 .name(request.getName())
                 .email(request.getEmail())
@@ -45,11 +42,11 @@ public class UserService {
                 .account(request.getAccount())
                 .build();
         userRepository.save(user);
-        return UserCreateDto.Response.fromEntity(user);
+        return UserDto.Response.fromEntity(user);
     } //fin
 
     int result = 0;
-    public int login(UserCreateDto.Login loginUser) {
+    public int login(UserDto.Login loginUser) {
         //ver1. int return
         Optional<User> info = userRepository.findByEmail(loginUser.getEmail());
         info.ifPresentOrElse(
@@ -62,17 +59,17 @@ public class UserService {
         return result;
     } //ing
 
-    public UserDetailDto getUserInfo(int no){
+    public UserDto.Response getUserInfo(int no){
         return userRepository.findById(Long.valueOf(no))
-                .map(UserDetailDto::fromEntity)
+                .map(UserDto.Response::fromEntity)
                 .orElseThrow(()-> new DefaultException(NO_USER));
     } //fin
 
-    public List<TravelCreateDto.Response> getUserJoinedTravel(int no){
+    public List<TravelDto.Response> getUserJoinedTravel(int no){
         List<Person> list = personRepository.findByUser_Id(Long.valueOf(no));
-        List<TravelCreateDto.Response> result = new ArrayList<>();
+        List<TravelDto.Response> result = new ArrayList<>();
         for (Person p : list){
-            TravelCreateDto.Response travel = TravelCreateDto.Response.builder()
+            TravelDto.Response travel = TravelDto.Response.builder()
                     .Id(p.getTravel().getId())
                     .Name(p.getTravel().getName())
                     .build();
@@ -81,19 +78,19 @@ public class UserService {
         return result;
     } //fin
 
-    public UserDetailDto.WithTravel getUserInfoWithTravel(int no){
+    public UserDto.WithTravel getUserInfoWithTravel(int no){
         User entity = userRepository.findById(Long.valueOf(no))
                 .orElseThrow(()-> new DefaultException(NO_USER));
-        UserDetailDto.WithTravel dto = UserDetailDto.WithTravel.fromEntity(entity);
+        UserDto.WithTravel dto = UserDto.WithTravel.fromEntity(entity);
         dto.setTravelList(getUserJoinedTravel(no));
         return dto;
     } //fin
 
-    public UserDetailDto getUserInfoByEmail(String email){
+    public UserDto.Response getUserInfoByEmail(String email){
         Optional<User> user = userRepository.findByEmail(email);
         if (!user.isPresent()) return null;
 
-        UserDetailDto dto = UserDetailDto.builder()
+        UserDto.Response dto = UserDto.Response.builder()
                 .Id(user.get().getId())
                 .Name(user.get().getName())
                 .Email(user.get().getEmail())

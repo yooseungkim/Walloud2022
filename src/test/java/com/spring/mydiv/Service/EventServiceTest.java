@@ -1,9 +1,7 @@
 package com.spring.mydiv.Service;
 
-import com.spring.mydiv.Dto.EventCreateDto;
-import com.spring.mydiv.Dto.TravelCreateDto;
+import com.spring.mydiv.Dto.EventDto;
 import com.spring.mydiv.Entity.Event;
-import com.spring.mydiv.Entity.Person;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.Commit;
 
 import java.util.Date;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class EventServiceTest {
@@ -30,7 +25,7 @@ class EventServiceTest {
     void createEvent() {
         //given
         Date date = new Date(22, 9, 1);
-        EventCreateDto.Request request = EventCreateDto.Request.builder()
+        EventDto.Request request = EventDto.Request.builder()
                 .Name("우버 (포츠담 -> 호텔) ")
                 .Travel(travelService.getTravelInfo(78)) //서울 여행
                 .Date(date)
@@ -38,7 +33,7 @@ class EventServiceTest {
                 .PartiCount(4)
                 .build();
         //when
-        EventCreateDto.Response eventDto = eventService.createEvent(request, true);
+        EventDto.Response eventDto = eventService.createEvent(request, true);
 
         //then
         System.out.println("status: " + ResponseEntity.ok(eventDto).toString());
@@ -98,7 +93,7 @@ class EventServiceTest {
         //given
         Long event_id = Long.valueOf(1); //대치동
         //when
-        Event event = eventService.getEventEntityByEventId(event_id).get();
+        Event event = eventService.getEventEntityByEventId(event_id);
         //then
         System.out.println("name: " + event.getName());
     }

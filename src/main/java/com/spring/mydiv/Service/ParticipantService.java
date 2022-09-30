@@ -1,9 +1,6 @@
 package com.spring.mydiv.Service;
 
-import com.spring.mydiv.Dto.EventCreateDto;
-import com.spring.mydiv.Dto.ParticipantCreateDto;
-import com.spring.mydiv.Dto.ParticipantDetailDto;
-import com.spring.mydiv.Dto.ParticipantDto;
+import com.spring.mydiv.Dto.*;
 import com.spring.mydiv.Entity.Participant;
 import com.spring.mydiv.Entity.Person;
 import com.spring.mydiv.Repository.EventRepository;
@@ -29,25 +26,25 @@ public class ParticipantService {
     private final PersonRepository personRepository;
 
     @Transactional
-    public ParticipantDto createParticipant(ParticipantCreateDto.Request request){
+    public ParticipantDto.basic createParticipant(ParticipantDto.Request request){
         Participant participant = Participant.builder()
                 .person(request.getPerson())
                 .event(request.getEvent())
                 .eventRole(request.getRole())
                 .build();
         participantRepository.save(participant);
-        return ParticipantDto.fromEntity(participant);
+        return ParticipantDto.basic.fromEntity(participant);
     }
 
-    public List<EventCreateDto.PersonView> getEventListThatPersonJoin(int personId){
-        List<EventCreateDto.PersonView> result = new ArrayList<>();
+    public List<EventDto.PersonView> getEventListThatPersonJoin(int personId){
+        List<EventDto.PersonView> result = new ArrayList<>();
         // personid가 있는 parti를 전부 찾아서 -> 그 parti의 event id, event role를 get
         List<Participant> partiList = participantRepository.findByPerson_Id(Long.valueOf(personId));
         for (Participant p : partiList){
             Long eventId = p.getEvent().getId();
             Boolean myEventRole = p.getEventRole();
             // -> event id를 통해 나머지 값 get(EventId, EventName, Date, Price, DividePrice, TakePrice)
-            EventCreateDto.PersonView tmpEvent = EventCreateDto.PersonView.fromEntity(eventRepository.findById(eventId).get());
+            EventDto.PersonView tmpEvent = EventDto.PersonView.fromEntity(eventRepository.findById(eventId).get());
             // -> if event role = payer
             if (myEventRole == true){
                 //      -> PayerId는 자기 것으로,
@@ -73,7 +70,7 @@ public class ParticipantService {
         return participantRepository.findByPerson_Id(Long.valueOf(personId)).size();
     }
 
-    public ParticipantDetailDto.peopleList getJoinedPeopleInEvent(int eventId){
+    public ParticipantDto.peopleList getJoinedPeopleInEvent(int eventId){
         List<Participant> participantList = participantRepository.findByEvent_Id(Long.valueOf(eventId));
         List<Person> joinedPeople = new ArrayList<Person>();
         Person Payer = new Person();
@@ -83,19 +80,19 @@ public class ParticipantService {
                 Payer = participant.getPerson();
             }
         }
-        ParticipantDetailDto.peopleList peopleList = new ParticipantDetailDto.peopleList(joinedPeople, Payer);
+        ParticipantDto.peopleList peopleList = new ParticipantDto.peopleList(joinedPeople, Payer);
         return peopleList;
     }
 
-    public List<ParticipantDetailDto.detailView> getParticipantInEvent(int eventId){
+    public List<ParticipantDto.detailView> getParticipantInEvent(int eventId){
         List<Participant> participantList = participantRepository.findByEvent_Id(Long.valueOf(eventId));
-        List<ParticipantDetailDto.detailView> participantDetailList = new ArrayList<>();
+        List<ParticipantDto.detailView> participantDetailList = new ArrayList<>();
 
         for(Participant participant : participantList){
             Long personId = participant.getPerson().getId();
             String participantName = participant.getPerson().getUser().getName();
             Boolean eventRole = participant.getEventRole();
-            ParticipantDetailDto.detailView participantDetail = new ParticipantDetailDto.detailView(personId, participantName, eventRole);
+            ParticipantDto.detailView participantDetail = new ParticipantDto.detailView(personId, participantName, eventRole);
             participantDetailList.add(participantDetail);
         }
 
