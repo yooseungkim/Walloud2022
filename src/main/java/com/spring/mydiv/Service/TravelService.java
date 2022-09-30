@@ -2,7 +2,7 @@ package com.spring.mydiv.Service;
 
 import javax.transaction.Transactional;
 
-import com.spring.mydiv.Dto.TravelCreateDto;
+import com.spring.mydiv.Dto.TravelDto;
 import com.spring.mydiv.Entity.Event;
 import com.spring.mydiv.Entity.Person;
 import com.spring.mydiv.Exception.DefaultException;
@@ -32,22 +32,22 @@ public class TravelService {
     private final PersonRepository personRepository;
 
     @Transactional
-    public TravelCreateDto.Response createTravel(TravelCreateDto.Request request) {
+    public TravelDto.Response createTravel(TravelDto.Request request) {
         Travel travel = Travel.builder()
                 .name(request.getName())
                 .build();
         travelRepository.save(travel);
-        return TravelCreateDto.Response.fromEntity(travel);
+        return TravelDto.Response.fromEntity(travel);
     } //fin
 
-    public TravelCreateDto.Response getTravelInfo(int no){
+    public TravelDto.Response getTravelInfo(int no){
         Optional<Travel> info = travelRepository.findById(Long.valueOf(no));
-        return TravelCreateDto.Response.fromEntity(info.get());
+        return TravelDto.Response.fromEntity(info.get());
     }
 
-    public TravelCreateDto.HomeView getTravelToMainView(int travelId){
+    public TravelDto.HomeView getTravelToMainView(int travelId){
         return travelRepository.findById(Long.valueOf(travelId))
-                .map(TravelCreateDto.HomeView::fromEntity)
+                .map(TravelDto.HomeView::fromEntity)
                 .orElseThrow(()-> new DefaultException(NO_TRAVEL));
     } //fin
 

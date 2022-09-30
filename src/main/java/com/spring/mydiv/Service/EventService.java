@@ -1,9 +1,6 @@
 package com.spring.mydiv.Service;
 
-import com.spring.mydiv.Dto.EventCreateDto;
-import com.spring.mydiv.Dto.EventDetailDto;
-import com.spring.mydiv.Dto.ParticipantDetailDto;
-import com.spring.mydiv.Dto.PersonCreateDto;
+import com.spring.mydiv.Dto.*;
 import com.spring.mydiv.Entity.Event;
 import com.spring.mydiv.Entity.Participant;
 import com.spring.mydiv.Entity.Person;
@@ -27,7 +24,7 @@ public class EventService {
     private final ParticipantRepository participantRepository;
     private final ParticipantService participantService;
 
-    public EventCreateDto.Response createEvent(EventCreateDto.Request request, boolean isPayerinParti){
+    public EventDto.Response createEvent(EventDto.Request request, boolean isPayerinParti){
         Double dividePrice = (double)request.getPrice()/request.getPartiCount();
         Double takePrice = (double)request.getPrice() - dividePrice;
         if (!isPayerinParti){
@@ -46,7 +43,7 @@ public class EventService {
                 .takePrice(takePrice)
                 .build();
         eventRepository.save(event);
-        return EventCreateDto.Response.fromEntity(event);
+        return EventDto.Response.fromEntity(event);
     }
 
     public boolean checkPayerInParticipant(List<Map> partiList, Long payerId){
@@ -57,11 +54,11 @@ public class EventService {
         return partiIds.contains(payerId);
     }
 
-    public List<EventCreateDto.HomeView> getEventInfoInTravel(int travelId){
+    public List<EventDto.HomeView> getEventInfoInTravel(int travelId){
         List<Event> list = eventRepository.findByTravel_Id(Long.valueOf(travelId));
-        List<EventCreateDto.HomeView> result = new ArrayList<>();
+        List<EventDto.HomeView> result = new ArrayList<>();
         for (Event e : list){
-            EventCreateDto.HomeView event = EventCreateDto.HomeView.fromEntity(e);
+            EventDto.HomeView event = EventDto.HomeView.fromEntity(e);
             Participant payer = participantRepository.findByEvent_IdAndEventRole(event.getId(),true); // payer가 participant에 포함되어 있지 않을 시 에러
             event.setPayer(payer.getPerson().getUser().getName());
             result.add(event);
@@ -93,11 +90,11 @@ public class EventService {
         return eventRepository.findById(id);
     }
 
-    public EventDetailDto.deleteRequest getEventDetailforDelete(int eventId){
-        ParticipantDetailDto.peopleList peopleList = participantService.getJoinedPeopleInEvent(eventId);
+    public EventDto.deleteRequest getEventDetailforDelete(int eventId){
+        ParticipantDto.peopleList peopleList = participantService.getJoinedPeopleInEvent(eventId);
         Optional<Event> event = eventRepository.findById(Long.valueOf(eventId));
 
-        return EventDetailDto.deleteRequest.builder()
+        return EventDto.deleteRequest.builder()
                 .joinedPerson(peopleList.getJoinedPerson())
                 .payerId(peopleList.getPayer().getId())
                 .DividePrice(event.get().getDividePrice())

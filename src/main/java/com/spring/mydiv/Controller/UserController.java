@@ -34,8 +34,9 @@ public class UserController {
     }
 
     @PostMapping(value = "/Register") //ResponseEntity.ok
-    public ResponseEntity<UserCreateDto.Response> createUser(@RequestBody Map map) {
-        UserCreateDto.Request request = new UserCreateDto.Request(map.get("user_name").toString(),
+    public ResponseEntity<UserDto.Response> createUser(@RequestBody Map map) {
+        UserDto.Request request = new UserDto.Request(
+                map.get("user_name").toString(),
                 map.get("user_email").toString(),
                 map.get("user_password").toString(),
                 map.get("user_account").toString());
@@ -44,7 +45,8 @@ public class UserController {
 
     @PostMapping(value = "/login") //return int -> orElseThrow (?)
     public int login(@RequestBody Map map) {
-        UserCreateDto.Login loginUser = new UserCreateDto.Login(map.get("input_id").toString(),
+        UserDto.Login loginUser = new UserDto.Login(
+                map.get("input_id").toString(),
                 map.get("input_password").toString());
         return userservice.login(loginUser);
         /**success -> return [user id]
@@ -54,14 +56,14 @@ public class UserController {
     }
 
     @GetMapping("/{userId}") //return empty
-    public UserDetailDto.WithTravel getUserInfo(@PathVariable int userId){
+    public UserDto.WithTravel getUserInfo(@PathVariable int userId){
         return userservice.getUserInfoWithTravel(userId);
     }
 
-    @PostMapping("/{userId}/createTravel") //return int -> orElseThrow (?)
+    @PostMapping("/erId}/createTravel") //return int -> orElseThrow (?)
     public int joinTravel(@PathVariable int userId, @RequestBody Map map){
-        TravelCreateDto.Request travelRequest = new TravelCreateDto.Request(map.get("travel_name").toString());
-        PersonCreateDto.Request personRequest = new PersonCreateDto.Request(
+        TravelDto.Request travelRequest = new TravelDto.Request(map.get("travel_name").toString());
+        PersonDto.Request personRequest = new PersonDto.Request(
                 userservice.getUserInfo(userId),
                 travelservice.createTravel(travelRequest));
         if (ResponseEntity.ok(personservice.createPerson(personRequest, TRUE)).getStatusCodeValue() == 200)

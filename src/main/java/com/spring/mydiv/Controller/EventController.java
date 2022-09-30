@@ -28,7 +28,7 @@ public class EventController {
     private final ParticipantService participantService;
 
     @GetMapping("/{userid}/{travelid}/createEvent") //don't use this
-    public List<PersonCreateDto.Simple> getPersonNameInTravel(@PathVariable("travelid") int travelid){
+    public List<PersonDto.Simple> getPersonNameInTravel(@PathVariable("travelid") int travelid){
         return personService.getPersonNameInTravel(travelid);
     }
 
@@ -38,7 +38,7 @@ public class EventController {
         DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         List<Map> partiDtoList = (List)map.get("parti_list");
         int partiCount = partiDtoList.size();
-        EventCreateDto.Request request = EventCreateDto.Request.builder()
+        EventDto.Request request = EventDto.Request.builder()
                 .Name(map.get("event_name").toString())
                 .Travel(travelService.getTravelInfo(travelId))
                 .Date((Date) simpleDateFormat.parse(map.get("event_date").toString()))
@@ -48,7 +48,7 @@ public class EventController {
         boolean isPayerinParticipant = eventService.checkPayerInParticipant(partiDtoList,
                 Long.valueOf(map.get("payer_person_id").toString()));
         //set dividePrice, takePrice
-        EventCreateDto.Response eventDto = eventService.createEvent(request, isPayerinParticipant);
+        EventDto.Response eventDto = eventService.createEvent(request, isPayerinParticipant);
         //get event dto(eventId)
 
         if (ResponseEntity.ok(eventDto).getStatusCodeValue() == 200){ //success to create event
@@ -61,7 +61,7 @@ public class EventController {
                         .valueOf(partiDto.get("id").toString())).get();
                 personList.add(person);
 
-                ParticipantCreateDto.Request partiRequest = ParticipantCreateDto.Request.builder()
+                ParticipantDto.Request partiRequest = ParticipantDto.Request.builder()
                         .person(person)
                         .event(eventService.getEventEntityByEventId(Long
                                         .valueOf(eventDto.getId().toString())).get())
@@ -92,7 +92,7 @@ public class EventController {
     @DeleteMapping("/{userid}/{travelid}/{eventid}/deleteEvent")
     public void deleteEvent(@PathVariable("eventid") int event_id)
     {
-        EventDetailDto.deleteRequest DeleteRequest = eventService.getEventDetailforDelete(event_id);
+        EventDto.deleteRequest DeleteRequest = eventService.getEventDetailforDelete(event_id);
         personService.updatePersonMoneyByDeleting(DeleteRequest.getJoinedPerson(),
                 DeleteRequest.getPayerId(),
                 DeleteRequest.getDividePrice(),
@@ -101,7 +101,7 @@ public class EventController {
     }
 
     @GetMapping("/{userid}/{travelid}/{eventid}/detail")
-    public List<ParticipantDetailDto.detailView> getDetailInEvent(@PathVariable("eventid") int eventid){
+    public List<ParticipantDto.detailView> getDetailInEvent(@PathVariable("eventid") int eventid){
         return participantService.getParticipantInEvent(eventid);
     }
 }

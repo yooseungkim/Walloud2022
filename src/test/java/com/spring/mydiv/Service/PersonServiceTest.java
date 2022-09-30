@@ -1,18 +1,14 @@
 package com.spring.mydiv.Service;
 
-import com.spring.mydiv.Dto.PersonCreateDto;
 import com.spring.mydiv.Dto.PersonDto;
-import com.spring.mydiv.Dto.TravelCreateDto;
-import com.spring.mydiv.Entity.Event;
+import com.spring.mydiv.Dto.TravelDto;
 import com.spring.mydiv.Entity.Person;
-import com.spring.mydiv.Entity.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Commit;
 
-import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,16 +31,16 @@ class PersonServiceTest {
     void createPerson() {
         //given
         int userNo = 13;
-        TravelCreateDto.Request travelInfo = TravelCreateDto.Request.builder()
+        TravelDto.Request travelInfo = TravelDto.Request.builder()
                 .Name("광주 여행")
                 .build();
-        PersonCreateDto.Request request = PersonCreateDto.Request.builder()
+        PersonDto.Request request = PersonDto.Request.builder()
                 .User(userService.getUserInfo(userNo))
                 .Travel(travelService.createTravel(travelInfo))
                 .build();
 
         //when
-        PersonDto person = personService.createPerson(request, FALSE);
+        PersonDto.basic person = personService.createPerson(request, FALSE);
 
         //then
         System.out.println("User name = " + person.getUser().getName());
@@ -59,10 +55,10 @@ class PersonServiceTest {
         int travelId = 57; //서울 여행
 
         //when
-        List<PersonCreateDto.Simple> list = personService.getPersonNameInTravel(travelId);
+        List<PersonDto.Simple> list = personService.getPersonNameInTravel(travelId);
 
         //then
-        for (PersonCreateDto.Simple p : list){
+        for (PersonDto.Simple p : list){
             System.out.println("Name: " + p.getName());
         }
 
@@ -154,7 +150,7 @@ class PersonServiceTest {
         //given
         int person_id = 50; //이하은
         //when
-        PersonCreateDto.Detail detail = personService.getPersonToDetailView(person_id);
+        PersonDto.Detail detail = personService.getPersonToDetailView(person_id);
         //then
         System.out.println("personID: " + detail.getPersonId());
         System.out.println("personID: " + detail.getUserName());
@@ -172,7 +168,7 @@ class PersonServiceTest {
         //given
         int travelId = 57; // 서울 여행
         //when
-        PersonCreateDto.HomeView tmp = personService.getPayerInTravel(travelId);
+        PersonDto.HomeView tmp = personService.getPayerInTravel(travelId);
         //then
         System.out.println("payer : " + tmp.getId());
         System.out.println("payer : " + tmp.getName());

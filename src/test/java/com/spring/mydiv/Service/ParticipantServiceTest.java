@@ -31,14 +31,14 @@ class ParticipantServiceTest {
         //given
         Long person_id = Long.valueOf(50); //이하은
         Long event_id = Long.valueOf(2); //대치동
-        ParticipantCreateDto.Request partiRequest = ParticipantCreateDto.Request.builder()
+        ParticipantDto.Request partiRequest = ParticipantDto.Request.builder()
                 .person(personService.getPersonEntityByPersonId(person_id).get())
                 .event(eventService.getEventEntityByEventId(event_id).get())
                 .role(false)
                 .build();
 
         //when
-        ParticipantDto dto = participantService.createParticipant(partiRequest);
+        ParticipantDto.basic dto = participantService.createParticipant(partiRequest);
 
         //then
         System.out.println("status: " + ResponseEntity.ok(dto).toString());
@@ -52,9 +52,9 @@ class ParticipantServiceTest {
         //given
         int person_id = 50; //이하은
         //when
-        List<EventCreateDto.PersonView> result = participantService.getEventListThatPersonJoin(person_id);
+        List<EventDto.PersonView> result = participantService.getEventListThatPersonJoin(person_id);
         //then
-        for (EventCreateDto.PersonView e : result){
+        for (EventDto.PersonView e : result){
             System.out.println(">> event:");
             System.out.println("event id: " + e.getEventId());
             System.out.println("event name: " + e.getEventName());
@@ -74,7 +74,7 @@ class ParticipantServiceTest {
         //given
         int event_id = 78;
         //when
-        ParticipantDetailDto.peopleList result = participantService.getJoinedPeopleInEvent(event_id);
+        ParticipantDto.peopleList result = participantService.getJoinedPeopleInEvent(event_id);
         //then
         for (Person p : result.getJoinedPerson()){
             System.out.println(p.getUser().getName());
@@ -90,9 +90,9 @@ class ParticipantServiceTest {
         //given
         int event_id = 90;
         //when
-        List<ParticipantDetailDto.detailView> result = participantService.getParticipantInEvent(event_id);
+        List<ParticipantDto.detailView> result = participantService.getParticipantInEvent(event_id);
         //then
-        for (ParticipantDetailDto.detailView detail : result){
+        for (ParticipantDto.detailView detail : result){
             System.out.println(detail.getName());
             System.out.println(detail.isEventRole());
         }
