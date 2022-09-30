@@ -6,7 +6,6 @@ function DisplayUsers({ users, preferences }) {
   const currentLoggedIn = JSON.parse(localStorage.getItem("id"));
   const { user, travel, travelName } = useParams();
   function CreateUser({ username, personid, spent }) {
-    console.log(username);
 
     return (
       <Link
@@ -27,7 +26,7 @@ function DisplayUsers({ users, preferences }) {
           <br />
           {preferences.displayMoney ? (
             <h4 className="caption">
-              {spent >= 0 ? `₩${Math.round(spent)}` : `-₩${-Math.round(spent)}`}
+              {spent >= 0 ? `₩${Math.round(spent)}` : `₩${-Math.round(spent)}`}
             </h4>
           ) : null}
         </div>
@@ -43,9 +42,9 @@ function DisplayUsers({ users, preferences }) {
           {users
             .filter(
               (user) =>
-                (user.role === true && type === "Manager") ||
-                (user.difference > 0 && type === "Depositors") ||
-                (user.difference < 0 && type === "Recipients")
+                (user.role && type === "총무") ||
+                (!user.role && (user.difference >= 0 && (type === "Receive")) ||
+                (user.difference < 0 && type === "Send"))
             )
             .map((user) => (
               <CreateUser
@@ -62,9 +61,9 @@ function DisplayUsers({ users, preferences }) {
 
   return (
     <div className="users">
-      <CreateType users={users} type="Manager" />
-      <CreateType users={users} type="Depositors" />
-      <CreateType users={users} type="Recipients" />
+      <CreateType users={users} type="총무" />
+      <CreateType users={users} type="Receive" />
+      <CreateType users={users} type="Send" />
     </div>
   );
 }

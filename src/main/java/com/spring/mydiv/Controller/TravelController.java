@@ -25,10 +25,9 @@ public class TravelController {
     private final PersonService personService;
     private final EventService eventService;
 
-    @GetMapping("/{userid}/{travelid}") // /{travelName}
-    public TravelCreateDto.HomeView getTravelToMainView(@PathVariable int travelid){
-        TravelCreateDto.HomeView homeView = travelservice.getTravelToMainView(travelid);
-        int travelId = homeView.getTravelId().intValue();
+    @GetMapping("/{userId}/{travelId}") //return empty
+    public TravelCreateDto.HomeView getTravelToMainView(@PathVariable int travelId){
+        TravelCreateDto.HomeView homeView = travelservice.getTravelToMainView(travelId);
         homeView.setPersonList(personService.getPersonInfoInTravel(travelId));
         homeView.setPersonCount(personService.getPersonCountInTravel(travelId));
         homeView.setEventList(eventService.getEventInfoInTravel(travelId));

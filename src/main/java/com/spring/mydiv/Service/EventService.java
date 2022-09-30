@@ -3,6 +3,7 @@ package com.spring.mydiv.Service;
 import com.spring.mydiv.Dto.EventCreateDto;
 import com.spring.mydiv.Dto.EventDetailDto;
 import com.spring.mydiv.Dto.ParticipantDetailDto;
+import com.spring.mydiv.Dto.PersonCreateDto;
 import com.spring.mydiv.Entity.Event;
 import com.spring.mydiv.Entity.Participant;
 import com.spring.mydiv.Entity.Person;
@@ -14,10 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * @author 12nov
@@ -29,7 +27,13 @@ public class EventService {
     private final ParticipantRepository participantRepository;
     private final ParticipantService participantService;
 
-    public EventCreateDto.Response createEvent(EventCreateDto.Request request){
+    public EventCreateDto.Response createEvent(EventCreateDto.Request request, boolean isPayerinParti){
+        Double dividePrice = (double)request.getPrice()/request.getPartiCount();
+        Double takePrice = (double)request.getPrice() - dividePrice;
+        if (!isPayerinParti){
+            takePrice = (double)request.getPrice();
+        }
+
         Event event = Event.builder()
                 .name(request.getName())
                 .date(request.getDate())
@@ -38,31 +42,36 @@ public class EventService {
                         .id(request.getTravel().getId())
                         .name(request.getTravel().getName())
                         .build())
-                .dividePrice((double)request.getPrice()/request.getPartiCount())
-                .takePrice((double)request.getPrice()/request.getPartiCount()*(request.getPartiCount()-1))
+                .dividePrice(dividePrice)
+                .takePrice(takePrice)
                 .build();
         eventRepository.save(event);
         return EventCreateDto.Response.fromEntity(event);
     }
 
-    public List<EventCreateDto.HomeView> getEventInfoInTravel(int travelId){
-        Optional<List<Event>> list = eventRepository.findByTravel_Id(Long.valueOf(travelId));
-        List<EventCreateDto.HomeView> result = new ArrayList<EventCreateDto.HomeView>();
-        list.ifPresent(
-                list_ ->
-                {for (Event e : list_){
-                    EventCreateDto.HomeView event = EventCreateDto.HomeView.fromEntity(e);
-                    Participant payer = participantRepository.findByEvent_IdAndEventRole(event.getId(),true);
-                    event.setPayer(payer.getPerson().getUser().getName());
-                    result.add(event);
-                }}
-        );
-        return result;
+    public boolean checkPayerInParticipant(List<Map> partiList, Long payerId){
+        List<Long> partiIds = new ArrayList<>();
+        for (Map parti : partiList){
+            partiIds.add(Long.valueOf(parti.get("id").toString()));
+        }
+        return partiIds.contains(payerId);
     }
+
+    public List<EventCreateDto.HomeView> getEventInfoInTravel(int travelId){
+        List<Event> list = eventRepository.findByTravel_Id(Long.valueOf(travelId));
+        List<EventCreateDto.HomeView> result = new ArrayList<>();
+        for (Event e : list){
+            EventCreateDto.HomeView event = EventCreateDto.HomeView.fromEntity(e);
+            Participant payer = participantRepository.findByEvent_IdAndEventRole(event.getId(),true); // payer가 participant에 포함되어 있지 않을 시 에러
+            event.setPayer(payer.getPerson().getUser().getName());
+            result.add(event);
+        }
+        return result;
+    } //ing - payer가 parti에 없을 경우 ifpresentorelse로 person에서 찾도록 수정
 
     public int getEventCountInTravel(int travelId){
         return eventRepository.countByTravel_Id(Long.valueOf(travelId));
-    }
+    } //fin
 
     public String getTravelPeriod(int travelId, int eventCount){
         if (eventCount == 0) return null;
@@ -78,13 +87,13 @@ public class EventService {
                     + ", " + diffDays + " days";
             return periodFormat;
         }
-    }
+    } //fin
 
     public Optional<Event> getEventEntityByEventId(Long id){
         return eventRepository.findById(id);
     }
 
-    public EventDetailDto.deleteRequest getEventDetail(int eventId){
+    public EventDetailDto.deleteRequest getEventDetailforDelete(int eventId){
         ParticipantDetailDto.peopleList peopleList = participantService.getJoinedPeopleInEvent(eventId);
         Optional<Event> event = eventRepository.findById(Long.valueOf(eventId));
 

@@ -19,4 +19,18 @@ public class ParticipantDetailDto {
         @NotNull
         private Person payer;
     }
+
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+    public static class detailView {
+        @NotNull
+        private Long Id;
+        @NotNull
+        private String Name;
+        @NotNull
+        private boolean eventRole;
+    }
 }

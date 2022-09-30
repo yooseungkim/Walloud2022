@@ -45,8 +45,10 @@ public class EventController {
                 .Price(Integer.parseInt(map.get("price").toString()))
                 .PartiCount(partiCount)
                 .build();
-        //set dividePrice, takePrice(get은 method랑 혼동될 것 같아 이름 변경했습니다!)
-        EventCreateDto.Response eventDto = eventService.createEvent(request);
+        boolean isPayerinParticipant = eventService.checkPayerInParticipant(partiDtoList,
+                Long.valueOf(map.get("payer_person_id").toString()));
+        //set dividePrice, takePrice
+        EventCreateDto.Response eventDto = eventService.createEvent(request, isPayerinParticipant);
         //get event dto(eventId)
 
         if (ResponseEntity.ok(eventDto).getStatusCodeValue() == 200){ //success to create event
@@ -54,7 +56,7 @@ public class EventController {
             List<Person> personList = new ArrayList<>();
             System.out.println(partiDtoList.size());
             //set parti dto(personId, eventId, role)
-            for (Map partiDto : partiDtoList){
+            for (Map partiDto : partiDtoList){ // 결제자가 참가자에 들어가지 않을 경우를 handling 해야함
                 Person person = personService.getPersonEntityByPersonId(Long
                         .valueOf(partiDto.get("id").toString())).get();
                 personList.add(person);
@@ -90,11 +92,16 @@ public class EventController {
     @DeleteMapping("/{userid}/{travelid}/{eventid}/deleteEvent")
     public void deleteEvent(@PathVariable("eventid") int event_id)
     {
-        EventDetailDto.deleteRequest DeleteRequest = eventService.getEventDetail(event_id);
+        EventDetailDto.deleteRequest DeleteRequest = eventService.getEventDetailforDelete(event_id);
         personService.updatePersonMoneyByDeleting(DeleteRequest.getJoinedPerson(),
                 DeleteRequest.getPayerId(),
                 DeleteRequest.getDividePrice(),
                 DeleteRequest.getTakePrice());
         eventService.deleteEvent(event_id);
+    }
+
+    @GetMapping("/{userid}/{travelid}/{eventid}/detail")
+    public List<ParticipantDetailDto.detailView> getDetailInEvent(@PathVariable("eventid") int eventid){
+        return participantService.getParticipantInEvent(eventid);
     }
 }

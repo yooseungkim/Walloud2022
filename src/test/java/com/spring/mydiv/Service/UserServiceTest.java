@@ -56,7 +56,7 @@ class UserServiceTest {
     @DisplayName("유저 정보 리턴")
     void getUserInfo() {
         //given
-        int userid = 13;
+        int userid = 11;
         /** user id info
          * 13: 이하은
          * 14: 황장원
