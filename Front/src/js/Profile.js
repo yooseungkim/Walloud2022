@@ -14,7 +14,7 @@ const Profile = () => {
   },[]);
 
   const getProfile = async() => {
-    await axios.get(`/api/${user}/${travel}/${personid}`
+    await axios.get(`/api/${user}/${travel}/${personid}/personDetail`
     ).then((res) => {
       console.log(res.data);
       setProfile(res.data);

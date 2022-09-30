@@ -62,16 +62,18 @@ const CreateUser = () => {
   }
 
   const sendInvite = async() => {
-    let sended = [];
+    let need_to_send = [...inviteList];
+    console.log("Before axios : ",need_to_send);
     await inviteList.map((invite_elem) => {
-      console.log(invite_elem.email);
+      console.log(invite_elem.id);
       axios.post(`/api/${user}/${travel}/createUser`,{
         user_email : invite_elem.email
       }).then((res) => {
         switch(res.data) {
           case 200:
-            sended.push(invite_elem.id);
-            console.log(sended);
+            need_to_send = need_to_send.filter(e => e.id !== invite_elem.id);
+            console.log("invite List : ", need_to_send);
+            setInvite(need_to_send);
             break;
           case -1:
             alert("check the email (" + invite_elem.email + ") is correct");
@@ -80,24 +82,21 @@ const CreateUser = () => {
             alert("Network Error");
             break;
           case -3:
-            alert("User is already existed.");
+            alert("User ("+ invite_elem.email +") is already existed.");
             break;
           default:
-            afterError(sended);
             break;
+        }
+        if(need_to_send.length === 0) {
+          console.log("test")
+          navigate(`/${user}/${travel}/${travelName}`);
         }
       }).catch((error) => {
         console.log(error);
-        afterError(sended);
       })
     })
   }
 
-  const afterError = (sended) => {
-    sended.map((sended_elem) => {
-      onDel(sended_elem);
-    })
-  }
 
   return (
     <div>
@@ -116,60 +115,12 @@ const CreateUser = () => {
       <ul>
         {inviteList && inviteList.map(friend => <UserInvite key={friend.id} friend={friend} onDel = {onDel}/>)}
       </ul>
-      <button onClick = {sendInvite}>Submit</button>
+      <button onClick= {sendInvite}>Submit</button>
 
     </div>
   )
 
 }
 
-// const CreateUser = () => {
-//   const { travel, travelName, user } = useParams();
-//   const [email, setEmail] = useState("");
-//   const navigate = useNavigate();
-  
-//   const onChange = (event) => {
-//     setEmail(event.currentTarget.value);
-//   }
-
-//   const onClick = async() => {
-//     await axios.post(`/api/${user}/${travel}/createUser`,{
-//       user_email : email
-//     }).then((res) => {
-//       switch(res.data) {
-//         case -1:
-//           alert("check the email is correct");
-//           break;
-//         case -2:
-//           alert("Network Error");
-//           break;
-//         case 200:
-//           alert("Successfully Created");
-//           navigate(`/${user}/${travel}/${travelName}`);
-//           break;
-//         default:
-//           throw res;
-//       }
-//     }).catch((error) => {
-//       console.log(error);
-//     })
-//   }
-
-//   return (
-//     <div>
-//       <Link
-//         to={`/${user}/${travel}/${travelName}`}
-//         state={{ user: user, travel: travel, travelName: travelName }}
-//       >
-//         <h1 className="home">{travelName}</h1>
-//       </Link>
-//       <h2>Add User</h2>
-
-//       <label htmlFor="email">Email</label>
-//       <input id="email" type="email" onChange={onChange} />
-//       <button onClick={onClick}>Submit</button>
-//     </div>
-//   );
-// };
 
 export default CreateUser;
