@@ -7,7 +7,7 @@ function CreateEvent() {
   const users = useLocation().state.userList;
   const { user, travel, travelName } = useParams();
   const [payer, setPayer] = useState(users[0].id);
-  const [participants, setparticipants] = useState([]);
+  const [participants, setparticipants] = useState([...users]);
   const navigate = useNavigate();
 
   const [inputs, setInputs] = useState({
@@ -40,7 +40,7 @@ function CreateEvent() {
       alert("Set place\n");
     } else if (price === "") {
       alert("Set price\n");
-    } else if (date === "") {
+    }else if (date === "") {
       alert("Set date\n");
     } else {
       console.log(participants);
@@ -58,6 +58,7 @@ function CreateEvent() {
     let temp_list = [...participants].map(function (row) {
       delete row.name;
       delete row.difference;
+      delete row.userId;
 
       return row;
     });
@@ -76,7 +77,7 @@ function CreateEvent() {
         event_name: place,
         event_date: date,
         price: price,
-        payer_person_id: payer[0],
+        payer_person_id: payer,
       })
       .then((res) => {
         switch (res.data) {
